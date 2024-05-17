@@ -1,28 +1,31 @@
 <!-- emmet : 코드 구조를 자동으로 만들어줌 (! + tab : 자동으로 html5구조를 만들어줌 ) -->
 <!DOCTYPE html> <!-- html문서로 작성하겠다. -->
 <html lang="ko">
-		<!-- lang 속성 : language(en,ko) -->
+<!-- lang 속성 : language(en,ko) -->
+
 <head>
-	<meta charset="UTF-8">    
-	  <!-- 인코딩 방식 지정 / 인코딩이랑 : 사람이 작성한 코드를 컴퓨터가 이해하는 코드로 변경하는 것 -->
+	<meta charset="UTF-8">
+	<!-- 인코딩 방식 지정 / 인코딩이랑 : 사람이 작성한 코드를 컴퓨터가 이해하는 코드로 변경하는 것 -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<!-- 모바일/반응형 웹에서 인식할 수 있는 태그 //프젝 만들때는 반응형웹으로 만들기  -->
 	<title>Document</title> <!--문서의 제목(탭에 보이는 제목) //프젝할때 타이틀 무조건 바까주기 -->
 </head>
+
 <body>
 	<!-- 브라우저 화면에서 보여주고 싶은 내용 -->
 	<!-- 태그이름 + tab -->
 	<h1>나의 첫 HTMl 문서입니다 !</h1>
 	<div>안녕하세요, 예진입니다</div>
-	
+
 	<!-- 중첩(nested) -->
 	<div style="background-color: aqua;"> <!--div : 블록(block 요소)-->
 		span 의 parent
-		<span style="background-color: yellow;">div 의 child</span>   <!--span : 인라인(inline)요소-->
-		<span style="background-color: green;">div 의 child</span>   <!--span : 인라인(inline)요소-->
+		<span style="background-color: yellow;">div 의 child</span> <!--span : 인라인(inline)요소-->
+		<span style="background-color: green;">div 의 child</span> <!--span : 인라인(inline)요소-->
 	</div>
 
 	<div style="background-color: blue;">또 다른 div </div>
 	<!--들여쓰기, 내어쓰기를 이용해서 중첩관계를 표현할때 같은 수준으로 들여쓰기를 갖도록 하자 ! -->
 </body>
+
 </html>
