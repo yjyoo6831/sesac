@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>html tag 종류-240517</title>
+</head>
+
+<body>
+    <h1 style="color : blue">Tag 종류에 대해 배워보자.</h1>
+    <h2>두번째로 큰 제목</h2>
+    <h3>h3 3rd</h3>
+    <h4>h4 4th</h4>
+    <h5>h5 5th</h5>
+
+    <h6>h6 6th</h6>
+    <h7>h7 7th</h7> <!-- 존재하지 않는 태그는 div 태그로 인식함  -->
+    <div style="text-align:center;">div tag 입니다.</div>
+    <hr>
+    <p style="text-align:center;">paragraph1</p>
+
+    <br>
+    <h3 style="color:#00CED1">오늘의 할 일 </h3>
+    <ul type="square">
+        <li>html 복습</li>
+        <li>운동하기</li>
+        <li>맛집가기</li>
+    </ul>
+    <hr>
+    <h3 style="color:#6495ED">카페라떼 레시피</h3>
+    <ol style="list-style-type:lower-roman">
+        <!-- strong,b : 굵은 글씨 **웹 접근성 차이이다 ! 
+            (b tag :단순 굵은 글씨 , strong : 실제 그 단어를 강조(시각장애인에서 읽을 때 더 강조해서 읽어줌)
+            em,i : 기울임체
+            (i tag :단순 굵은 글씨 , em : 실제 그 단어를 강조(시각장애인에서 읽을 때 더 강조해서 읽어줌)
+            del :취소선 
+            u:밑줄 -->
+        <li><strong>우유</strong>를 <em>180ml</em> 넣기</li>
+        <li><b>얼음</b>을 컵에 넣기</li>
+        <li><i>에스프레스</i> 2샷 넣기</li>
+        <li><del>Maybe....</del> <u>Complete! Enjoy!</u></li>
+    </ol>
+    <!-- 목록 태그중첩 사용  -->
+
+    <h3>💖My favorite food💖</h3>
+    <ul>
+        <li>양식</li>
+        <ol>
+            <li>뇨끼</li>
+            <li>타코</li>
+        </ol>
+    </ul>
+    <ul>
+        <li>한식</li>
+        <ul>
+            <li>순대국밥</li>
+            <li>콩나물국밥</li>
+        </ul>
+    </ul>
+    <ul>
+        <li>중식</li>
+        <ol>
+            <li>마라탕</li>
+            <li>탄탄멘</li>
+        </ol>
+    </ul>
+    <hr>
+    <h2>img tag </h2>
+    <h3>My name is 킹.율.이.닷.!</h3>
+    <!-- 상대경로 : 현재 위치를 기준으로 하는 파일 경로 
+        목적파일의 위치가 바뀐다면 상대경로를 수정해야하는 단점이 있음.
+    -->
+    <!-- 절대경로 : root(맨 처음, 최상단)부터 해당 파일까지의 경로. 로컬어디서나 접근 가능한 것이 장점이다.-->
+    <img src="./img/킹율.png" alt="킹율강아지사진" width="300" height="300">
+    <br>
+    <!-- 인터넷 이미지로도 가능 -->
+    <img src="data:image/png;base64,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" alt="테슬라로고" width="200">
+    <hr> 
+    <!-- a tag 에 사용할수 있는 target attribute(속성) 는 링크가 열릴 위치를 지정할 수 있음.
+    - _self (default) : 현재 탭에서 열기
+    - _blank : 새 탭으로 열기
+ -->
+    <a href="http://www.naver.com" target="_blank" title="마우스를 올리면 나타나는 제목">네이버 바로가기</a>
+    <!-- a 태그의 href 속성 값으로는 인터넷 상의 주소 뿐만 아니라 프로젝트 폴더 내의 다른 HTMl 문서의 주소를 넣어도 됨. -->
+    <a href="./html_tag-practice.html">html 태그 과제연습</a>
+</body>
+</html>
