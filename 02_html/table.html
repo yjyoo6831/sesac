@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Table tag</title>
+</head>
+
+<body>
+    <h1>How to use table tag</h1>
+
+    <table border="1" width="150" height="150" bgcolor="skyblue">
+        <caption>My first table</caption>
+        <tr>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+        </tr>
+        <tr>
+            <td>4</td>
+            <td>5</td>
+            <td>6</td>
+        </tr>
+        <tr>
+            <td>7</td>
+            <td>8</td>
+            <td>9</td>
+        </tr>
+    </table><hr>
+         <!-- 
+        - cellspacing : border 사이의 간격
+        - cellpadding : cell (td)의 내부 여백
+        align : 정렬  -->
+        <table border="2" cellpadding="15" cellspacing="15" align="center">
+        <caption>menu</caption>
+        <tr>
+            <!-- th tag : 테이블의 제목 칸을 의미한다.(bold 체) -->
+            <th>종류</th>
+            <th>가격</th>
+            <th>비고</th>
+        </tr>
+            <tr>
+                <td>떡볶이</td>
+                <td>3000</td>
+                <td>2인이상 주문 가능</td>
+            </tr>
+            <tr>
+                <td>참치김밥</td>
+                <td>5000</td>
+                <td>국내산</td>
+            </tr>
+            <tr>
+                <td>치즈김밥</td>
+                <td>4000</td>
+                <td>캐나다산</td>
+            </tr>
+    </table><hr>
+    <table border="2" align="center" cellpadding="20">
+    <caption>new menu</caption>
+    <tr>
+        <!-- th tag : 테이블의 제목 칸을 의미한다.(bold 체) -->
+        <th>종류</th>
+        <th>가격</th>
+        <th>비고</th>
+    </tr>
+        <tr>
+            <td>떡볶이</td>
+            <td>3000</td>
+            <td>2인이상 주문 가능</td>
+        </tr>
+        <tr>
+            <td>참치김밥</td>
+            <!-- rowspan : 밑 요소포함 두개의 행을 합치겠다. -->
+            <td rowspan="2">4000</td>
+            <td>국내산</td>
+        </tr>
+        <tr>
+            <td>치즈김밥</td>
+            <!-- <td>4000</td> -->
+            <td>캐나다산</td>
+        </tr>
+        <tr align="center">
+            <td>순대</td>
+            <!-- colspan : 2개 열 합친다. -->
+            <td colspan="2">품절</td>
+        </tr>
+</table><hr>
+
+   
+</body>
+
+</html>
