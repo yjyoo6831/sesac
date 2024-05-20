@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
+    
+    <title>Form 과 Form 요소</title>
+</head>
+<body>
+    <h1>form 관련 태그 및 form 요소</h1>
+    
+    <form action="" method=""></form>
+    <!-- 
+        action : 사용자가 폼에 입력한 값을 전달할 주소 
+        method : 사용자가 폼에 입력한 값을 전달할 방법
+        위 두가지 속성은 "서버"에 연관된 내용이다.
+
+        form 은 화면에 드러나지 않는 추상적인 태그이다.(양식)
+     -->
+     <form>
+        <!-- form 요소 : 폼 태그 안에 있는 사용자의 입력값을 받는 요소 
+            input,textarea,select 태그들에는 name 속성을 가질 수 있음 
+        -->
+        Text <input type="text"><br>
+        이 칸은 입력받을 수 없음 <input type="text" disabled><br>
+        <label for="user-email">이메일</label>
+        <!-- "input:email" + tab 
+        - label 태그의 for 와 input tag의 id 값을 똑같이 입력하면 label 의 이메일을 클릭하면 입력창으로 포커싱이 됨
+        -- : 웹 접근성에 적합한 코드이다.
+        -->
+        <!-- input tag 속성
+            disabled : 입력을 받지 못하게 막음.
+            placeholder : 미리보기
+            
+        -->
+        
+
+        <input type="email" id="user-email" placeholder="abc@naver.com" name=""><br>
+        색상 선택 <input type="color" name="color" id=""><br>
+        음량 선택(범위지정) : <input type="range" name="음량" id=""><br>
+        파일 첨부 : <input type="file" name="attach" id=""><br>
+        숫자 입력 받기 : <input type="number" name="number" id=""><br>
+        날짜 입력받기 : <input type="date" name="" id=""><br>
+        날짜 및 시간입력받기 : <input type="datetime-local" name="" id=""><br>
+        Password <input type="password" name="user-pw" id="">
+
+        <!-- radio input :
+            checkbox input:
+            radio , checkbox input : 같은 name 속성값을 주어 그룹화 해야한다.
+            name : 카테고리화 하는 기능을 가지고 있음
+            checked : default 옵션
+            
+        textarea 태그 : input 보다 더 많은 양의 내용을 입력받을 수 있는 요소
+            cols,rows는 가,세로 길이
+            유저가 마우드 하단에서 크기 조절 가능 
+         -->
+        <h5>너의 취미는 ?</h5>
+        <input type="checkbox" name="interest" value="basketball">농구
+        <input type="checkbox" name="interest" value="baseball" checked>야구
+        <input type="checkbox" name="interest" value="badminton" >배드민턴
+
+        <h5>당신의 성별은 무엇인가요 ?</h5>
+        
+        <input type="radio" name="gender" id="female" value="female"> <label for="female">여자</label>
+        <input type="radio" name="gender" id="male" value="male"> <label for="male">남자</label>
+        
+        <textarea placeholder="문의 사항을 입력해주세요" cols="30px" rows="10"></textarea><br>
+
+        <select name="dept">
+            <optgroup label="department">
+                <option value="피아노">피아노</option>
+                <option value="체육">체육</option>
+                <option value="수영 selected">수영</option>
+            </optgroup>
+            <optgroup label="flower">
+                <option value="장미">장미</option>
+                <option value="개나리">개나리</option>
+                <option value="튤립 selected">튤립</option>
+            </optgroup>
+        </select>
+        <br>
+        <!-- button 
+            1. input 태그의 type 속성을 이용해 버튼 만들기
+            2. button 태그
+        -->
+        <!-- 단순버튼(클릭가능 버튼)  -->
+        <input type="button" value="단순 버튼">
+        <button type="button">단순 버튼 2</button>
+        <!-- 제출버튼("폼" 제출 버튼) -->
+        <input type="submit" name="" id="" value="제출버튼1">
+        <button type="submit" value="제출 버튼 2">제출 버튼2</button><br>
+        <!-- 참고. type 속성을 생략한 button 태그 
+        - type 속성 :button, submit 값 사용
+        - button type : form 태그 바깥에 button 태그가 있을때 기본 값
+        - submit type : form 태그 내부에 button 태그가 있을때 기본 값
+        -->
+        <button>버튼1</button>
+     </form>
+     <button>버튼22</button>
+</body>
+</html>
