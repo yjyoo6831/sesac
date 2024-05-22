@@ -1,51 +1,59 @@
 <!DOCTYPE html>
 <html lang="ko">
-  <head>
+
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <title>선택자 종합실습</title>
+
     <link rel="stylesheet" href="./seletor-total-ex.css">
     <style>
-      form {
-        width: 400px;
-      }
+        form {
+            width: 400px;
+        }
 
-      /* focus */
-      textarea {
-        width: 100%;
-        height:150px;
-      }
-      /* checked */
-      /* active */
-      button {
-        float: right;
-        padding: 5px 15px;
-        background-color: #f96666;
-        color: white;
-        font-size: 17px;
-        border-radius: 10px;
-        border: none;
-      }
+        /* focus */
+        textarea {
+            width: 100%;
+            height: 150px;
+        }
+
+        /* checked */
+        /* active */
+        button {
+            float: right;
+            padding: 5px 15px;
+            background-color: #f96666;
+            color: white;
+            font-size: 17px;
+            border-radius: 10px;
+            border: none;
+        }
     </style>
-  </head>
-  <body>
+</head>
+
+<body>
     <h3>건의 사항을 적어주세요!</h3>
     <form>
-      <!-- label
+        <!-- label
         - 명시적 방식: id와 for 맞춰주기
         - 암시적 방식: label 내부에 input 쓰기 
             - checkbox 사용 시 명시적 방식으로 진행하기	
       -->
 
-      <!-- checkbox와 textarea 만들기 -->
-      <textarea placeholder="건의 사항🎈"></textarea>
-      <input type="checkbox" name="color" id="red"> 
-      <label for="red">red</label>
-      <input type="checkbox" name="color" id="blue">
-      <label for="blue">blue</label>
-      <input type="checkbox" name="color" id="yell"> 
-      <label for="yell">yellow</label>
-      <button>제출</button>
+        <!-- checkbox와 textarea 만들기 -->
+        <textarea placeholder="건의 사항🎈"></textarea>
+        <input type="checkbox" name="color" id="red">
+        <label for="red">red</label>
+        <input type="checkbox" name="color" id="blue">
+        <label for="blue">blue</label>
+        <input type="checkbox" name="color" id="yell">
+        <label for="yell">yellow</label>
+        <button>제출</button>
     </form>
-  </body>
+    <hr>
+    <div>(divtag) css속성 공부</div>
+</body>
+
 </html>
