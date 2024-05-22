@@ -1,13 +1,46 @@
-*{
-    color: white;
-    background-color: gray;
+@import url('https://fonts.googleapis.com/css2?family=Dongle&family=Hi+Melody&display=swap');
+.hi-melody-regular {
+    font-family: "Hi Melody", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+  .dongle-regular {
+    font-family: "Dongle", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+body{
+    font-family: ;
 }
-span{
+/* 야생사자 선택 배경 빨강 */
+p.lion{
     background-color: red;
 }
-#first{
-    background-color: blue;
+/* 사파리안의 사자 선택 배경 greenye ??*/ 
+ul .lion{
+background-color: greenyellow;
 }
-.second{
-    background-color: green;
+
+/* 호랑이만 선택 배경 노랑 */
+#tiger{
+    background-color: yellow;
 }
+/* 사자 전부 선택후 글자 색*/
+.lion{
+    color:sienna;
+}
+/* 동물원안의 사자만 선택후 폰트 두껍 */
+.zoo .lion{
+    font-weight: bold;
+}
+/* 호랑이 뒤에있는 팬더 */
+#tiger + li {
+    background-color: skyblue;
+}
+/* 사파리 사자 뒤에 있는 사육사 
+선택후 배경 오렌지 */
+li.lion ~ li {
+    background-color: orange;
+}
+
+

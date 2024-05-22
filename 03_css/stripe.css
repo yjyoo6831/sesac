@@ -1,0 +1,8 @@
+.stripes{
+    color: white;
+    background-color: navy;
+}
+.stripes :nth-child(4n+2){
+    color: black;
+    background-color: yellow;
+}
