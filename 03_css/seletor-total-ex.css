@@ -1,0 +1,26 @@
+h3:hover{
+    background-color: aqua;
+    color:blue;
+}
+h3::selection{
+    background-color: aliceblue;
+}
+button:active{
+    background-color: gray;
+}
+
+input[id="red"]:checked +label {
+    background-color: red;
+    color: white;
+}
+input[id="blue"]:checked +label {
+    background-color:blue;
+    color: white;
+}
+input[id="yell"]:checked +label {
+    background-color:yellow;
+    color: white;
+}
+textarea:focus{
+    outline-color: red;
+}
