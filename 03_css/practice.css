@@ -1,0 +1,13 @@
+*{
+    color: white;
+    background-color: gray;
+}
+span{
+    background-color: red;
+}
+#first{
+    background-color: blue;
+}
+.second{
+    background-color: green;
+}

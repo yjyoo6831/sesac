@@ -1,0 +1,35 @@
+/* css에서는 slash + * */
+/* 
+    * : 전체 선택자
+    태그명 :태그 선택자
+    # : id selector (고유함 - 한개만 정의 가능)
+    . : class  selector (그룹화 가능 - 여러개 정의 가능)
+*/
+
+*{
+    color: black;
+}
+h1{
+    color:blue
+}
+p{
+    background-color:violet;
+}
+.second{
+    background-color: pink;
+}
+#first{
+    background-color: beige;
+    color:yellow
+}
+ol{
+    background-color: chocolate;
+}
+
+.small{
+    font-size: 10px;
+}
+.big{
+    font-size: 30px;
+}
+
