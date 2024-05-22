@@ -1,3 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Poor+Story&display=swap');
+/*  google font */
+body{
+font-family: "Poor Story", system-ui;
+font-weight: 400;
+    font-style: normal;
+} 
+/* 눈누폰트 */
+  @font-face {
+    font-family: 'Ownglyph_eunbyul21-Rg';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2405-2@1.0/Ownglyph_eunbyul21-Rg.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+h3{
+    font-family: 'Ownglyph_eunbyul21-Rg';
+}
+div{
+    font-family: "Poor Story", system-ui;
+}
 h3:hover{
     background-color: aqua;
     color:blue;
@@ -19,8 +39,14 @@ input[id="blue"]:checked +label {
 }
 input[id="yell"]:checked +label {
     background-color:yellow;
-    color: white;
+    
 }
 textarea:focus{
     outline-color: red;
 }
+
+/* 구글 웹 폰트, 눈누 웹 폰트
+    - 모든 브라우저에서 보는 폰트를 통일
+    - 폰트 다운로드 X, 링크태그에서 폰트를 가져오는 방식
+    보통 기본 폰트는 body 태그에 작성.
+*/
