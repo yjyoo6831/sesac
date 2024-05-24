@@ -3,3 +3,109 @@ li{
     color:white;
     background-color: black;
 }
+div{
+    text-align: center;
+}
+.b1{
+    height: 300px;
+    color: aquamarine;
+    background-color: pink;
+    /* background: linear-gradient(blue,pink); */
+    /* background: linear-gradient(to right,blue,pink); */
+    background:linear-gradient(290deg,royalblue,pink);
+
+    /* --------------- */
+    /* 폰트크기는 기본이 :16px 
+        * 폰트굵기
+        - lighter, normal, bold, bolder
+        - 100~900
+        * 폰트 모양
+        - normal, italic, oblique
+        * 정렬
+        - center, left, rigt, justify(양쪽정렬)
+        * 글자선
+        -underline,line-through, overline, none
+    */
+    font-size: 50px;
+    font-weight: 500;
+    font-style: oblique 70deg;
+    text-align: center;
+    text-decoration: line-through;
+    /* 줄 높이
+        - px, 1.2(default)
+    */
+    line-height: 4;
+    /* 크기
+        min-width, min-height, max-width, max-height
+    */
+    width: 500px;
+    /* 테두리의 종류 */
+    /* border-style: solid;
+    border-width:  5px;
+    border-color: limegreen; */
+
+    /* 위의 3개를 합친 것이 밑의 것이다. 
+        border: [width] [style] [color]*/
+     border: 1px solid #000;
+
+     /* 한쪽 테두리만 : top, bottom, right, left */
+     border-top: dashed groove none dotted;
+     border-left: 3px dashed double lime;
+     border-right: 7px inset pink;
+     border-bottom: 10px dotted;
+
+    /* 모서리 모양 */
+     /* border-radius: 10px 20px 0 30%; */
+     /* border-radius: 50%; */
+
+}
+.b2{
+    border-width: 2px;
+    border-style:dashed double groove dotted;
+    border-left : dashed  rosybrown;
+    border-radius: 20px 30px 7px 20%;
+    /* border-top: groove teal; */
+    
+}
+/* 여백 */
+/* padding-top, padding-bottom, padding-left, padding-right */
+/* margin-top, margin-bottom, margin-left, margin-right */
+
+.b3{
+    border: 3px dashed blueviolet;
+    border-radius: 40%;
+    /* 방향별 속성 단축 형식 */
+     margin: 10px 50px 30px 40px; 
+     /* 한개 지정시 : 상하좌우
+        두개 지정시 : 상하/좌우 
+        세개 지정시 : 상/좌우/하
+        네개 지정시 : 상/우/하/좌
+     */     
+}
+.bgI{
+    background-color: deeppink;
+    /* 이미지 없음 */
+    height: 500px;
+    background-image: none;
+    background-image: url("./images/sky_squirrel.jpg");
+    /* 
+        *bgrepeat : 
+        default : repeat 
+        repeat, repeat-x, repeat-y
+        * bgposition : top bottom right center  50px ...
+        * bgsize : auto (이미지 실제 크기) , 35em
+    */
+    background-repeat: no-repeat; 
+    background-position: 30px;
+    /* 비율유지- 요소의 더 넓은 너비에 맞춤 */
+    background-size: cover;
+    /* 비율유지- 요소의 더 짧은 너비에 맞춤 */
+    background-size: contain;
+
+    /* 배경 이미지 스크롤 특성 */
+    /* background-attachment: scroll;
+    background-attachment: fixed;
+    background-attachment: local; */
+}
+
+

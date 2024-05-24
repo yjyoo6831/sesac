@@ -29,7 +29,7 @@ button:active{
     background-color: gray;
 }
 
-input[id="red"]:checked +label {
+input[id="red"]:checked + label {
     background-color: red;
     color: white;
 }
