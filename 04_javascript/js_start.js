@@ -1,0 +1,1 @@
+console.log("링크방식")
