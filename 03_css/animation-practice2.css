@@ -1,0 +1,12 @@
+.text{
+    animation: t 2s 
+}
+@keyframes t {
+    0% {
+      transform: translateX(500px);
+    }
+
+    100% {
+      transform: translateX(0px);
+    }
+  }
