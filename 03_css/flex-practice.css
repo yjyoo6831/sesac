@@ -1,0 +1,36 @@
+h2{
+    font-weight:bold;
+}
+.big{
+    
+    background-color: lightgreen;
+    width: 300px;
+    height: 300px;
+    position: relative;
+}
+.small{
+    
+    background-color: lightcoral;
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    top: 50%;
+    left:50%;
+    transform: translate(-50%,-50%);
+}
+.fbig{
+    background-color: lightgreen;
+    width: 300px;
+    height: 300px; 
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.fsmall{
+    background-color: lightcoral;
+    width: 100px;
+    height: 100px;
+    
+    
+    
+}
