@@ -1,20 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>funcion_lms</title>
 </head>
+
 <body>
     <h1>lms 함수 과제 </h1>
 </body>
+
 </html>
 <script>
-    let x=prompt("첫번째 값 입력");
     
-    const square = (x)=>{
-        const result = x*x;
-        return result;
+    let num=0;
+    while(num<=10){
+        let age = prompt("your age");
+        if(typeof age !=="number"){
+            console.log("숫자만 입력하세요!")
+        }
+        age=Number(age);
+        if (age > 21) { result = "성인"; }
+        else if (age >= 17) { result = "고등학생"; }
+        else if (age >= 14) { result = "중학생"; }
+        else if (age >= 8) { result = "초등학생"; }
+        else if (age >= 3) { result = "유치원생"; }
+        else if (age >= 0) { result = "유아"; }
+        else { result = "태어나지 않았음"; }
+        console.log(`Your age : ${age} \ntype : ${result}`);
+        num+=1;
     }
-    console.log(`${x}*${x} =`,square(x));
+    
 </script>
