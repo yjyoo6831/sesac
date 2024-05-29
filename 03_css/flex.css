@@ -73,7 +73,7 @@
             - wrap : 개행처리
             - wrap-reverse : 줄바꿈하는데 아이템을 역순 배치
         */
-        flex-wrap: wrap;
+        /* flex-wrap: wrap;
 
         /* align-content : 여러 행에 대한 정렬.
         (조건) flex-wrap :wrap/wrap-reverse 상태에서 아이템이 두 줄 이상일때 수직축 방향 설정함. */
