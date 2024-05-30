@@ -1,0 +1,198 @@
+body {
+    /* background-image bg.jpg 되도록 */
+    /* body- 수정하지 않아도 됩니다. */
+    width: 100vw;
+    height: 100vh;
+    background-image: url('./images/banff.png');
+    background-repeat: no-repeat;
+    background-size : cover;
+    background-attachment: fixed;
+    
+  }
+  
+  .container {
+  
+
+  }
+  
+  .container .heroes {
+    width: 70%;
+    margin-left: 20%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap:10px;
+    /* align-content: space-evenly; */
+    
+    
+    
+    /* align-self: baseline; */
+  }
+  
+  .container .heroes .hero {
+    
+    flex-grow: 0;
+    
+  }
+  
+  .container .heroes .hero:hover {
+    transition: all 0.5s ease-out ;
+    transform: scale(1.2);
+    
+  }
+  
+  .container .heroes .hero .image {
+    border:3px solid white;
+    border-radius:10%;
+    width:100px;
+    height: 100px;
+    transform: skewX(-15deg);
+    /* background-size: 100%; */
+    background-size: cover;
+    /* background-repeat: no-repeat; */
+    
+  }
+  
+  /* 로고 - 수정하지 않아도 됩니다. */
+  .container .logo {
+    max-width: 300px;
+    margin: 0 auto;
+    padding: 20px 30px;
+  }
+  
+  .container .logo img {
+    width: 100%;
+
+  }
+  
+  /* 사진 넣기 작업 */
+  /* 사진이 해당 경로에 없다면 경로 수정해주세요. */
+  .container .heroes .hero:nth-child(1) .image {
+    background-image: url('./images/food/food1.png');
+  }
+  
+  .container .heroes .hero:nth-child(2) .image {
+    background-image: url('./images/food/food2.png');
+  }
+  
+  .container .heroes .hero:nth-child(3) .image {
+    background-image: url('./images/food/food3.png');
+  }
+  
+  .container .heroes .hero:nth-child(4) .image {
+    background-image: url('./images/food/food4.png');
+  }
+  
+  .container .heroes .hero:nth-child(5) .image {
+    background-image: url('./images/food/food5.png');
+  }
+  
+  .container .heroes .hero:nth-child(6) .image {
+    background-image: url('./images/food/food6.png');
+  }
+  
+  .container .heroes .hero:nth-child(7) .image {
+    background-image: url('./images/food/food7.png');
+  }
+  
+  .container .heroes .hero:nth-child(8) .image {
+    background-image: url('./images/food/food8.png');
+  }
+  
+  .container .heroes .hero:nth-child(9) .image {
+    background-image: url('./images/food/food9.png');
+  }
+  
+  .container .heroes .hero:nth-child(10) .image {
+    background-image: url('./images/food/food10.png');
+  }
+  
+  .container .heroes .hero:nth-child(11) .image {
+    background-image: url('./images/food/food11.png');
+  }
+  
+  .container .heroes .hero:nth-child(12) .image {
+    background-image: url('./images/food/food12.png');
+  }
+  
+  .container .heroes .hero:nth-child(13) .image {
+    background-image: url('./images/food/food13.png');
+  }
+  
+  .container .heroes .hero:nth-child(14) .image {
+    background-image: url('./images/food/food14.png');
+  }
+  
+  .container .heroes .hero:nth-child(15) .image {
+    background-image: url('./images/food/food5.png');
+  }
+  
+  .container .heroes .hero:nth-child(16) .image {
+    background-image: url('./images/food/food5.png');
+  }
+  
+  .container .heroes .hero:nth-child(17) .image {
+    background-image: url('./images/food/food5.png');
+  }
+  
+  .container .heroes .hero:nth-child(18) .image {
+    background-image: url('./images/food/food5.png');
+  }
+  
+  .container .heroes .hero:nth-child(19) .image {
+    background-image: url('./images/food/food5.png');
+  }
+  
+  .container .heroes .hero:nth-child(20) .image {
+    background-image: url('./images/food/food5.png');
+  }
+  
+  .container .heroes .hero:nth-child(21) .image {
+    background-image: url('./images/food/food5.png');
+  }
+  
+  .container .heroes .hero:nth-child(22) .image {
+    background-image: url('./images/food/food5.png');
+  }
+  
+  .container .heroes .hero:nth-child(23) .image {
+    background-image: url('./images/food/food23.png');
+  }
+  
+  .container .heroes .hero:nth-child(24) .image {
+    background-image: url('./images/food/food24.png');
+  }
+  
+  .container .heroes .hero:nth-child(25) .image {
+    background-image: url('./images/food/food25.png');
+  }
+  
+  .container .heroes .hero:nth-child(26) .image {
+    background-image: url('./images/food/food26.png');
+  }
+  
+  .container .heroes .hero:nth-child(27) .image {
+    background-image: url('./images/food/food31.png');
+  }
+  
+  .container .heroes .hero:nth-child(28) .image {
+    background-image: url('./images/food/food28.png');
+  }
+  
+  .container .heroes .hero:nth-child(29) .image {
+    background-image: url('./images/food/food29.png');
+  }
+  
+  .container .heroes .hero:nth-child(30) .image {
+    background-image: url('./images/food/food30.png');
+  }
+  
+  .container .heroes .hero:nth-child(31) .image {
+    background-image: url('./images/food/food31.png');
+  }
+  
+  .container .heroes .hero:nth-child(32) .image {
+    background-image: url('./images/food/food31.png');
+  }
+  
