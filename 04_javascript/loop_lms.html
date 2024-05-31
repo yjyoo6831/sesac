@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript loop lms</title>
+</head>
+<body>
+    <h1>99단</h1>
+</body>
+</html>
+<script>
+    let num=prompt("10000까지 중 숫자 아무거나 입력하세욧")
+    console.log("*13배수이면서 홀수 인 숫자 찾기* \n입력된 숫자 : "+num);
+    for(let i=0;i<num;i++){
+        if((i%13===0) && (i%2===1)){
+            console.log(i);
+        }
+    }
+    console.log("=================");
+    
+    for(let i=2;i<=3;i++){
+        console.log(`---${i} 단 ---`);
+        for(let j=1;j<=9;j++){
+            console.log(`${i} x ${j} = ${i*j}`);
+        }
+    }
+    console.log("=================");
+    let sum=0;
+    for(let i=0;i<=100;i++){
+            if((i%2===0)||(i%5===0)){
+                sum+=i;
+                // console.log(i);
+            }
+    }
+    console.log("sum = "+sum);
+
+</script>
