@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>배열과 반복문 실습 1 lms</title>
+</head>
+<body>
+    <h1>배열과 반복문 실습/내장 메소드 실습</h1>
+</body>
+</html>
+<script>
+    let sum=0,sum1=0,sum2=0;
+    for(let i=1;i<=100;i++){
+        sum+=i;
+    }
+    console.log(`1~100까지 합(for) : ${sum}`);
+
+    /// for of
+    const nums = Array(100).fill().map((v,i)=> i+1);
+    
+    for(let i of nums){
+        sum1+=i;
+    }
+    console.log(`1~100까지 합(for of) : ${sum1}`);
+
+    nums.forEach((num) => {
+        sum2+=num;
+    })
+    console.log(`1~100까지 합(forEach) : ${sum2}`);
+
+    let fruits1=["사과","딸기","수박","참외","오렌지","자두","mango"];
+    let fruits2=["수박","사과","참외","오렌지","자두","파인애플","mango",];
+
+    let multi=fruits1.filter(i=> fruits2.includes(i));    
+    console.log("중복값",multi);
+    let diff=fruits1.concat(fruits2)
+    	.filter(i => !fruits1.includes(i) || !fruits2.includes(i));
+    console.log("다른 값",diff);
+</script>
+
+
+
