@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>html 내용 변경하기 - lms</title>
+</head>
+<body>
+    <div>민트 초코는 <span>맛있다 >_<</span></div>
+</body>
+</html>
+<script defer>
+    const div1=document.getElementsByTagName('div')[0];
+    const span1=document.getElementsByTagName('span')[0];
+    span1.textContent="맛없어요T_T";
+    span1.style.color='red';
+    div1.style.fontWeight='bold';
+
+</script>
