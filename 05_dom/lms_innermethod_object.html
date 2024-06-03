@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>내장 메소드와 내장객체 실습 lms</title>
+</head>
+<body>
+    <h1>내장 메소드와 내장객체 실습 lms</h1>
+</body>
+</html>
+<script>
+    console.log("오늘은 주말일까요? 평일일까요 ?");
+    let today=new Date('2024-05-23');
+    console.log(typeof today.getDay());
+    let res=(today.getDay()  === 6) ||  
+    (today.getDay()  === 0) ? "주말" : "평일" ;
+    console.log(`today :${today}\n${res}\n\n===========`);
+
+    let pick=Math.random();
+    console.log("랜덤 숫자 뽑기>>> ",Math.floor(pick*11));
+   
+   
+
+</script>
