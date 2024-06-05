@@ -10,7 +10,7 @@ console.log("innerText > ", div1.innerText);
 
 console.log("textContent > ", div1.textContent);
 
-div1.innerHTML = '여기는 <b>첫번째</b> 태그!';
+// div1.innerHTML = 'innerHTML >  여기는 <b>첫번째</b> 태그!';
 console.log('innerHTML > ', div1);
 
 // # innerText 와 textContent
@@ -21,9 +21,9 @@ console.log('innerHTML > ', div1);
 // innerText = HTML 태그를 해석하지 X, 보여지는 텍스트만 그대로
 // textContent = HTML 태그를 포함하여 처리
 
-div1.innerText = "여기는 <b>두번째</b> 태그! "
+div1.innerText = "innerText > 여기는 <b>두번째</b> 태그! "
 console.log(div1);
-div1.textContent = "여기는 <b>세번째</b> 태그!"
+// div1.textContent = "textContent > 여기는 <b>세번째</b> 태그!"
 console.log(div1);
 
 // 속성(attribute) 변경
@@ -41,14 +41,14 @@ console.log(document.getElementById('dog').getAttribute('src'));
 console.log(document.getElementById('dog').id); // dog
 console.log(document.getElementById('naver').href); // https://www.google.com/
 
-// # 참고2! . 연산자로 속성에 접근하고 = 할당 연산자로 속성 값 변경 가능
+// # 참고2! .연산자로 속성에 접근하고 = 할당 연산자로 속성 값 변경 가능
 document.getElementById('naver').href = '#'; // 내부 앵커 // 현재 페이지의 상단으로 스크롤
 console.log(document.getElementById('naver').href);
 
 // CSS 지정
 const h1 = document.querySelector('h1');
 const list = document.querySelectorAll('ul > li'); // 유사 배열
-// console.log(list);
+console.log("list >>>>>>>>> ",list);
 
 // CSS 지정
 // # 1. style 속성
@@ -59,11 +59,11 @@ list[0].style.backgroundColor = 'purple';
 list[0].style.fontSize = '20px';
 list[0].style.color = 'yellow';
 
-for (let li of list) {
-    li.style.backgroundColor =  'purple';
-    li.style.fontSize = '20px';
-    li.style.color = 'yellow';
-}
+// for (let li of list) {
+//     li.style.backgroundColor =  'purple';
+//     li.style.fontSize = '20px';
+//     li.style.color = 'yellow';
+// }
 
 // # 2. classList 활용
 // xxx.classList.add
@@ -113,13 +113,14 @@ const p2=document.createElement('p');
 const p3=document.createElement('p');
 
 p2.innerHTML='p2';
-p3.innerHTML='p3';
+// p3.innerHTML='p3';
 
 p2.classList.add('p-2');
 p3.classList.add('p-3');
 
-
+p3.append('p3',' ','p-3')
 container.append(p2,p3); // 여러개 추가가능
+console.log("!!!!!!!!!!!",container)
 
 //x.prepend(y) : x요소의 맨 처음 자식으로 y요소가 추가
 const li1=document.createElement('li');
