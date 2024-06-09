@@ -1,0 +1,12 @@
+header{
+    border: 1px solid #000;
+    background-color: aqua;
+}
+nav{
+    border: 1px solid #000;
+    background-color: chartreuse;
+}
+main{
+    border: 1px solid #000;
+    background-color: antiquewhite;
+}
