@@ -24,6 +24,7 @@ const server = http.createServer((req,res)=>{
         }
     })
 });
+
 server.listen(8000,()=>{
     console.log('8000서버 실행');
 })
