@@ -70,40 +70,37 @@ const fs= require('fs');
 // })
 
 //디렉토리 읽기
-// fs.readdir('./', function(err,files){
-//     if(err) console.log("에러",err);
-//     else console.log("result : ",files);
-// })
-// fs.writeFile('new.txt','Hello World', function (err) {
-//     if(err) throw err;
-//         console.log("파일 생성완료");
-// })
-
-// open() ,w 를 이용한 파일 생성
-// fs.open('new1.txt','w',function (err,file) {
-//     if(err) throw err;
-//     console.log("open ,w 이용한 파일 생성 완료 ");
-// })
-
-// apeendFile() : 파일이 없으면 새파일생성하여 내용 작성, 이미 있으면 내용만 추가함.
-//  fs.appendFile('appendfile.txt','www',function (err) {
-//     if(err) throw err;
-//     console.log("appendfile 이용한 파일 생성 완료 ");
-// })
-
-// 파일삭제 
-// fs.unlink('new.txt',function (){
-//     console.log('파일 삭제 완료');
-// })
-// 파일 이름 변경
-// fs.rename('batman.js','rebatman.js',function (err){
-//     if(err) throw err;
-//     console.log('파일 이름 변경 완료');
-// })
-// 파일 읽기
-// fs.readFile('./input.txt',function(err,data){
-//     console.log(data);
-// });
+fs.readdir('./', function(err,files){
+    if(err) console.log("에러",err);
+    else console.log("result : ",files);
+})
+fs.writeFile('new.txt','Hello World', function (err) {
+    if(err) throw err;
+        console.log("파일 생성완료");
+})
+//open() ,w 를 이용한 파일 생성
+fs.open('new1.txt','w',function (err,file) {
+    if(err) throw err;
+    console.log("open ,w 이용한 파일 생성 완료 ");
+})
+//appendFile() : 파일이 없으면 새파일생성하여 내용 작성, 이미 있으면 내용만 추가함.
+fs.appendFile('appendfile.txt','www',function (err) {
+    if(err) throw err;
+    console.log("appendfile 이용한 파일 생성 완료 ");
+ })
+//파일삭제 
+fs.unlink('new.txt',function (){
+    console.log('파일 삭제 완료');
+})
+//파일 이름 변경
+fs.rename('batman.js','rebatman.js',function (err){
+    if(err) throw err;
+    console.log('파일 이름 변경 완료');
+})
+//파일 읽기
+fs.readFile('./input.txt',function(err,data){
+    console.log(data);
+});
 
 const data = fs.readFileSync('./input.txt','utf-8')
 console.log(data);
