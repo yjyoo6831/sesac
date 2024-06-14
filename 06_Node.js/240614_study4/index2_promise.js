@@ -154,7 +154,7 @@ function mul(a) {
 })
 }
 
-add(4,22d3)
+add(4,3)
     .then(function (res) {
         console.log(res);
         return mul(res);
