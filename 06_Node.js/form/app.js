@@ -20,10 +20,10 @@ app.get('/',(req,res)=>{
     res.render('index',{title : '폼 실습하기'});
 })
 app.get('/getForm',(req,res) =>{
-    console.log(req.query); // { id2: 'banana', pw2: 'df' }
+    console.log(req.query); // { id: 'banana', pw: 'df' }
     // res.send('get 요청 성공') 
     res.render('result_get',{title:'GET 요청 결과',userInfo : req.query})
-    //userInfo : req,query => { id2: 'banana', pw2: 'df' }
+    //userInfo : req,query => { id: 'banana', pw: 'df' }
 })
 app.post('/postForm',(req,res) =>{
     console.log(req.body);
