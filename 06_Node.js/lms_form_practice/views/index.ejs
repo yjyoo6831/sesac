@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title%></title>
+  
+</head>
+
+<body>
+    <form action="/getForm" method="get">
+        이름 <input type="text" name="name" id="name" required>
+        <br>
+        성별 <input type="radio" name="gender" id="male" value="남자" required>
+        <label for="male">남자</label>
+        <input type="radio" name="gender" id="female" value="여자"> 
+        <label for="female">여자</label>
+        <br>
+        생년월일 <input type="date" name="bth" id="bth">
+        <br>
+        관심사 <input type="checkbox" name="interest" id="interest" value="여행"> 여행
+        <input type="checkbox" name="interest" id="interest" value="패션"> 패션
+        <input type="checkbox" name="interest" id="interest" value="음식"> 음식 <br>
+        <br>
+        <div>선택</div>
+        좋아하는 색상 <input type="color" name="color" id="color"><br>
+        좋아하는 숫자 <input type="number" name="number" id="number">
+        <br><br>
+
+        <button type="submit">Get button</button>
+        <br><br>
+        <button type="submit">Post button</button>
+    </form>
+    <br>
+    
+</body>
+</html>
+
