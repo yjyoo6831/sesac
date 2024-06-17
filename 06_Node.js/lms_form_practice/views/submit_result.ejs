@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        span{
+            color : blueviolet;
+        }
+    </style>
+</head>
+<body>
+    <ul>
+        <li>이름 : <span><%= uInfo.name%></span></li>
+        <li>성별 : <span><%= uInfo.gender%></span></li>
+        <li>생년월일 : <span><%= uInfo.bth%></span></li>
+        <li>관심사 : <span><%= uInfo.interest%></span></li>
+        <li>좋아하는 색상 : <span style="color: <%=uInfo.color%>"><%= uInfo.color%></span></li>
+        <li>좋아하는 숫자 : <span><%= uInfo.number%></span></li>
+    </ul>
+
+</body>
+</html>
