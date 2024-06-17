@@ -1,7 +1,7 @@
 const express=require('express');
 const app=express();
 const PORT = 8000;
-// console.log(app);
+console.log(app);
 app.set('view engine','ejs'); //view engine 에는 여러개가 있지만, ejs 를 사용한다고 세팅해주는것. 
 app.set('views','./views') //(MVC)의 views 폴더 안에는 ejs 문법으로 만들어진 파일들로 구성된다.
 

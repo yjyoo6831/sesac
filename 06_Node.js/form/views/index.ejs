@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %> </title>
+</head>
+<body>
+    <h1><%= title %> </h1>
+    
+    <h2>get 방식으로 요청하는 폼</h2>    
+    <form action="/getForm" method="get">
+        <input type="text" name="id" placeholder="ID(min 3letter, required)"minlength="3" required >
+        <input type="password" name="pw" placeholder="password(min 4letter, required)" minlength="4" required>
+
+        <!-- 이메일(required) 학년 1~4 input  -->
+
+        <input type="email" name="email" placeholder="email(required)" required>
+        <input type="number" name="grade" placeholder="grade" min="1" max="4" >
+
+        <button type="submit">GET 제출</button>
+        <hr>
+    
+    </form>
+
+    <h2>post 방식으로 요청하는 폼</h2>    
+    <form action="/postForm" method="post">
+        <input type="text" name="id" placeholder="ID" pattern="^([a-zA-z0-9]){4,}$" title = "대소문자, 숫자, 4글자 이상" required>
+        <input type="password" name="pw" pattern="^([a-zA-z0-9]){4,6}$" title = "대소문자, 숫자, 4~6글자" placeholder="Password" required>
+
+        <button type="submit">POST 제출</button>
+    </form>
+
+</body>
+</html>
