@@ -4,14 +4,19 @@ const app=express();
 
 app.set('view engine','ejs');
 app.set('views','./views');
+app.use(express.urlencoded({extended : true}))
+app.use(express.json());
 
 // const async = require('./views/asynchronous')
 // app.use('/async',async);
 // const router = express.Router();
 
-app.get('/',(req,res)=>{
-    res.render('index',{title:"Home"});
+app.get('/',(req,res) =>{
+    res.render('dynamic',{'title':'동적 폼 전송을 사용해보자 !'})
 })
+// app.get('/',(req,res)=>{
+//     res.render('index',{title:"Home"});
+// })
 app.get('/getForm',(req,res)=>{
     res.render('submit_result',{title:"Form",uInfo:req.query});
     console.log(req.query);
@@ -20,6 +25,8 @@ app.post('/getForm',(req,res)=>{
     res.render(req.body)
     console.log(req.body);
 })
+
+
 // router.get('/async',(req,res,next)=>{
 //     res.render('asynchronous',{title:'asynchronous'})
 // });

@@ -29,6 +29,7 @@ app.post('/postForm',(req,res) =>{
     console.log(req.body);
     // res.send('post 요청 성공')
     res.render('result_post',{title:'POST 요청 결과',userInfo : req.body})
+    
 })
 /* res.send() :  문자열, json, 파일 등을 클라이언트에게 응답 (json을 가장 많이 응답)
     => 서버가 데이터를 응답할 때 send()사용
