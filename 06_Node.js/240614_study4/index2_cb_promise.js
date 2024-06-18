@@ -12,23 +12,28 @@ rejected : 실패
 
 
 // 1. promise를 생성하는 코드 "제작 코드(Producing code)"
-// function promise1(flag) {
-//     // 프로미스 객체를 반환
-//     // - new 연산자를 이용해서 프로미스 객체를 만들고 바로 반환
+function promise1(flag) {
+    // 프로미스 객체를 반환
+    // - new 연산자를 이용해서 프로미스 객체를 만들고 바로 
+    // 실행함수(excutor)가 두개의 콜백함수(resolve, reject)를 받음
+    return new Promise(function (resolve, reject) {
+        if (flag) {
+            resolve(`프로미스 이행(fulfilled) 상태! 성공! ${flag}`);
+        } else {
+            reject(`프로미스 거절(rejected) 상태.. 실패.. ${flag}`);
+        }
+    });
+}
 
-//     // 실행함수(excutor)가 두개의 콜백함수(resolve, reject)를 받음
-//     return new Promise(function (resolve, reject) {
-//         if (flag) {
-//             resolve(`프로미스 이행(fulfilled) 상태! 성공! ${flag}`);
-//         } else {
-//             reject(`프로미스 거절(rejected) 상태.. 실패.. ${flag}`);
-//         }
-//     });
-// }
-
+promise1(5 >3)
+     .then((result) => console.log("5 > 3",result))
+     .catch((error) => console.log(error));
+promise1(5 < 3)
+     .then((result) => console.log(result))
+     .catch((error) => console.log("5 < 3",error));
 
 // 2. promise를 소비하는 코드 "소비 코드(Consuming code)"
-// promise1(5 < 3)
+// 
 //     .then(function(result) {
 //         console.log(result);
 //     })
@@ -36,9 +41,8 @@ rejected : 실패
 //         console.log(error);
 //     });
 
-// promise1(5 < 3)
-//     .then((result) => console.log(result))
-//     .catch((error) => console.log(error));
+
+
 // ##########################################################
 // index.js에서 콜백함수를 사용해 작성한 코드를 promise를 이용해 바꿔보자!
 // let product;
@@ -150,20 +154,39 @@ function sub(n) {
     })
 }
 
-add(4, 3)
-    .then(function (result) {  // 7
-        console.log(result); // 7
+// add(4, 3)
+//     .then(function (result) {  // 7
+//         console.log(result); // 7
 
-        return mul(result); // return mul(7)
-    })
-    .then(function (result) { // 14
-        console.log(result); // 14
+//         return mul(result); // return mul(7)
+//     })
+//     .then(function (result) { // 14
+//         console.log(result); // 14
 
-        return sub(result); // return sub(14)
+//         return sub(result); // return sub(14)
+//     })
+//     .then(function (result) { // 13
+//         console.log(result); // 13
+//     })
+//     .catch(function (error) {
+//         console.log(error);
+//     })
+
+function foo(num, sec){
+    return new Promise(function(resolve, reject){
+     setTimeout( function(){
+         console.log(num);
+       resolve();
+     }, sec);
+
     })
-    .then(function (result) { // 13
-        console.log(result); // 13
-    })
-    .catch(function (error) {
-        console.log(error);
-    })
+ }
+ 
+ async function exec() {
+     await foo(1,2000)
+     await foo(2,500)
+     await foo(3,3000)
+
+ }
+ 
+ exec();

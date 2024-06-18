@@ -35,8 +35,10 @@ function pay(product, price) {
 async function exec() {
   try {
     goMart()
-    await pickDrink();
-    pay(product,price);
+    await pickDrink().then(()=>{
+      pay(product,price);
+    })
+    
   } catch (error) {
     console.error("Error!!!!!!!!!!!!!");
   }
