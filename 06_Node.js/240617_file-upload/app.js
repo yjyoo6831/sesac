@@ -45,7 +45,7 @@ app.post("/upload", uploadDetail.single('userfile'), (req, res) => {
     console.log(req.body); // { title: 'HTML 파일' }
     console.log(req.file); // 첨부파일은 body에 저장되지 않는다.
     // res.send('Success upload!')
-    res.render('uploaded',{title : req.body.title, src : req.file.path})
+    res.render('uploaded',{title : req.body.title, src : 'image/' + req.file.filename})
 
     // 파일 탐색기 > uploads 폴더 생성됨.
     // 확장자 없이 파일명이 자동으로 저장됨 (multer 객체를 생성할 때 dest 옵션 외에 설정을 한 게 없어서)
