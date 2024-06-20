@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/static/css/thumbnail.css">
+
+</head>
+
+<body>
+    <h1>
+        <%=title %>
+    </h1>
+    <form action="/single" method="POST" enctype="multipart/form-data">
+        <input type="text" name="id" id="id1" placeholder="아이디 " required><br>
+        <input type="password" name="pw" id="pw1" placeholder="비밀번호" required><br>
+        <input type="text" name="name" id="name1" placeholder="이름" required><br>
+        <input type="age" name="age" id="age1" placeholder="나이" required><br>
+        <input type="file" name="ufile" id="ufile"><br>
+        <button type="submit">Single file 업로드</button>
+    </form>
+</body>
+</html>
+
