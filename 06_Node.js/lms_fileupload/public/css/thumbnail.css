@@ -1,0 +1,17 @@
+.ufile {
+    width: 200px;
+    height: 200px;
+    border-radius: 0%;
+    box-shadow: 0 0 20px #0002;
+}
+.a{
+    width: 400px;
+    height: 500px;
+    border-radius: 10%;
+    border: 1px solid black;
+    
+}
+span{
+    font-weight: bold;
+    color: tomato;
+}

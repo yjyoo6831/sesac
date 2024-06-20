@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        img {
+            top: 100px;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            box-shadow: 0 0 20px #0002;
+        }
+
+        .a {
+            width: 300px;
+            height: 300px;
+            border-radius: 10%;
+            border: 1px solid black;
+
+        }
+
+        span {
+            font-weight: bold;
+            color: tomato;
+        }
+        div{
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>회원가입 정보</h1>
+    <div class="a">
+        <img src="/<%= src%>" alt="">
+        <div>Welcome <span><%= id%></span> !</div>
+        <div>Password : <%= pw%></div>
+        <div>Name : <%= name%></div>
+        <div>Age : <%= age%></div>
+    </div>
+</body>
+
+</html>
