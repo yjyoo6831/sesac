@@ -20,6 +20,7 @@ app.get('/', (req, res) => {
 //  use 의 첫번째 인자 : 이 경로로 가겠다. 
 //첫번째 인자를 두번째와 다르게 설정해주는 것이 좋다. 보안상에 노출될 위험이 있기 때문에 . 
 app.use('/image', express.static(__dirname + '/uploads'));
+app.use('/static', express.static(__dirname + '/public'));
 // const upload = multer({
 //     dest : 'uploads/'
 // })
@@ -37,7 +38,7 @@ const uploadDetail = multer({
     limits: { fileSize: 5 * 1024 * 1024 }, //업로드 크기 제한
 })
 //multer객체 의 single() : 하나의 파일 업로드 
-// single 미들웨어는 라우터 미들워어 앞에 넣으면 된다. 
+// single 미들웨어는 라우터 미들웨어 앞에 넣으면 된다. 
 //  ejs 의 name 속성 값을 써줘야함.
 
 //  multer 객체 생성시 작성한 옵션에 따라 파입 업로드 후 req.file 객체 생성
@@ -59,12 +60,21 @@ app.post('/upload/array', uploadDetail.array('userfiles'),(req,res)=>{
     res.send('Success upload multiple files')
 })
 
-//multer객체 .fields() : 여러 파일을 각가의 인풋에 업로드
+
+
+//multer객체 .fields() : 여러 파일을 각각의 인풋에 업로드
 app.post('/upload/fields', uploadDetail.fields([{name:'kiwi'},{name:'orange'}]),(req,res)=>{
     console.log(req.body); //{ title1: '01.ot', title2: '13.파일업로드' }
     console.log(req.files); // [kiwi : {}, ..., orange : {}, ... ] 배열로 각 파일정보 저장
     res.send('Success upload multiple files')
 })
+
+//// 동적 폼 업로드 
+app.post('/dynamicFile',uploadDetail.single('thumbnail'),(req,res) => {
+    
+    res.send(req.file)
+})
+
 
 app.listen(POST, () => {
     console.log(POST + "포트 실행중");

@@ -5,6 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="/static/js/thumbnail.js"></script>
+    <link rel="stylesheet" href="/static/css/thumbnail.css">
 </head>
 
 <body>
@@ -38,6 +41,12 @@
         <input type="text" name="title2"><br>
         <button type="submit">Multi2 file 업로드</button>
     </form>
+
+    <br><br>
+    <h2>동적 파일 업로드</h2>
+    <input type="file" name="thumbnail" id="thumbnail">
+    <button type="button" onclick="uploadThumbnail()">동적 파일  업로드</button>
+    <img class="thumbnail" src="" alt="">
 </body>
 
 </html>
