@@ -5,12 +5,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
     <link rel="stylesheet" href="/static/css/thumbnail.css">
+    <script src="/static/js/thumb.js"></script>
+    <style>
+
+    </style>
 
 </head>
 
 <body>
-    <h1>
+    <!-- <h1>
         <%=title %>
     </h1>
     <form action="/single" method="POST" enctype="multipart/form-data">
@@ -19,8 +25,18 @@
         <input type="text" name="name" id="name1" placeholder="이름" required><br>
         <input type="age" name="age" id="age1" placeholder="나이" required><br>
         <input type="file" name="ufile" id="ufile"><br>
-        <button type="submit">Single file 업로드</button>
-    </form>
+        <button type="submit">JOIN</button>
+    </form> -->
+
+    <h1>동적 파일 업로드</h1>
+    
+        <input type="file" name="dfile" id="dfile">
+        <input type="text" name="anno" id="anno">
+        <button type="button" onclick="uploadDynamic()">동적으로전송</button>
+        <br>
+        <img src="" alt="">
+        <div class="ddd"></div>
+    
 </body>
 </html>
 
