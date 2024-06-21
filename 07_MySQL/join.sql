@@ -14,9 +14,7 @@ select * from customer inner join orders
 -- "고객 이름"과 고객이 주문한 "상품명", "상품 가격" 조회
 select c.custid, o.prodname, o.price from customer c , orders o where c.custid = o.custid;
 
-
-select c.custid, o.prodname, sum( from customer c , orders o where c.custid = o.custid;
-
+-- 고객 이름별로 //주문한 제품 총 구매액을 고객 별로 오름차순 정렬
 select  c.custname, sum(price* amount) as 'total_price'
 from customer c ,orders o
 where c.custid = o.custid
