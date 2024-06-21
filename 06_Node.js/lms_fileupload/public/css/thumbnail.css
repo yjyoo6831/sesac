@@ -1,8 +1,8 @@
-.ufile {
+img {
     width: 200px;
     height: 200px;
     border-radius: 0%;
-    box-shadow: 0 0 20px #0002;
+    /* box-shadow: 0 0 20px #0002; */
 }
 .a{
     width: 400px;

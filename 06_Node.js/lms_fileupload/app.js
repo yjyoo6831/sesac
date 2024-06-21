@@ -41,3 +41,12 @@ app.post('/single', uploadDetail.single('ufile'), (req, res) => {
     res.render('uploaded',{id : req.body.id, pw : req.body.pw,
         name : req.body.name, age : req.body.age, src : req.file.path})
 })
+
+app.post('/dynamic', uploadDetail.single('dfile'), (req, res) => {
+    const file = req.file;
+    const body = req.body;
+    console.log("req.body : ",req.body);
+
+
+    res.send({file,body})
+})
