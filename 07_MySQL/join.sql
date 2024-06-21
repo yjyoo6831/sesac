@@ -23,3 +23,5 @@ where c.custid = o.custid
 group by custname 
 order by total_price ;
 
+-- natural join (중복컬럼은 한개만 나옴)
+select * from customer natural join orders;
