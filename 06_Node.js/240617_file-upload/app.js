@@ -19,7 +19,8 @@ app.get('/', (req, res) => {
 // app.use('/uploads', express.static(__dirname + '/uploads'));
 //  use 의 첫번째 인자 : 이 경로로 가겠다. 
 //첫번째 인자를 두번째와 다르게 설정해주는 것이 좋다. 보안상에 노출될 위험이 있기 때문에 . 
-app.use('/image', express.static(__dirname + '/uploads'));
+app.use('/uploads', express.static(__dirname + '/uploads'));
+// app.use('/images', express.static(__dirname + '/uploads'));
 app.use('/static', express.static(__dirname + '/public'));
 // const upload = multer({
 //     dest : 'uploads/'
@@ -46,7 +47,8 @@ app.post("/upload", uploadDetail.single('userfile'), (req, res) => {
     console.log(req.body); // { title: 'HTML 파일' }
     console.log(req.file); // 첨부파일은 body에 저장되지 않는다.
     // res.send('Success upload!')
-    res.render('uploaded',{title : req.body.title, src : 'image/' + req.file.filename})
+    // res.render('uploaded',{title : req.body.title, src : 'image/' + req.file.filename})
+    res.render('uploaded',{title : req.body.title, src : req.file.path})
 
     // 파일 탐색기 > uploads 폴더 생성됨.
     // 확장자 없이 파일명이 자동으로 저장됨 (multer 객체를 생성할 때 dest 옵션 외에 설정을 한 게 없어서)
@@ -60,8 +62,6 @@ app.post('/upload/array', uploadDetail.array('userfiles'),(req,res)=>{
     res.send('Success upload multiple files')
 })
 
-
-
 //multer객체 .fields() : 여러 파일을 각각의 인풋에 업로드
 app.post('/upload/fields', uploadDetail.fields([{name:'kiwi'},{name:'orange'}]),(req,res)=>{
     console.log(req.body); //{ title1: '01.ot', title2: '13.파일업로드' }
@@ -69,12 +69,11 @@ app.post('/upload/fields', uploadDetail.fields([{name:'kiwi'},{name:'orange'}]),
     res.send('Success upload multiple files')
 })
 
-//// 동적 폼 업로드 
-app.post('/dynamicFile',uploadDetail.single('thumbnail'),(req,res) => {
-    
-    res.send(req.file)
+// 동적 폼 업로드
+app.post('/dynamicFile', uploadDetail.single('thumbnail'), (req, res) => {
+    console.log("req.file : " , req.file)
+    res.send(req.file);
 })
-
 
 app.listen(POST, () => {
     console.log(POST + "포트 실행중");
