@@ -10,6 +10,13 @@ create database testdb;
 create user 'test' identified by 'test';
 grant all privileges on testdb.* to test@'%';
 
+create user 'node' identified by 'pass';
+grant all privileges on nodedb.* to node@'%';
+
+
+create user 'lms' identified by '1234';
+grant all privileges on lmsdb.* to lms@'%';
+
 select host,user from user;
 
 use haksa;
@@ -31,6 +38,7 @@ show databases;
 
 -- 1. 데이터베이스 생성  collate utf8mb4_unicode_ci : 문자열 정렬할때 필요해서 해줌. utf8mb4  : 이모지 추가 됨.
 create database codingon default character set utf8mb4 collate utf8mb4_unicode_ci;
+create database lmsdb default character set utf8mb4 collate utf8mb4_unicode_ci;
 show databases;
 -- 3. 데이터베이스 사용 선언 
 use codingon;
