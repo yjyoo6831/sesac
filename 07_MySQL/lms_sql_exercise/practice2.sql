@@ -25,6 +25,8 @@ SELECT * FROM orders;
 
 
 -- 1. author_id가 1인 작성자의 이메일을 jkrowling@yahoo.com으로 업데이트하는 SQL 문을 작성합니다.
+update authors set email = 'jkrowling@yahoo.com' where author_id=1;
+
 
 -- 2. books 테이블에서 book_id 2인 책을 삭제하는 SQL 문을 작성합니다.
 
