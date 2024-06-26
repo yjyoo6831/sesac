@@ -9,6 +9,9 @@ create table visitor(
 desc visitor;
 insert into visitor values
 	(null, '홍길동','내가 왔다'),
+    (null, '이찬1','으라차차'),
+    (null, '이찬2','으라차차'),
+    (null, '이찬3','으라차차'),
     (null, '이찬혁','으라차차');
     
 select * from visitor;

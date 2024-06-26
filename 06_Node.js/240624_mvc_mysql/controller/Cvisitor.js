@@ -21,17 +21,27 @@ exports.getVisitors = (req,res) =>{
         res.render('visitor',{data:result});
       })
 }
-exports.postVisitor = (req,res) => {
-    console.log(req.body);
-    //result 는 Visitor.js 의 rows.insetId 값 ( cb )
-    Visitor.postVisitor(req.body, (result) =>{
-    res.send({
-        id:result, 
-        name:req.body.name, 
-        comment:req.body.comment
-    })
-    })
+exports.getVisitor = (req,res) =>{
+    // req.params.id : 조회해야할 id
+    Visitor.getVisitor(req.params.id, (result) => {
+        // res.send('test')
+        res.send(result);
+    }); 
 }
+
+exports.postVisitor = (req, res) => {
+    console.log(req.body);
+  
+    Visitor.postVisitor(req.body, (result) => {
+      // result: rows.insertId
+      console.log('controller/CVisitor.js >> ', result);
+      // controller/CVisitor.js >>  4
+  
+      res.send({id: result, 
+        name: req.body.name, 
+        comment: req.body.comment})
+    });
+  }
 
 exports.deleteVisitor = (req,res) =>{
     console.log(req.body);
@@ -43,3 +53,13 @@ exports.deleteVisitor = (req,res) =>{
         res.send({result}); // { result : result}
     })
 }
+exports.patchVisitor = (req, res) => {
+    console.log(req.body);
+  
+    Visitor.patchVisitor(req.body, (result) => {
+      console.log('controller/CVisitor.js >> ', result);
+  
+    //   res.send('test');
+       res.send({result});
+    })
+  }
