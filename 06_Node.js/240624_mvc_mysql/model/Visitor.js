@@ -27,7 +27,7 @@ exports.getVisitors = (callback) =>{
             throw err;
         }
         // console.log("errrror");
-        console.log('model/Visitor.js >> ', rows);
+        console.log('model/getVisitors >> ', rows);
         callback(rows)
         // model/Visitor.js >> [ RowDataPacket { id: 10, name: '이찬2', comment: '으라차차' }
     });
@@ -39,18 +39,18 @@ exports.getVisitor = (targetId,callback)=>{
     
     if(err) throw err;
 
-    console.log('model/Visitor.js >> ',rows);
+    console.log('model/getVisitor >> ',rows);
     callback(rows[0])
 })
 }
 
 exports.postVisitor = (data, callback) =>{
-    conn.query(`insert into visitor(name,comment) values('${data.name}','${data.comment}'})`),
+    conn.query(`insert into visitor(name,comment) values('${data.name}','${data.comment}')`,
     (err, rows) => {
         if(err){
             throw err;
         }
-        console.log('model/Visitor.js >> ',rows);
+        console.log('model/postVisitor >> ',rows);
         // model/Visitor.js >>  OkPacket {
       //   fieldCount: 0,
       //   affectedRows: 1,
@@ -63,13 +63,14 @@ exports.postVisitor = (data, callback) =>{
       // }
         callback(rows.insertId)
     }
+)
 }
 
 exports.deleteVisitor = (targetId,callback) => {
     //targetId : 삭제해야할 visitor id 
     conn.query(`delete from visitor where id=${targetId}`,(err,rows)=>{
         if(err) throw err;
-        console.log('model/Visitor.js >> ',rows);
+        console.log('model/deleteVisitor >> ',rows);
         /*
         OkPacket {
             fieldCount: 0,

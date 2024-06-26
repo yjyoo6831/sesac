@@ -7,7 +7,7 @@ function createVisitor() {
     console.log('click 등록 btn ');
     
     const form = document.forms['visitor-form'];
-    
+    console.log("1-----------",);
     axios({
         method:'POST',
         url : '/visitor',
@@ -18,24 +18,24 @@ function createVisitor() {
         }
     }).then((res)=>{
         console.log(res);
-        
+        console.log("data before1111-----------",res);
 
-        const  { data } = res; 
+        const  { data } = res; // {id: 7, name: 'lily', comment: 'hihi'}
         // js 문법
+        console.log("data before-----------",{data});
         const html = `
             <tr id="tr_${data.id}">
             <td>${data.id}</td>
             <td>${data.name}</td>
             <td>${data.comment}</td>
-            <td><button type="button" onclick="editVisitor(${data[i].id})">수정</button></td>
+            <td><button type="button" onclick="editVisitor(${data.id})">수정</button></td>
             <td><button type="button" onclick="deleteVisitor(this,${data.id});">삭제</button></td>
 
         `;
-
-    //insertAdjacentHTML : 특정요소에 html 추가
-    tbody.insertAdjacentHTML('beforeend',html)
+        console.log("data-----------",{data});
+        //insertAdjacentHTML : 특정요소에 html 추가
+        tbody.insertAdjacentHTML('beforeend',html)
     })
-
 }
 
 // [삭제]버튼 클릭시 
