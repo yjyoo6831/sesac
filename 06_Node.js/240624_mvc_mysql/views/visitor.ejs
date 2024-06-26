@@ -7,14 +7,15 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
 <body>
-    <form action="visitor-form">
+    <form name="visitor-form">
         <fieldset>
         <legend>방명록 등록</legend>
-        <input type="text" name="" id="name" placeholder="사용자 이름"><br>
+        <input type="text" id="name" placeholder="사용자 이름"><br>
 
-        <input type="text" name="" id="comment" placeholder="방명록">
+        <input type="text" id="comment" placeholder="방명록">
         <div id="button-group">
         <button type="button" onclick="createVisitor();">등록</button>
+        </div>
     </div>
     </fieldset>
     </form>
@@ -36,7 +37,8 @@
                     <td><%= data[i].id %></td>
                     <td><%= data[i].name %></td>
                     <td><%= data[i].comment %></td>
-                    <td><button type="button">수정</button></td>
+                    
+                    <td><button type="button" onclick="editVisitor('<%= data[i].id %>')">수정</button></td>
                     <td><button type="button" onclick="deleteVisitor(this, '<%= data[i].id %>');">삭제</button></td>
                     
                 </tr>
