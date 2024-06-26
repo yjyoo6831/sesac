@@ -84,7 +84,7 @@ function editVisitor(id) {
      })
      const html = `
         <button type="button" onclick="editDo(${id});">변경</button>
-        <button type="button">취소</button>
+        <button type="button" onclick="editCancel();">취소</button>
      `
      buttonGroup.innerHTML = html;   
 }
@@ -109,6 +109,20 @@ function editDo(id) {
         children[1].textContent= form.name.value; //이름 값 변경
         children[2].textContent= form.comment.value; //댓글 값 변경
 
+        //입력창 초기화
+        editCancel();
+
     }
 })
+}
+
+// [취소] 버튼 클릭시 화면 초기화 
+function editCancel() {
+    //1. input 초기화 
+    const form = document.forms['visitor-form'];
+    form.name.value=''
+    form.comment.value=''
+    //2. [등록] 버튼 보이기
+    const html=`<button type="button" onclick="createVisitor();">등록</button>`
+    buttonGroup.innerHTML = html;
 }
