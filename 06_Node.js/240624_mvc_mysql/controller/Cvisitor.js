@@ -16,7 +16,7 @@ exports.getVisitors = (req,res) =>{
         // result 매개변수
         // : model/Visitor.js getVisitors함수의 callback(rows)의 "rows" 변수에 대응
       
-        console.log('controller/CVisitor.js >> ', result);
+        console.log('controller/getVisitors >> ', result);
         
         res.render('visitor',{data:result});
       })
@@ -30,11 +30,11 @@ exports.getVisitor = (req,res) =>{
 }
 
 exports.postVisitor = (req, res) => {
-    console.log(req.body);
+    console.log("req.body",req.body);
   
     Visitor.postVisitor(req.body, (result) => {
       // result: rows.insertId
-      console.log('controller/CVisitor.js >> ', result);
+      console.log('controller/CVisitor.js postVisitor >> ', result);
       // controller/CVisitor.js >>  4
   
       res.send({id: result, 
