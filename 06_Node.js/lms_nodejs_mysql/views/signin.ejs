@@ -1,12 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <!-- axios -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
+
 <body>
-    <h1>로그인 안내</h1>
-    
+    <form name="form_signin">
+        <h1>로그인 안내</h1>
+        <label for="userid">ID</label>
+        <input type="text" name="userid" id="" required><br>
+        <label for="pw">Password</label>
+        <input type="text" name="pw" required><br>
+        <button type="button" onclick="checkUser()">Login</button><br><br>
+    </form>
+    <a href="/user/signup">Join Us</a>
+    <script src="/static/static_user.js"></script>
 </body>
+
 </html>
