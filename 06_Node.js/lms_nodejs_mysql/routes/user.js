@@ -11,14 +11,17 @@ const router = express.Router();
 router.get('/', controller.main);
 
 // 회원가입페이지 보여주기
-router.get('/user/signup',controller.getSignup)
+router.get('/signup',controller.getSignup);
 
-//새로운 회원 생성하기 
-router.post('/signup',controller.postCreateUser)
+// 새로운 회원 생성하기 
+router.post('/signup',controller.postCreateUser);
 
 
-//로그인 페이지 보여주기
-router.get('/signin',controller.signin)
+// 로그인 페이지 보여주기
+router.get('/signin',controller.getSignin);
+
+// 로그인 회원 조회
+router.post('/signin',controller.postCheckUser);
 
 
 module.exports=router;
