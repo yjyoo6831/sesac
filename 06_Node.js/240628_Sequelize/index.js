@@ -3,6 +3,7 @@ const app = express();
 const PORT = 8000;
 const router = require('./routes/index');
 const playerRouter = require('./routes/player');
+const teamRouter = require('./routes/teams');
 const {sequelize} = require('./models/index');
 
 
@@ -14,6 +15,8 @@ app.use(express.json())
 
 app.use('/',router);
 app.use('/players',playerRouter);
+//기본 경로가 /teams 가 되게 하므로
+app.use('/teams',teamRouter);
 
 
 sequelize
