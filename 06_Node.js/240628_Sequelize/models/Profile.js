@@ -1,5 +1,5 @@
 const ProfileModel = (sequelize, DataTypes) => { 
-    const Profie = sequelize.define('Profile',{
+    const Profile = sequelize.define('Profile',{
         profile_id : {
             type:DataTypes.INTEGER,
             primaryKey : true,
@@ -18,7 +18,6 @@ const ProfileModel = (sequelize, DataTypes) => {
         freezeTableName : true
     
     });
-    return ProfileModel;
+    return Profile;
 }
-
 module.exports = ProfileModel;
