@@ -70,6 +70,8 @@ exports.patchPlayer=async(req,res)=>{
         const {player_id} = req.params;
         const {team_id} = req.body;
 
+
+        
         const updatedPlayer = await Player.update(
             {team_id}, // 무엇을 바꾸나요 
             {where:{player_id}} // where
