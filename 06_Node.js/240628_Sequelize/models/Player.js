@@ -6,7 +6,7 @@ const playerModel = (sequelize, DataTypes) =>{
         'Player',  //param1 : 모델 이름 설정 
         
         { // param2 : 모델 컬럼 정의
-        playerid:{
+        player_id:{
             // player_id int not null primary key auto_increment
             type:DataTypes.INTEGER,
             primaryKey : true,
