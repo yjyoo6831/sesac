@@ -32,6 +32,33 @@
         #notice p {
             margin: 0;
         }
+        .my-chat{
+            display: flex;
+            justify-content: end;
+            padding: 2px 0px;
+        }
+        .my-chat p {
+            margin: 0;
+            padding: 10px;
+            background-color: yellow;
+            border-radius: 10px;
+            margin-right: 10px;
+        }
+        .other-chat {
+            display: flex;
+            justify-content: start;
+            padding: 2px 0px;
+        }
+        .other-chat p{
+            margin: 0px;
+            padding: 10px;
+            background-color: white;
+            border-radius: 10px;
+            margin-left: 10px;
+        }
+        .secret-chat p{
+            background-color: pink;
+        }
     </style>
 </head>
 <body>
@@ -98,6 +125,19 @@
             myName = userName;
         })
 
+        // [6] 메세지 전송
+        chatForm.addEventListener('submit',(e)=>{
+            e.preventDefault(); // 새로고침 방지
+            const chatMessage = chatForm.querySelector('#chatMessage');
+            const user = chatForm.querySelector('#userList');
+            // message , username, select 박스에서 선택한 값
+            socket.emit('sendMessage',{message: chatMessage.value, user: myName, select : user.value})
+            chatMessage.value=''; // 입력값 초기화
+            // 이 다음, 서버에서 받기 server.js
+
+
+        })
+
 
         // ------------------------
         // 소켓 이벤트
@@ -137,6 +177,30 @@
                     lists.appendChild(li);
                 })
             })
+        })
+
+        // [6] 메시지 전송 - 메세지
+        socket.on('newMessage',(res)=>{
+            console.log('newMessage >>> ',res);
+            // {message: '안녕',user:'ㅇㅇ',dm: false}
+            // {message: '야',user:'ㅇㅇ',dm: true}
+
+            const div = document.createElement('div');
+            const p = document.createElement('p');
+
+            if(myName === res.user){
+                //내가 입력한 텍스트
+                div.classList.add('my-chat');
+            }else{
+                div.classList.add('other-chat')
+            }
+            // 개인 메세지 일 때 
+            if(res.dm){
+                div.classList.add('secret-chat');
+            }
+            p.textContent = `${res.user} : ${res.message}`
+            div.appendChild(p);
+            message.appendChild(div);
         })
       </script>
 </body>
