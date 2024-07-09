@@ -19,6 +19,7 @@ exports.postCreateUser = (req,res) =>{
     // views/signup.ejs 
     console.log("req.body > ",req.body);
     // req.body > { userid: '12', pw: '1', name: '1' }
+   
     mUser.postCreateUser(req.body,(result)=>{
         console.log("controller/Cuser.js postCreateUser >> ", result);
 
@@ -36,14 +37,36 @@ exports.getSignin = (req,res) =>{
 }
 //로그인 화면 조회 (로그인 일치 조회)
 exports.postCheckUser = (req,res) =>{
-    console.log("check req.body  > ",req.body);
+    console.log("controller/Cuser.js req.body  > ",req.body);
     // req.body > { userid: '12', pw: '1', name: '1' }
+    
     mUser.postCheckUser(req.body.userid,req.body.pw,(result)=>{
-        console.log("controller/Cuser.js postCheckUser >> ", result);
-        res.send('test');
-        // res.send({
-        //     userid:req.body.userid,
-        //     pw:req.body.pw,
-        // })
+        console.log("controller/Cuser.js postCheckUser >> ", req.body.userid);
+        // res.send('test');
+        if (!req.body.userid) {
+            res.redirect('/user/signin')
+        } else {
+            res.send({
+                userid:req.body.userid,
+                pw:req.body.pw,
+            })
+        }
     })
 }
+exports.postUserInfo = (req,res) => {
+    res.render('prof');
+}
+
+// 회원 정보 수정 페이지 
+// exports.patchUserInfo = (req,res)=>{
+//     console.log("Cuser patchUserInfo >>  \n",req.body);
+//     res.render('profile');
+    // mUser.patchUserInfo(req.body,(res)=>{
+    //     console.log("Cuser.js patchUserInfo res  > ",res);
+    //     // res.send({
+    //     //     userid:req.body.userid,
+    //     //     pw:req.body.pw,
+    //     //     name:req.body.name
+    //     // })
+    // })
+// }

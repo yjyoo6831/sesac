@@ -23,5 +23,14 @@ router.get('/signin',controller.getSignin);
 // 로그인 회원 조회
 router.post('/signin',controller.postCheckUser);
 
+// 로그인 성공시 회원 정보 수정 페이지 접속
+router.post('/profile',controller.postUserInfo);
+
+// 회원정보 수정한 뒤 수정된 화면 접속
+// router.patch('/profile',controller.patchUserInfo)
+
+// 회원정보 삭제
+// router.delete('/profile/delete',controller.patchUserInfo)
+
 
 module.exports=router;
