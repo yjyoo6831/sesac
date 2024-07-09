@@ -25,7 +25,7 @@ PATCH {{server}}/players/{{player_id}}/team
 Content-Type: application/json ; charset=UTF-8
 
 {
-    "team_id" :2
+    "team_id" :2  
 }
 
 ### 특정 선수 방출(삭제)

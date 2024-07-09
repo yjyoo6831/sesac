@@ -18,7 +18,7 @@ function createVisitor() {
         }
     }).then((res)=>{
         console.log(res);
-        console.log("data before1111-----------",res);
+        // console.log("data before1111-----------",res);
 
         const  { data } = res; // {id: 7, name: 'lily', comment: 'hihi'}
         // js 문법
