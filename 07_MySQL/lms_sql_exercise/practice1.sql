@@ -185,3 +185,22 @@ select * from departments where substr(location,2,1)='e';
 select * from departments where location like '% %';
 -- 12. 직원 테이블에서 이름 컬럼에서 마지막 글자가 n인 사원을 계산합니다.
 select * from employees where substr(name,-1,1)='n';
+
+
+
+-----------------
+-- lms nodejs-mysql 회원 가입 실습 
+create table user(
+	id int primary key auto_increment,
+    userid varchar(20) not null,
+    name varchar(20) not null,
+    pw varchar(20) not null
+);
+drop table user;
+desc user;
+
+insert into user(userid,name,pw) values('test1','starbucks','pass1');
+
+select * from user where id='2' and pw='pass';
+
+

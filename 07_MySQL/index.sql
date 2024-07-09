@@ -17,7 +17,10 @@ grant all privileges on nodedb.* to node@'%';
 create user 'lms' identified by '1234';
 grant all privileges on lmsdb.* to lms@'%';
 
+use codingon;
+
 select host,user from user;
+
 
 use haksa;
 create database haksadb;
@@ -30,6 +33,7 @@ flush privileges;
 -- 새싹 수업 *******************
 -- db 목록 보기
 show databases;
+
 -- 데이터 베이스 : 데이터의 집합 
 -- DBMS : Database Management System = 데이터 베이스를 운영/관리 하는 프로그램 ex)MySQL 
 -- SQL  : 데이터베이스를 구축, 관리하고 활용하기 위해 사용하는 언어 
@@ -154,7 +158,7 @@ delete from customer where custid= 'happy';
 delete from customer where custid= 'apple'; -- on delete cascade  때문에 orders 테이블에서 apple 도 삭제된다. 
 
 INSERT INTO customer VALUES('bunny', '강해린', '대한민국 서울', '01012341234', '2000-02-23');
-INSERT INTO customer VALUES('hello', '이지민', '대한민국 포항', '01022221234', '1999-08-08');
+INSERT INTO customer VALUES('hello', '이지민', '대한민국 포항visitorvisitorvisitor', '01022221234', '1999-08-08');
 INSERT INTO customer VALUES('orange', '최지수', '미국 뉴욕', '01050005000', '1990-12-25');
 INSERT INTO customer VALUES('imminji01', '강민지', '영국 런던', '01060001000', '1995-01-11');
 INSERT INTO customer VALUES('lalala', '홍수지', '미국 로스앤젤레스', '01010109090', '2007-05-16');
@@ -315,6 +319,14 @@ where
 - 집계함수를 쓸 수는 있으나 having 절 보다는 자유롭지 못함
 
 */
+
+
+-------- 240628 --
+
+show tables;
+
+use codingon;
+
 
 
 
