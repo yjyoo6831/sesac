@@ -66,6 +66,7 @@ console.log("----------------");
 // 매개변수가 있는 함수는 How?
 // 매개변수 1개
 function food(text) {
+    
     return text;
 }
 console.log(food("제육덮밥")); // 제육덮밥
