@@ -22,15 +22,15 @@ const USERSMODEL = require("./Musery")(sequelize, Sequelize);
 async function syncModels() {
   try {
     // USERSMODEL 테이블 먼저 생성
-    await USERSMODEL.sync({ force: true });
+    await USERSMODEL.sync({ force: false });
     console.log("*** Users table created");
 
     // 그 다음 RecipesModel 테이블 생성
-    await RecipesModel.sync({ force: true });
+    await RecipesModel.sync({ force: false });
     console.log("*** Recipes table created");
 
     // 마지막으로 Recipe_Img_Model 테이블 생성
-    await Recipe_Img_Model.sync({ force: true });
+    await Recipe_Img_Model.sync({ force: false });
     console.log("*** Recipe Images table created");
 
     console.log("All tables created successfully");
@@ -77,4 +77,4 @@ db.Users = USERSMODEL;
 
 syncModels();
 
-module.exports = { db, sequelize, RecipesModel, Recipe_Img_Model, USERSMODEL };
+module.exports = db;
