@@ -1,9 +1,7 @@
 const RecipesModel = require('../models/Mrecipe');
 const Recipe_Img_Model = require('../models/Mrecipe_img');
-const multer = require('multer');
-const express=require('express');
-const router=express.Router();
-const path = require("path");
+const express = require('express');
+
 const {Recipes,Recipe_Img,Users }= require('../models/Mindex');
 
 // get /recipes?recipe_num=1 레시피 상세보기 페이지 - 완
@@ -59,36 +57,6 @@ exports.getRecipeWrite = (req,res) => {
     // res.render('recipeWrite',{title:'글 작성'});
     res.render('write-detail-test',{title:'글 작성'});
 }
-// multer 미들 웨어 등록 
-const uploadMainImage = multer({
-    storage1: multer.diskStorage({ 
-        destination(req, file, done) {
-            done(null, 'uploads/recipe') // 파일을 저장할 경로 
-        },
-        filename(req, file, done) {
-            const ext = path.extname(file.originalname);
-            done(null, path.basename(req.params.recipe_num + '_img0',ext ) + Date.now() + ext); // 저장할 파일명
-    
-        },
-    }),
-    limits: { fileSize: 10 * 1024 * 1024 }, //업로드 크기 제한
-    });
-
-// multer 미들 웨어 등록 
-const uploadImage = multer({
-    storage: multer.diskStorage({ 
-        destination(req, file, done) {
-            done(null, 'uploads/recipe') // 파일을 저장할 경로 
-        },
-        filename(req, file, done) {
-            const ext = path.extname(file.originalname);
-            const recipeStep=req.body.recipeStep;
-            done(null, path.basename(req.params.recipe_num + `_img${recipeStep}`,ext ) + Date.now() + ext); // 저장할 파일명
-    
-        },
-    }),
-    limits: { fileSize: 10 * 1024 * 1024 }, //업로드 크기 제한
-    });
 
 // 레시피 작성페이지에서 저장 버튼 클릭시
 exports.postRecipeWrite = async(req,res) => {
@@ -106,20 +74,13 @@ exports.postRecipeWrite = async(req,res) => {
 }
         */
         const { title, content, main_ingredient, main_ing_detail, 
-            sub_ingredient_detail, thumnail_num, recipeStep } = req.body;
+            sub_ingredient_detail, thumnail_num, recipeStep , mainImage } = req.body;
         // const {main_img, sub_imgs} =
-        console.log(`req.File : ${req.file} \nreq.files : ${req.files}`)
+        console.log("main image file path >>> ",req.file);
         
-        // 이미지 저장하기 
-        uploadMainImage.single('main-image')(req,res,async function(err){
-            if(err){
-                console.error("메인 이미지 업로드 오류",err);
-                return res.status(500).send('메인 이미지 업로드중 에러가 발생하였습니다.');
-                }
-        });
+        
                 /*
             if(req.file){
-                console.log("main image file path >>> ",req.file.path);
                 const mainImagePath = req.file.path;
                 Recipe_Img_Model.image_url =req.file.path;
                 Recipe_Img_Model.recipe_num=recipe_num;
