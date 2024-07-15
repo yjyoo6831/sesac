@@ -1,16 +1,31 @@
-const express = require('express');
-const controller = require('../controller/Crecipes');
+const express = require("express");
+const controller = require("../controller/Crecipes");
+// const { recipeList, allRecipes } = require("../controller/Cmain");
+
+const mdware=require('../middleware/upload_recipeimg');
 const router = express.Router();
 
-// get /recipes?recipe_id=1
-// router.get('/recipes', controller.getRecipe);
-router.get('/:recipe_id', controller.getRecipe);
-// post /recipes 레시피 작성 페이지로 넘어가기
-router.post('/write', controller.postRecipe);
-// patch /recipes?recipe_id=
-// router.patch('/recipes?recipe_id=', controller.updateRecipe);
 
-// delete /recipes?recipe_id=
-// router.delete('/recipes?recipe_id=', controller.deleteRecipe);
+
+// 주재료에 대한 레시피 리스트 가져오기
+// router.get("/recipes/:main_ingredinet", controller.getRecipeListMain);
+
+
+
+// get /recipe 레시피 상세보기 페이지 
+router.get('/',controller.getRecipe);
+
+// get /recipe 레시피 "작성 화면" 보여주기
+router.get("/write", controller.getRecipeWrite);
+
+// post 레시피작성 페이지에서 "작성 완료" 버튼 클릭시 
+router.post("/write", mdware.singleup ,controller.postRecipeWrite);
+
+// patch /recipe?recipe_num=
+// router.patch('/update', controller.patchRecipe);
+router.patch('/:recipe_num', controller.patchRecipe);
+
+// delete /recipe?recipe_num=
+router.delete('/delete', controller.deleteRecipe);
 
 module.exports = router;
