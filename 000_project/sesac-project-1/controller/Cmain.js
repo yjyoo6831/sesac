@@ -6,8 +6,7 @@ const { setCookie } = require('./Ccookie');
 exports.main = async (req,res) => {
     setCookie(req, res);
     // await this.getRecipeList(req, res);
-    // res.render('index');
-    res.render('index-test');
+    res.render('index');
 }
 
 // 레시피 리스트 가져오기 (전체, 주재료)
