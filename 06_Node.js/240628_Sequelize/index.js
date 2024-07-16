@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const PORT = 8000;
+const PORT = 8787;
 const router = require('./routes/index');
 const playerRouter = require('./routes/player');
 const teamRouter = require('./routes/teams');
