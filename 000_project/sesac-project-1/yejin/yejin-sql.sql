@@ -78,6 +78,7 @@ select * from recipes;
 select * from recipe_img;
 
 drop table users;
+drop table recipe_img;
 insert into users (user_id,user_name,profile_img,user_pw,birth_day)
 	values ('user1', '네이버관리자', 'https://recipe1.ezmember.co.kr/cache/recipe/2018/02/10/31eb5c9685f61ec424e4000f484cfee81.jpg',
     'pass','2024-01-01');
