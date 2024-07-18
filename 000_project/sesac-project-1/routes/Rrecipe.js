@@ -10,7 +10,8 @@ const router = express.Router();
 // router.get("/recipes/:main_ingredinet", controller.getRecipeListMain);
 
 // get /recipe 레시피 상세보기 페이지
-router.get("/", controller.getRecipe);
+router.get("/:recipe_num", controller.getRecipe);
+
 
 // get /recipe 레시피 "작성 화면" 보여주기
 router.get("/write", controller.getRecipeWrite);
@@ -24,6 +25,6 @@ router.post("/write", mdware.upload, controller.postRecipeWrite);
 router.patch("/:recipe_num", controller.patchRecipe);
 
 // delete /recipe?recipe_num=
-router.delete("/delete", controller.deleteRecipe);
+router.delete("/:recipe_num", controller.deleteRecipe);
 
 module.exports = router;
