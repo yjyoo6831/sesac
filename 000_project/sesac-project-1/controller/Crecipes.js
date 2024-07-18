@@ -27,10 +27,11 @@ exports.getRecipe = async (req, res) => {
     });
     // res.json(recipe);
 
-    // res.render("test-recipeView", {
-    //     title: "레시피 상세페이지",
-    //     isLogin: true,
-    // });
+    res.render("test-recipeView", {
+        title: "레시피 상세페이지",
+        isLogin: true,
+        recipe:res
+    });
     /*
     res.json(recipe);
   "recipe_num": 1,
@@ -167,7 +168,7 @@ exports.patchRecipe = async (req, res, next) => {
         });
         return;
     }
-    const result = await Recipes.update(
+    const upRecipe = await Recipes.update(
       {
         title : recipeTitle,
         user_num : 1,
@@ -183,7 +184,7 @@ exports.patchRecipe = async (req, res, next) => {
         console.log("데이터 수정완료");
         res.redirect('/recipe');
       })
-      res.json(result);
+      res.render('recipeUpdate',{upRecipe:res})
   } catch (error) {
     console.error(error);
   }
