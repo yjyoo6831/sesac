@@ -18,7 +18,7 @@ const uploadFile = multer({
         let fileCount = 0;
         for (const key in req.files) {
           fileCount += req.files[key].length;
-          done(null, path.basename("recipe_num2-img" + fileCount , ext) + ext); // 저장할 파일명
+          done(null, path.basename("3-img" + fileCount , ext) + ext); // 저장할 파일명
         }
     },
     }),

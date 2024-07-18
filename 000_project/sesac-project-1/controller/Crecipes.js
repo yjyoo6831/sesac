@@ -64,33 +64,11 @@ exports.getRecipeWrite = (req, res) => {
   });
 };
 
-// 레시피 작성페이지에서 저장 버튼 클릭시 - 부재료 값 안들어감, 이미지 추가필요)
+// 레시피 작성페이지에서 저장 버튼 클릭시
 exports.postRecipeWrite = async (req, res) => {
   try {
-    /*
-        const files = req.files;
-        const imagesData = [];
-        // 각 파일 정보를 데이터베이스에 저장
-        for (const key in files) {
-            files[key].forEach(file => {
-                imagesData.push({
-                    filename: file.filename,
-                    path: file.path,
-                    mimetype: file.mimetype,
-                    size: file.size,
-                });
-            });
-        }
-
-        const images = await Image.bulkCreate(imagesData);
-
-        res.json({ message: '이미지가 성공적으로 업로드되었습니다.', images });
-        req.session. 을 이용하여 유저 정보 저장하기
-        */
-
+        // req.session. 을 이용하여 유저 정보 저장하기
     console.log("레시피 저장 버튼 클릭 postRecipe >> \n", req.body);
-    
-
     /*
     {
       title: '1',
@@ -101,47 +79,60 @@ exports.postRecipeWrite = async (req, res) => {
   sub_imgs: [ null ]
   }
   */
-    // const { user_num, title, content, main_ingredient, main_ing_detail,
-    //     sub_ingredient_detail, mainImage } = req.body;
-
-    // 레시피 데이터베이스에 저장
-    // const newRecipe = await Recipes.create({
-    //     title,
-    //     user_num :1,
-    //     content,
-    //     main_ingredient,
-    //     main_ing_detail,
-    //     sub_ingredient_detail
-    // });
+    const { recipeTitle, content, mainIng, mainIngDetail,
+        sub_ingredient} = req.body;
+    
+    console.log(`recipeTitle : ${recipeTitle}\n
+, recipeRawHtml : ${content}\n
+, mainIng : ${mainIng}\n
+, mainIngDetail : ${mainIngDetail}\n
+, subIngList : ${sub_ingredient}
+`);
+    
+    // 레시피 정보 db 저장
+    
+    const newRecipe = await Recipes.create({
+        title : recipeTitle,
+        user_num : 1,
+        content : '물을따른다',
+        main_ingredient : mainIng,
+        main_ing_detail : mainIngDetail,
+        sub_ingredient_detail : '라임,탄산수'
+    });
 
     var imgFileArr = req.files; // 객체
+    console.log('========\n req.files >> ',req.files, '\n =============');
+
     //  완료된 것 
     // filename 속성을 추출하는 함수
-    // const extractFilenames = (imgArr) => {
-    //   const filenames = [];
-    //   for (const key in imgArr) {
-    //     if (Object.prototype.hasOwnProperty.call(imgArr, key)) {
-    //       imgArr[key].forEach((file) => {
-    //         filenames.push(file.filename);
-    //       });
-    //     }
-    //   }
-
-    //   return filenames;
-    // };
-
-    // // 추출된 filename들
-    // const filenames = extractFilenames(imgFileArr);
-    // for (i = 0; i < filenames.length; i++) {
-    //   console.log("i>> ", i);
-    //   // const newImage = await Recipe_Img.create({
-    //   // recipe_num:req.body.recipe_num,
-    //   // image_url:filenames[i],
-    //   // main_img:req.body.thumnail_num
-    //   // });
-    // }
+    const extractFilenames = (imgArr) => {
+        const filenames = [];
+        for (const key in imgArr) {
+        if (Object.prototype.hasOwnProperty.call(imgArr, key)) {
+                imgArr[key].forEach((file) => {
+                    // console.log("file.filename",file.filename);
+            filenames.push(file.filename);
+            });
+            }
+        }
+        return filenames;
+    };
     
-    res.send("File upload completed"); // 프론트로 다시 보내주는 것 
+    // 추출된 filename들
+    const filenames = extractFilenames(imgFileArr);
+    // console.log(filenames.length);
+    for (i = 0; i < filenames.length; i++) {
+        console.log("i >> ",i, filenames[i]);
+        // 이미지 파일 db 저장
+        const newImage = await Recipe_Img.create({
+        recipe_num : 1,
+        image_url : "/uploads/recipe/" + filenames[i],
+        main_img : 1 //req.body.main_image 0,1 넘겨주기
+        });
+    }
+    
+    // res.send("saved"); 
+    res.send("savedtt"); // 프론트로 다시 보내주는 것 
 
     // res.redirect('/') 작성 완료 버튼을 누를시 홈으로 돌아가기
   } catch (error) {
