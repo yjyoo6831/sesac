@@ -1,39 +1,44 @@
 
 const { Recipes, Recipe_Img, Users } = require("../models/Mindex");
 
-// get /recipe/1 레시피 상세보기
+// get /recipe/read?recipe_num=1 레시피 상세보기 페이지 
 // select * from where rcp_id=?
 exports.getRecipe = async (req, res) => {
-    try {
-        
-    console.log("레시피 상세페이지 >> ", req.params);
+  try {
+    console.log("레시피 상세페이지 >> ", req.query);
 
-    const { recipe_num } = req.params;
-    
-    console.log("session.user_id : ",req.session);
+    const { recipe_num } = req.query;
     const recipe = await Recipes.findOne({
-        attributes:['title','content','main_ingredient','main_ing_detail','sub_ingredient_detail'],
-        where: { recipe_num },
-        include: [
+      where: { recipe_num },
+      include: [
         {
-            model: Users,
-            attributes: ["user_id"],
+          model: Users,
+          attributes: ["user_id"],
         },
         {
-            model: Recipe_Img,
-            attributes: ["image_url"],
+          model: Recipe_Img,
+          attributes: ["image_url"],
         },
-        ],
+      ],
+      plain: true, // 단일 객체로 반환
+      nest: true // 중첩된 객체로 반환하도록 설정
     });
-    // res.json(recipe);
-
-    res.render("test-recipeView", {
-        title: "레시피 상세페이지",
-        isLogin: true,
-        recipe:res
+    console.log(">>>> ", recipe)
+    const imageUrls = recipe['Recipe_Imgs'].map(img => img.image_url);
+    console.log("image_urls >", imageUrls);
+    res.render("recipeView", {
+      isLogin: req.session.loggedin,
+      title: "레시피 상세페이지",
+      recipe_title: recipe.title, //: "title",  //string
+      main_img: recipe['Recipe_Imgs.image_url'], //: "imgPath",  //string
+      main_ing: recipe.main_ingredient, //: "vodka",  // string
+      main_ing_detail: recipe.main_ing_detail, //: "ing detail",  // string
+      sub_ing: recipe.sub_ingredient_detail, //: "sub ing",  // string
+      recipe_content: recipe.content.split('$'), //: ["step1", "step2"], // array
+      sub_image: ['sample.png'], //: ["path1", "path2"],  // array
+      likes_count:10
     });
     /*
-    res.json(recipe);
   "recipe_num": 1,
   "user_num": 1,
   "title": "레몬 짐빔 레시피",
@@ -61,167 +66,174 @@ exports.getRecipe = async (req, res) => {
 
 // 레시피 작성 버튼 클릭시 
 exports.getRecipeWrite = (req, res) => {
-    
-  // res.render('recipeWrite',{
-  res.render("test-recipeWrite", {
-    title: "레시피 작성",
-    isLogin: true,
-    recipe: res
+  res.render("recipeWrite", {
+    isLogin: req.session.loggedin,
+    title: "레시피 작성페이지"
   });
 };
 
-// 레시피 작성페이지에서 저장 버튼 클릭시
+// 수정 버튼클릭시
+exports.getRecipeUpdate = async (req, res) => {
+  console.log("params > ",req.params);
+  const { recipe_num } = req.params;
+  console.log("recipe_num > ",recipe_num);
+
+  const recipe = await Recipes.findOne({
+    where: { recipe_num },
+    include: [
+      {
+        model: Recipe_Img,
+        attributes: ["image_url"],
+      },
+    ],
+    raw: true
+  });
+  res.render('recipeUpdate', {
+    isLogin: req.session.loggedin,
+    title: "레시피 수정페이지",
+    recipe_title: recipe.title, //: "title",  //string
+    main_img: recipe['Recipe_Imgs.image_url'], //: "imgPath",  //string
+    main_ingredient: recipe.main_ingredient, //: "vodka",  // string
+    main_ing_detail: recipe.main_ing_detail, //: "ing detail",  // string
+    sub_ing: recipe.sub_ingredient_detail, //: "sub ing",  // string
+    recipe_content: recipe.content.split('$'), //: ["step1", "step2"], // array
+    sub_image: ['sample.png'], //: ["path1", "path2"],  // array
+  });
+};
+// 레시피 작성페이지에서 저장 버튼 클릭시 
 exports.postRecipeWrite = async (req, res) => {
   try {
-        // req.session. 을 이용하여 유저 정보 저장하기
     console.log("레시피 저장 버튼 클릭 postRecipe >> \n", req.body);
-    /*
-    {
-      title: '1',
-      main_ingredient: 'vodka',
-      main_ing_detail: '2',
-  main_img: {},
-  content: '<div><div>Step 1</div><div>4</div></div>',
-  sub_imgs: [ null ]
-  }
-  */
-    const { recipeTitle, content, mainIng, mainIngDetail,
-        sub_ingredient} = req.body;
-    
-    console.log(`recipeTitle : ${recipeTitle}\n
-, recipeRawHtml : ${content}\n
-, mainIng : ${mainIng}\n
-, mainIngDetail : ${mainIngDetail}\n
-, subIngList : ${sub_ingredient}
-`);
-    
-    // 레시피 정보 db 저장
-    
+    // console.log("user > ",req.session.user);
+    const { user_num, title, content, main_ingredient, main_ing_detail,
+        sub_ingredient_detail, mainImage } = req.body;
+
+    // 레시피 데이터베이스에 저장
     const newRecipe = await Recipes.create({
-        title : recipeTitle,
-        user_num : 1,
-        content : '물을따른다',
-        main_ingredient : mainIng,
-        main_ing_detail : mainIngDetail,
-        sub_ingredient_detail : '라임,탄산수'
+        title,
+        user_num: req.session.user.user_num, 
+        content,
+        main_ingredient,
+        main_ing_detail,
+        sub_ingredient_detail
     });
 
-    var imgFileArr = req.files; // 객체
-    console.log('========\n req.files >> ',req.files, '\n =============');
+    // recipe_num 을 받기 위한 조회
+    const recipe = await Recipes.findOne({
+      order: [[ 'createdAt', 'DESC' ]],
+      where: { user_num: req.session.user.user_num },
+      attributes: ['recipe_num']
+      
+    });
+    console.log("recipe >>>>>> ", recipe.recipe_num);
 
-
+    var imgFileArr = req.files; 
+    // filename 속성을 추출하는 함수
     const extractFilenames = (imgArr) => {
-        const filenames = [];
-        for (const key in imgArr) {
+      const filenames = [];
+      for (const key in imgArr) {
         if (Object.prototype.hasOwnProperty.call(imgArr, key)) {
-                imgArr[key].forEach((file) => {
-                    // console.log("file.filename",file.filename);
+          imgArr[key].forEach((file) => {
             filenames.push(file.filename);
-            });
-            }
+          });
         }
-        return filenames;
+      }
+
+      return filenames;
     };
-    
+
     // 추출된 filename들
     const filenames = extractFilenames(imgFileArr);
-    // console.log(filenames.length);
     for (i = 0; i < filenames.length; i++) {
-        console.log("i >> ",i, filenames[i]);
-        // 이미지 파일 db 저장
-        const newImage = await Recipe_Img.create({
-        recipe_num : 1,
-        image_url : "/uploads/recipe/" + filenames[i],
-        main_img : 1 //req.body.main_image 0,1 넘겨주기
-        });
+      console.log("i >> ", i);
+      const newImage = await Recipe_Img.create({
+        recipe_num: recipe.recipe_num,
+        image_url: filenames[i],
+        main_img: i == 0 ? 1 : 0
+      });
     }
-    
-    // res.send("saved"); 
-    res.send("savedtt",recipe_num); // 프론트로 다시 보내주는 것 
+    res.send("File upload completed");  
 
-    // res.redirect('/') 작성 완료 버튼을 누를시 홈으로 돌아가기
   } catch (error) {
     console.error("postRecipeWrite 오류발생:", error);
     res.status(500).send("레시피 작성버튼 클릭시 에러 발생! ");
   }
 };
 
-// 레시피 수정 - 프엔연결 필요
+// 레시피 수정 
 exports.patchRecipe = async (req, res, next) => {
-
-  console.log(`update >>> `, req.params);
-
+  console.log(`update >>> `, req.query);
   try {
-    const { recipe_num } = req.params;
-    const { recipeTitle, content, mainIng, mainIngDetail,
-        sub_ingredient} = req.body;
-    const updateData = await Users.findOne({ where: { user_id } });
-    if(!recipe_num){
-        res.status(412).json({
-            errorMessage : '게시글이 존재하지 않습니다.'
-        });
-    }
-     // 로그인한 회원의 닉네임과 해당 게시글 작성한 닉네임이 다른 경우
-     if (updateData.userId !== user.userId)  {
-        res.status(403).json({
-            errorMessage: "게시글 수정의 권한이 존재하지 않습니다."
-        });
-        return;
-    }
-    const upRecipe = await Recipes.update(
+    const result = await Recipes.update(
       {
-        title : recipeTitle,
-        user_num : 1,
-        content : '물을따른다',
-        main_ingredient : mainIng,
-        main_ing_detail : mainIngDetail,
-        sub_ingredient_detail : '라임,탄산수'
+        title,
+        content,
+        main_ingredient,
+        main_ing_detail,
+        sub_ingredient_detail,
       },
       {
         where: { recipe_num },
-      })
-      .then(res => {
-        console.log("데이터 수정완료");
-        res.redirect('/recipe');
-      })
-      res.render('recipeUpdate',{upRecipe:res})
+      }
+    );
+    var imgFileArr = req.files; 
+    // filename 속성을 추출하는 함수
+    const extractFilenames = (imgArr) => {
+      const filenames = [];
+      for (const key in imgArr) {
+        if (Object.prototype.hasOwnProperty.call(imgArr, key)) {
+          imgArr[key].forEach((file) => {
+            filenames.push(file.filename);
+          });
+        }
+      }
+
+      return filenames;
+    };
+
+    // 추출된 filename들
+    const filenames = extractFilenames(imgFileArr);
+    for (i = 0; i < filenames.length; i++) {
+      const newImage = await Recipe_Img.update({
+        recipe_num: recipe.recipe_num,
+        image_url: filenames[i],
+        main_img: i == 0 ? 1 : 0
+      });
+    }
+
+    res.render("recipeUpdate", {
+      isLogin: req.session.loggedin,
+      title: "레시피 수정페이지",
+      recipe_title: "title",  //string
+      main_img: "imgPath",  //string
+      main_ing: "vodka",  // string
+      main_ing_detail: "ing detail",  // string
+      sub_ing: "sub ing",  // string
+      recipe_content: ["step1", "step2"], // array
+      sub_image: ["path1", "path2"],  // array
+    });
   } catch (error) {
     console.error(error);
   }
 };
 
-// 레시피 삭제 - 프엔연결 필요
+// 레시피 삭제 
 exports.deleteRecipe = async (req, res) => {
   try {
-    const { recipe_num } = req.params;
-    const updateData = await Users.findOne({ where: { user_id } });
-    if(!recipe_num){
-        res.status(412).json({
-            errorMessage : '게시글이 존재하지 않습니다.'
-        });
-    }
-     // 로그인한 회원의 닉네임과 해당 게시글 작성한 닉네임이 다른 경우
-     if (updateData.userId !== user.userId)  {
-        res.status(403).json({
-            errorMessage: "게시글 수정의 권한이 존재하지 않습니다."
-        });
-        return;
-    }
-    
+    const { recipe_num } = req.query;
+    console.log("삭제할 레시피 번호 : ",req.query);
     const isDeleted = await Recipes.destroy({
       where: { recipe_num },
     });
     console.log(isDeleted); // 삭제되면 1 , 삭제실패시 0
 
     if (isDeleted) {
-        res.status(200).json({ message: "게시글을 삭제하였습니다." });
-        return res.send(true);
+      return res.send(true);
     } else {
-        res.status(401).json({ message: "게시글을 삭제실패하였습니다." });
-        return res.send(false);
+      return res.send(false);
     }
-    } catch (error) {
-        console.error(err);
-      res.status(500).send("Internal Server Error");
-    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Internal Server Error");
+  }
 };
