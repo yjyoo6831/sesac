@@ -15,6 +15,8 @@ const RecipesModel = (sequelize, DataTypes) =>{
             // user_num int NOT NULL,
             type:DataTypes.INTEGER,
             allowNull:false,
+            onDelete: 'CASCADE',
+            onUpdate: 'CASCADE'
         },
         title:{
             // TITLE TEXT NOT NULL,
@@ -25,12 +27,6 @@ const RecipesModel = (sequelize, DataTypes) =>{
             // CONTENT TEXT NOT NULL,
             type:DataTypes.TEXT,
             allowNull : false,
-        },
-        likes_count:{
-            // LIKES_COUNT INT NOT NULL,
-            type:DataTypes.INTEGER,
-            allowNull : false,
-            defaultValue: 0
         },
         main_ingredient:{
             // MAIN_INGREDIENT VARCHAR(50) NOT NULL,
