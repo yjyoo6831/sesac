@@ -34,11 +34,18 @@ async function syncModels() {
     await Recipe_Img_Model.sync({ force: false });
     console.log("*** Recipe Images table created");
 
+    // 마지막으로 Recipe_Img_Model 테이블 생성
+    await LikesModel.sync({ force: false });
+    console.log("*** Likes Images table created");
+
+        
     console.log("All tables created successfully");
   } catch (error) {
     console.error("Error creating tables:", error);
   }
 }
+
+syncModels();
 
 // 모델간 관계 연결
 // Users <-> Recipe 1:N 관계 연결
@@ -53,6 +60,8 @@ UsersModel.hasMany(RecipesModel, {
 RecipesModel.belongsTo(UsersModel, {
   foreignKey: "user_num",
   targetKey: "user_num",
+  onDelete: 'cascade',
+  onUpdate: 'cascade'
 });
 
 // Recipes <-> Recipe_Img 1:N 관계 연결
@@ -69,16 +78,22 @@ Recipe_Img_Model.belongsTo(RecipesModel, {
   foreignKey: "recipe_num",
   // 참조하게 될 recipe 의 키는 'recipe_num'
   targetKey: "recipe_num",
+  onDelete: 'cascade',
+  onUpdate: 'cascade'
 });
 
 // 좋아요
 LikesModel.belongsTo(UsersModel, {
   foreignKey: 'user_num',
-  targetKey: 'user_num'
+  targetKey: 'user_num',
+  onDelete: 'cascade',
+  onUpdate: 'cascade'
 });
 LikesModel.belongsTo(RecipesModel, {
   foreignKey: 'recipe_num',
-  targetKey: 'recipe_num'
+  targetKey: 'recipe_num',
+  onDelete: 'cascade',
+  onUpdate: 'cascade'
 });
 
 UsersModel.hasMany(LikesModel, {
@@ -102,6 +117,5 @@ db.Likes = LikesModel;
 
 db.Users = UsersModel;
 
-syncModels();
 
 module.exports = db;
