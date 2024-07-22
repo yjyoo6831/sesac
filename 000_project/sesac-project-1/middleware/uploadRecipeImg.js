@@ -18,29 +18,15 @@ const uploadFile = multer({
     try{
       const recipe = await Recipes.findOne({
         order: [[ 'createdAt', 'DESC' ]],
-<<<<<<< HEAD
-=======
-        where: { user_num: req.session.user.user_num },
->>>>>>> 3770982a31c72764973ec9e20bf11bbd6ecbd21b
         attributes: ['recipe_num']
       });
 
       const recipeNum = recipe ? recipe.recipe_num + 1 : 1;
       const ext = path.extname(file.originalname);
       
-<<<<<<< HEAD
       let fileCount = 0;
       for (const key in req.files) {
         fileCount += req.files[key].length;
-=======
-        for (const key in req.files) {
-          fileCount += req.files[key].length;
-      }
-      done(null, path.basename(`${recipeNum}-img` + fileCount , ext) + ext); // 저장할 파일명
-      } catch (error) {
-        console.error(error);
-        done(error);
->>>>>>> 3770982a31c72764973ec9e20bf11bbd6ecbd21b
       }
       done(null, path.basename(`${recipeNum}-img` + fileCount , ext) + ext); // 저장할 파일명
     } catch (error) {

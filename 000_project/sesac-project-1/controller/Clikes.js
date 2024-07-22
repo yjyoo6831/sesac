@@ -4,7 +4,6 @@ const {Likes, Users, Recipes} = require('../models/Mindex');
 exports.getLikesCount = async (req, res) => {
     try {
         const recipeNum = req.params.recipe_num; // URL 파라미터에서 recipe_num 가져오기
-<<<<<<< HEAD
         let userNum = 0;
         if(!req.session.user) {
             return res.json({ alreadyLiked: false });
@@ -29,13 +28,6 @@ exports.getLikesCount = async (req, res) => {
             res.json({ alreadyLiked: false });
         }
         
-=======
-        const count = await Likes.count({
-            where: { recipe_num: recipeNum }
-        });
-        console.log('count >>', count);
-        res.json({ count });
->>>>>>> 3770982a31c72764973ec9e20bf11bbd6ecbd21b
     } catch (error) {
         console.error('Error fetching likes count:', error);
         res.status(500).send('Internal Server Error');
