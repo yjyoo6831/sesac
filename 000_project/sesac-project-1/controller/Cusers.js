@@ -9,12 +9,9 @@ const RecipesImageModel = require('../models/Mrecipe_img');
 const RecipesImg = RecipesImageModel(sequelize, DataTypes);
 const {Op} = require('sequelize');
 const validator = require('validator');
-<<<<<<< HEAD
 
 const image_path = '/uploads/recipe/';
 
-=======
->>>>>>> 3770982a31c72764973ec9e20bf11bbd6ecbd21b
 exports.getLogin = async (req, res) => {
     res.send('login')
 }
@@ -25,7 +22,7 @@ exports.postLogin = async (req, res) => {
             where:{
                 user_id
             },
-            attributes:['user_id','user_name','user_pw']
+            attributes:['user_id','user_name','user_pw', 'user_num']
         });
         if (!user) {
             return res.status(401).json({ success: false, message: '등록되지 않은 사용자입니다.' });
@@ -35,14 +32,11 @@ exports.postLogin = async (req, res) => {
         if (!isPasswordValid) {
             // 비밀번호가 일치하지 않으면 401 에러 응답
             return res.status(401).json({ success: false, message: '비밀번호가 일치하지 않습니다.' });
-<<<<<<< HEAD
         } else {
-=======
-        }else {
->>>>>>> 3770982a31c72764973ec9e20bf11bbd6ecbd21b
             req.session.user = {
                 user_id: user.user_id,
-                user_name: user.user_name
+                user_name: user.user_name,
+                user_num: user.user_num
             };
             req.session.loggedin = true;
             res.json({ success: true });
@@ -147,20 +141,10 @@ exports.postChkName = async (req, res) => {
 // 마이페이지 ---- 태완
 // myprofile controller 추가
 exports.getMyprofile = async (req, res) => {
-<<<<<<< HEAD
     const isLogin = req.session.loggedin;
     if(isLogin) {
         // // session 으로 user 정보 받아오기
         const user_id = req.session.user.user_id;
-=======
-
-    const isLogin = true; //req.session.loggedin;
-    if(isLogin) {
-        // // session 으로 user 정보 받아오기
-        // const user_id = req.session.user_id;
-        const user_id = "user2";
-
->>>>>>> 3770982a31c72764973ec9e20bf11bbd6ecbd21b
     
         // user_name, profile_img 찾기
         const userInfo = await Users.findOne({
@@ -186,12 +170,7 @@ exports.getMyprofile = async (req, res) => {
             recipeNumList.push(recipe.recipe_num);
             recipeInfo.recipe_title = recipe.title;
             recipeInfo.main_ing = recipe.main_ingredient;
-<<<<<<< HEAD
             recipeInfo.write_date = `${year}.${month}.${day}`;
-=======
-            recipeInfo.likes_count = recipe.likes_count;
-            recipeInfo.write_date = recipe.createdAt;
->>>>>>> 3770982a31c72764973ec9e20bf11bbd6ecbd21b
             recipe_list.push(recipeInfo);
         })
         const recipeImg = await RecipesImg.findAll({
@@ -214,7 +193,6 @@ exports.getMyprofile = async (req, res) => {
                 }
             })
         })
-<<<<<<< HEAD
         // 각 레시피별로 좋아요 수를 가져와서 recipe_list에 추가하기
         for (let i = 0; i < recipe_list.length; i++) {
             const recipeNum = recipe_list[i].recipe_num;
@@ -238,34 +216,20 @@ exports.getMyprofile = async (req, res) => {
 
         console.log('레시피이미지',recipe_list);
         
-=======
-        // // -- test --
-        // console.log(recipe_list);
-        // // ---------
->>>>>>> 3770982a31c72764973ec9e20bf11bbd6ecbd21b
         res.render('myProfile', {
             user_id,
             user_name,
             profile_img,
             recipe_list,
-<<<<<<< HEAD
             isLogin,
             image_path 
         });
     } else {
         // 로그인 페이지
-=======
-            isLogin
-        });
-    } else {
-        // 로그인 페이지
-
->>>>>>> 3770982a31c72764973ec9e20bf11bbd6ecbd21b
         res.redirect('/');
     }
    }
 
-<<<<<<< HEAD
 exports.deleteMyprofile = async (req, res) => {
     try {
         const { user_num } = req.session.user;
@@ -274,16 +238,6 @@ exports.deleteMyprofile = async (req, res) => {
             // where: { user_id },
             where: { user_num },
         });
-=======
-   exports.deleteMyprofile = async (req, res) => {
-    try {
-        const { user_id } = req.body;
-        console.log(req.query);
-        const isDeleted = await Users.destroy({
-            where: { user_id },
-        });
-        console.log(isDeleted); 
->>>>>>> 3770982a31c72764973ec9e20bf11bbd6ecbd21b
 
         if (isDeleted) {
             return res.send(true);
@@ -294,7 +248,6 @@ exports.deleteMyprofile = async (req, res) => {
         console.error(err);
         res.status(500).send("Internal Server Error");
     }
-<<<<<<< HEAD
 }
 
     
@@ -353,50 +306,3 @@ exports.patchMyprofile = async (req, res) => {
     }
 };
     
-=======
-   }
-
-    exports.patchMyprofile = async (req, res) => {
-        try {
-
-            const { user_id,
-                old_pw,
-                new_pw,
-                user_name } = req.body;
-            
-            const user = await Users.findOne({
-                where:{
-                    user_id
-                },
-                attributes:['user_pw']
-            });
-
-            // 비밀번호 비교
-            const isPasswordValid = await comparePw(user_pw, user.user_pw);
-            if (isPasswordValid) {
-                const isUpdated = await Users.update(
-                    {
-                        user_name,
-                        user_pw: hashPw(new_pw)
-                    },
-                    {
-                        where: { user_id }
-                    }
-                )
-            } else {
-                return res.send(false)
-            }
-
-            
-            // 암호화 + 프로필 이미지 + 닉네임 중복검사
-            if (isUpdated) {
-                return res.send(true);
-            } else {
-                return res.send(false);
-            }
-        } catch(err) {
-            console.error(err);
-            res.status(500).send("Internal Server Error");
-        }
-    }
->>>>>>> 3770982a31c72764973ec9e20bf11bbd6ecbd21b

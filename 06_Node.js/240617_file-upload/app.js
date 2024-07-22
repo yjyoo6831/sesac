@@ -36,7 +36,7 @@ const uploadDetail = multer({
 
         },
     }),
-    limits: { fileSize: 5 * 1024 * 1024 }, //업로드 크기 제한
+    limits: { fileSize: 100 * 1024 * 1024 }, //업로드 크기 제한
 })
 //multer객체 의 single() : 하나의 파일 업로드 
 // single 미들웨어는 라우터 미들웨어 앞에 넣으면 된다. 
@@ -63,7 +63,7 @@ app.post('/upload/array', uploadDetail.array('userfiles'),(req,res)=>{
 })
 
 //multer객체 .fields() : 여러 파일을 각각의 인풋에 업로드
-app.post('/upload/fields', uploadDetail.fields([{name:'kiwi'},{name:'orange'}]),(req,res)=>{
+app.post('/upload/fields', uploadDetail.fields([{name:'kiwi'},{name:'orange'},{name:'org'}]),(req,res)=>{
     console.log(req.body); //{ title1: '01.ot', title2: '13.파일업로드' }
     console.log(req.files); // [kiwi : {}, ..., orange : {}, ... ] 배열로 각 파일정보 저장
     res.send('Success upload multiple files')
