@@ -22,23 +22,22 @@ const LikesModel = require('./Mlikes')(sequelize, Sequelize);
 // force: false = 서버 실행때마다 테이블이 없으면 생성
 async function syncModels() {
   try {
+    let flag = false;
     // UsersModel 테이블 먼저 생성
-    await UsersModel.sync({ force: false });
+    await UsersModel.sync({ force: flag });
     console.log("*** Users table created");
 
     // 그 다음 RecipesModel 테이블 생성
-    await RecipesModel.sync({ force: false });
+    await RecipesModel.sync({ force: flag });
     console.log("*** Recipes table created");
 
     // 마지막으로 Recipe_Img_Model 테이블 생성
-    await Recipe_Img_Model.sync({ force: false });
+    await Recipe_Img_Model.sync({ force: flag });
     console.log("*** Recipe Images table created");
 
     // 마지막으로 Recipe_Img_Model 테이블 생성
-    await LikesModel.sync({ force: false });
+    await LikesModel.sync({ force: flag });
     console.log("*** Likes Images table created");
-
-        
     console.log("All tables created successfully");
   } catch (error) {
     console.error("Error creating tables:", error);

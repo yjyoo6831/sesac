@@ -18,14 +18,14 @@ router.get('/count/:recipe_num', getLikesCount);
 // get /recipe 레시피 "작성 화면" 보여주기
 router.get("/write", controller.getRecipeWrite);
 
-// get 레시피 수정 페이지
-router.get("/write/:recipe_num", controller.getRecipeUpdate);
- 
 // post 레시피 작성 페이지에서 "저장" 버튼 클릭시
 router.post("/write", mdware.upload, controller.postRecipeWrite);
 
+// get 레시피 수정 페이지
+router.get("/write/:recipe_num", controller.getRecipeUpdate);
+
 // patch 레시피 수정 페이지에서 "수정하기" 버튼 클릭시
-router.post("/update", mdware.upload, controller.patchRecipe);
+router.post("/update", mdware.uploadpatch, controller.patchRecipe);
 
 // delete /recipe/read?recipe_num= "삭제" 버튼 클릭시 
 router.delete("/read", controller.deleteRecipe);

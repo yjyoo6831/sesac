@@ -31,6 +31,7 @@ drop table if exists users,recipes,recipe_img;
 desc users;
 desc recipes;
 desc recipe_img;
+desc likes;
 
 SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES 
 WHERE TABLE_TYPE = 'BASE TABLE' 
@@ -75,8 +76,16 @@ CREATE TABLE RECIPE_IMG(
     foreign key(RECIPE_NUM) references RECIPES(RECIPE_NUM) on update cascade on delete cascade
 );
 select * from users;
+desc users;
+desc recipes;
+desc recipe_img;
+desc likes;
 select * from recipes where user_num=2 order by recipe_num desc;
+select * from users;
+select * from recipes;
 select * from recipe_img order by image_num desc;
+select * from likes;
+desc likes;
 
 drop table users;
 insert into users (user_id,user_name,profile_img,user_pw,birth_day)
