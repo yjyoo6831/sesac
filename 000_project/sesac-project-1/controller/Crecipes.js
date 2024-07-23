@@ -262,7 +262,7 @@ exports.patchRecipe = async (req, res) => {
         where: { recipe_num, main_img }
       });
       console.log("existingRecord > ",existingRecord);
-      //이미지 찾기
+      //이미지를 db에서 찾기
       if (existingRecord) {
         console.log("i >> ", i, filenames[i]);
         const newImage = await Recipe_Img.update(
