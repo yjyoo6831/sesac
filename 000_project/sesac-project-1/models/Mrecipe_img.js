@@ -20,6 +20,8 @@ const Recipe_Img_Model = (sequelize, DataTypes) =>{
                 model:'Recipes',
                 key:'recipe_num'
             },
+            onDelete: 'CASCADE',
+            onUpdate: 'CASCADE'
         },
         image_url:{
             // IMAGE_URL VARCHAR(255) ,
