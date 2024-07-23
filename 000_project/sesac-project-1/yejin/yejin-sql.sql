@@ -31,7 +31,6 @@ drop table if exists users,recipes,recipe_img;
 desc users;
 desc recipes;
 desc recipe_img;
-desc likes;
 
 SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES 
 WHERE TABLE_TYPE = 'BASE TABLE' 
@@ -66,26 +65,17 @@ CREATE TABLE RECIPES(
     foreign key (USER_NUM) references users(USER_NUM) on update cascade on delete cascade
 );
 select * from recipes;
-desc recipes;
-delete from users where user_num=1;
 CREATE TABLE RECIPE_IMG(
 	IMAGE_NUM INT auto_increment primary key,
     RECIPE_NUM INT NOT NULL ,
     IMAGE_URL VARCHAR(255) ,
+    
     MAIN_IMG INT default '0',
     foreign key(RECIPE_NUM) references RECIPES(RECIPE_NUM) on update cascade on delete cascade
 );
 select * from users;
-desc users;
-desc recipes;
-desc recipe_img;
-desc likes;
 select * from recipes where user_num=2 order by recipe_num desc;
-select * from users;
-select * from recipes;
 select * from recipe_img order by image_num desc;
-select * from likes;
-desc likes;
 
 drop table users;
 insert into users (user_id,user_name,profile_img,user_pw,birth_day)
@@ -98,8 +88,8 @@ insert into users (user_id,user_name,profile_img,user_pw,birth_day)
 	values ('user3', '네이버관리자', 'https://recipe1.ezmember.co.kr/cache/recipe/2018/02/10/31eb5c9685f61ec424e4000f484cfee81.jpg',
     'pass','2024-01-01');
 
-insert into recipes (USER_num,TITLE,CONTENT,main_ingredient,main_ing_detail,sub_ingredient_detail,createdAt,updatedAt)
-	values (1, '레몬 짐빔 레시피', '1. 우선 재료를 준비한다.', '하이볼', '짐빔 버본,토닉워터', '콜라,물',now(),now());
+insert into recipes (USER_num,TITLE,CONTENT,LIKES_COUNT,main_ingredient,main_ing_detail,sub_ingredient_detail,createdAt,updatedAt)
+	values (1, '레몬 짐빔 레시피', '1. 우선 재료를 준비한다.', 5, '하이볼', '짐빔 버본,토닉워터', '콜라,물',now(),now());
 insert into recipes (USER_num,TITLE,CONTENT,LIKES_COUNT,main_ingredient,main_ing_detail,sub_ingredient_detail,createdAt,updatedAt)
 	values (1, '레몬 짐빔 레시피', '1. 우선 재료를 준비한다.', 5, '하이볼', '짐빔 버본,토닉워터', '콜라,물',now(),now());
 insert into recipes (USER_num,TITLE,CONTENT,LIKES_COUNT,main_ingredient,main_ing_detail,sub_ingredient_detail,createdAt,updatedAt)
@@ -137,12 +127,10 @@ show tables;
 desc recipe_img;
 select * from users;
 select * from recipes;
-
-select * from recipe_img order by image_num desc; 
 select * from recipes order by recipe_num desc limit 3;
 
 desc recipes;
-
+select * from recipe_img;
 
 create table test_table (
 `recipe_num` int NOT NULL primary key AUTO_INCREMENT,
