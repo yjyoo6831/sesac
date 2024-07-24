@@ -21,8 +21,8 @@ router.get('/logout',getLogout)
 
 // 중복검사
 router.post('/register/chkid', postChkId)
-router.post('/register/chkName', postChkName)
 
+router.post('/register/chkName', postChkName)
 
 // get /users/mypage
 router.get('/mypage', getMyprofile);
