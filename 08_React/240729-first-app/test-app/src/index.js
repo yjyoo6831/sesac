@@ -3,12 +3,14 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import Clock from './Clock';
+import Larva from './Larva';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode> 
     <App />
+    <Larva></Larva>
   </React.StrictMode>
 );
 
@@ -19,7 +21,8 @@ setInterval(()=>{
   root.render(
     <React.StrictMode>
       {/* 페이지 전체 reload 가 아닌 변경된 부분만 업데이트 해준다. : React 의 특성 */}
-      <Clock />
+      
+      <App />
     </React.StrictMode>
   )
 },1000); //1초
