@@ -55,7 +55,6 @@ export default class ClassBind extends Component{
 
                 {/* 이벤트 객체만 전달 */}
                 <button onClick={this.printConsole2}>printConsole2 (인자 1개) </button>
-                
              </div>
         );
     }
