@@ -29,7 +29,7 @@ export default function Base() {
         console.log(`현재 값 : ${currentValue} \n인덱스 : ${i} \n원본 배열 : ${arr}\n------------------`);
         return (
             <li>
-                값 : {currentValue} , 인덱스 : {i}, 원본 배열 : {arr}
+                값 : {currentValue} , 인덱스 : {i}, 원본 배열 : {' '}
                 {arr.join(',')}
             </li>
         );
@@ -41,11 +41,17 @@ export default function Base() {
 
 
     let newAnimals=animals.filter((animal) =>{
-        const result2=animal;
-        return result2;
+        return animal.length > 3;
     });
+    console.log(newAnimals);
+    
+    // # ex2
+    let words = ['dog', 'cat', 'rabbit'];
 
-    // #ex2
+    let result2 = words.filter((word) => {
+        return word.includes('a');
+    });
+    console.log(result2);
 
     return (
         <div>
