@@ -18,7 +18,7 @@ export default function Base() {
     -- index : 현재 요소의 인덱스(위치) . (옵션)
     -- array : 'map()'이 호출된 원본 배열 (옵션)
 
-    - [thisArg] : callbackFuncthin 내부에서 this로 사용할 값을 지정 (옵션)
+    - [thisArg] : callbackFunction 내부에서 this로 사용할 값을 지정 (옵션)
     default : undefined 
     */
     // 원본 배열
@@ -35,6 +35,18 @@ export default function Base() {
         );
     });
     
+    // filter() 함수 사용 
+    // #ex1
+    let animals=['dog','cat','rabbit'];
+
+
+    let newAnimals=animals.filter((animal) =>{
+        const result2=animal;
+        return result2;
+    });
+
+    // #ex2
+
     return (
         <div>
             <h1>Map (1)</h1>
@@ -57,9 +69,14 @@ export default function Base() {
                             {array.join(', ')}
                         </li>
                     );
-                })}
-                ;
+                })};
             </ul>
+
+            <h1>filter (1)</h1>
+            <ul>{newAnimals.join(', ')}</ul>
+            <h1>filter (2)</h1>
+            <ul>{result2.join(', ')}</ul>
+
         </div>
     );
 }
