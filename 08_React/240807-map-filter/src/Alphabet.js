@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const Alphabet = () => {
+export default function Alphabet() {
     // 배열 ex
     const [alphabet, setAlphabet] = useState(['b', 'a', 'n', 'a']);
 
@@ -23,8 +23,6 @@ const Alphabet = () => {
             alert('빈 칸입니다 입력값을 넣어주세요');
             return;
         }
-    };
-        // activeEnter();
 
         // * concat
         // - 기존 배열을 변경하지 않고, 주어진 배열이나 값들을 새로운 배열로 결합하여 반환.
@@ -35,32 +33,30 @@ const Alphabet = () => {
         // let arr3=arr1.concat(arr2);  // 리액트는 불변성 유지를 위함.
 
         //console.log(arr3); // [1,2,3,5,6,7];
+
         const newAlpha = alphaObject.concat({
             id: alphaObject.length + 1,
             alpha: inputAlpha,
         });
-
-        // 엔터키 입력하면 추가되도록
-        const activeEnter = (e) => {
-            console.log('e >> ', e);
-
-            if (e.key === 'Enter') {
-                addAlpha();
-            }
-            
-        };
-
         setAlphabetObject(newAlpha);
         setInputAlpha(''); // 입력 칸 초기화
+    };
+    //글자 삭제
+    const deleteAlpha = (targetId) => {
+        console.log('targetId > ', targetId); // targetId : 삭제될 요소의 Id
 
-        //글자 삭제 
-        const deleteAlpha = (targetId) => {
-            console.log("targetId > " ,targetId); // targetId : 삭제될 요소의 Id
-            
-            const newAlpha = alphabet.filter((alpha) => alpha.id !== targetId);
-            setAlphabet(newAlpha);
+        const newAlpha = alphaObject.filter((alpha) => alpha.id !== targetId);
+        setAlphabetObject(newAlpha);
+    };
+
+    // 엔터키 입력하면 추가되도록
+    const activeEnter = (e) => {
+        console.log('e >> ', e);
+
+        if (e.key === 'Enter') {
+            addAlpha();
         }
-    
+    };
     return (
         <div>
             <h1>Map & Filter</h1>
@@ -91,7 +87,7 @@ const Alphabet = () => {
                 onChange={(e) => {
                     setInputAlpha(e.target.value);
                 }}
-                onKeyDown={activeEnter}
+                onKeyDown={(e) => activeEnter(e)}
             ></input>
 
             {/* Q2) input 에서 enter 키 누르면 추가되도록 ! */}
@@ -99,11 +95,16 @@ const Alphabet = () => {
 
             {/* 알파벳 삭제해보기 */}
             <ol>
-                {alphaObject.map((val) => {
-                    <li key={val.id} onDoubleClick={() => deleteAlpha(val.id)}>{val.alpha}</li>
-                })}
+                {alphaObject.map((value) => (
+                    <li
+                        key={value.id}
+                        onDoubleClick={() => deleteAlpha(value.id)}
+                    >
+                        {value.alpha}
+                    </li>
+                ))}
+                
             </ol>
         </div>
     );
-};
-export default Alphabet;
+}
