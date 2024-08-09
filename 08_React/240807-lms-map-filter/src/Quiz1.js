@@ -55,11 +55,11 @@ export default function Quiz1() {
         <input type="email" name="email" id="" placeholder='이메일' value={input.email} onChange={stateHandler}/>
         <button type="button" onClick={addInfo}>등록</button>
         <br></br>
-            {/* {
+            {
                 infoOb.map( (n) => (
                 <div> {n.name} : {n.email} </div>
             ))
-            } */}
+            }
         
     </>
   )
