@@ -17,11 +17,12 @@ const reducer = (prevState,action) => {
     switch(action.type){
         case 'INCREMENT':
             return {value:prevState.value + 1};
-            break;
         case 'DECREMENT':
             return {value:prevState.value - 1};
         case 'RESET':
-            return {value:prevState.value =0};
+            return initState;
+        default:
+            return {value:prevState.value}
     }
 }
 
