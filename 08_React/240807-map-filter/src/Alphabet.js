@@ -108,3 +108,34 @@ export default function Alphabet() {
         </div>
     );
 }
+
+/*
+onDoubleClick={() => deleteAlpha(value.id)}
+
+1. deleteAlpha(value.id)
+ - deleteAlpha 함수를 즉시 실행하고 , 그 결과 값을 반환하도록 한다. 
+ - 반환된 결과 값이 onDoubleClick에 전달됨.
+
+ - 삭제 로직일 뿐, 반환값이 없기 때문에 undefined일 확률이 높다. 
+ -> 즉시 실행 : 컴포넌트가 렌더링 되는 시점에 deleteAlpha(value.id)가 바로 실행된다. 
+
+ - value.id 라는 인자를 함수에 전달하면서 함수를 실행
+ 
+2. () => deleteAlpha(value.id)
+-  () => deleteAlpha(value.id) 라는 함수 호출을 나중에 실행하도록 준비해둔 "함수 참조"이다. 
+
+- 나중에 실행 : 컴포넌트가 렌더링 될 때, 이 함수는 실행되지 않고, 이벤트가 발생할 때만 실행된다. 
+- value.id라는 인자가 이벤트가 발생할 때, deleteAlpha 함수에 전달되면서 실행된다.
+
+- 필요성 : 인자를 넘겨주는 함수 호출을 연기하기 위해 화살표 함수, 즉 콜백함수 형태로 작성해야한다.
+
+3. deleteAlpha 함수 호출에서 인자 없이 사용하면 ? 
+ - 그냥 deleteAlpha 라고만 작성 할 수 있다. 
+ - 이 경우에도 함수는 참조로서 전달된다. 
+ - 인자를 넘겨줄 필요가 없으므로, 화살표 함수로 감쌀 필요도 없다. 
+
+ 요약 ---
+ deleteAlpha(value.id) : 즉시 작동한다. 
+ () => deleteAlpha(value.id) : 이벤트 발생시 작동된다.  인자를 넘겨줄 때 사용
+ deleteAlpha  : 인자가 필요 없을 때, 그냥 함수 이름 작동된다.
+*/ 
