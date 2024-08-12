@@ -1,0 +1,47 @@
+@mixin box($size) {
+    width: $size;
+    height: $size;
+}
+
+// lms -quiz2
+@mixin circle($size) {
+    width: $size;
+    height: $size;
+    border-radius:50%;
+}
+
+@mixin moveCircle($p1,$p2,$size) {
+    // float:right;
+    top: $p1;
+    left: $p2;
+    position: relative;
+    animation: move-#{$size} 3s infinite;
+    @at-root {
+        @keyframes move-#{$size} {
+        0% {
+            top:0;
+            left:0;
+        }
+        25%{
+            top:0;
+            left:#{$size}px;
+        }
+        50%{
+            top:#{$size}px;
+            left:#{$size}px;
+        }
+        75%{
+            top: #{$size}px;
+            left: 0;
+        }
+
+        100% {
+            top: 0;
+            left: 0;
+            
+        }
+    }
+}
+}
+
+
