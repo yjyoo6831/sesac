@@ -1,0 +1,28 @@
+@import './utils';
+@import './variables';
+
+.box{
+    width: 700px;
+    height:500px;
+    background-color:skyblue;
+    
+}
+.circle{
+    @include circle(100px);
+    border-radius:100%;
+    margin:20px;
+    &.c1{
+        background-color: $c-first;
+        @include moveCircle(10px,10px,30);
+    }
+    &.c2{
+        background-color: $c-second;
+        @include moveCircle(10px,50px,50);
+        
+    }
+    &.c3{
+        background-color: $c-third;
+        @include moveCircle(10px,100px,70);
+        
+    }
+}
