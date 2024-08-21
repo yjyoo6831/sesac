@@ -124,3 +124,127 @@ let val2;
 val2 = false;
 val2 = 'Cat';
 console.log(val2);
+
+
+// ##########################
+// * Interface
+
+// 1. 객체 타입 정의 
+// - interface 키워드 사용 
+interface Crew {
+    name : string;
+    readonly age : number;
+    exp : boolean;
+}
+
+const crew1: Crew = {
+    name: 'Damon',
+    age: 20,
+    exp: true,
+};
+// - 'Crew' 인터페이스는 세 가지 속성을 요구
+// - crew1 객체는 이 구조를 따라야 함. 
+// - 객체 안에 순서는 상관 없음. 
+console.log(crew1);
+
+// #2. 선택적 속성
+// -모든 속성이 필수는 아님! - '?' 붙이기 
+interface Crew2{
+    name: string;
+    age?: number; //? - 선택적 속성
+}
+
+const crew2: Crew2 ={
+    name: 'Damon',
+}
+
+console.log(crew2);
+
+// #3. readOnly 읽기 전용 속성
+// - 객체가 초기화 된 후에는 변경할 수 없음.
+const crew3: Crew = {
+    name: 'John',
+    age : 22,
+    exp: true,
+};
+crew3.name = 'Son';
+// crew3.age = 30;
+console.log(crew3);
+
+// #4. 상속도 가능
+enum Score {
+    Aplus = 'A+',
+    A = 'A',
+    B = 'B',
+    C = 'C'
+}
+
+// #5. 인터페이스 확장
+// - 기존 인터페이스의 모든 속성 포함 및 속성 추가 
+interface Team extends Crew {
+    // {name, age, exp}를 가지게 됨.
+    position: string;
+    readonly personnel? :number; // 없어도 되는 값 처리
+    [grade: number]: Score;
+     // ** 인덱스 시그니처
+     // - 객체가 어떤 키로든 접근 할 수 있도록 허용하고, "키"와 그에 대응하는 "값의 타입"을 정의할 수 있는 방법을 제공한다.
+     // [grade: number] : 숫자로 구성 된 키 
+     
+     // [grade: number]: string - 숫자 키를 가진 객체가 문자열 값을 가질 것임을 명시.
+}
+
+
+const first: Team = {
+    name: 'Damon',
+    age: 20,
+    exp: true,
+    position :'FrontEnd',
+    1: Score.Aplus,
+};
+console.log(first);
+
+// 값 변경 (점 접근법, 대괄호 법)
+first.position = 'BackEnd';
+first['name'] = 'Joyce';
+
+console.log(first);
+
+// #6. 교차 타입 : 두 개 이상의 interface를 합치는 것 
+interface Toy{
+    name : string;
+    start(): void;
+}
+interface Car {
+    name: string; // 공통된 속성을 가지고 있어도 상관 없음
+    color:  string;
+    price: number;
+}
+interface ToyCar extends Toy, Car {} //인터페이스 확장을 사용한 교차 타입
+const toyCar: ToyCar = {
+    name: 'tayo',
+    start() {
+        console.log('출발 ! '); //함수도 가능 
+        
+    },
+    color: 'blue',
+    price: 5000,
+}
+console.log(toyCar);
+
+// #####################
+// * type 사용
+type Gender = 'F' | 'M';
+type Person = {
+    name: string;
+    age?: number;
+    like?: string[];
+    gender: Gender; // 위에서 정의한 'Gender' 타입 가짐 => 'F', 'M' 둘 중 하나여야 함. 
+};
+
+const IU: Person = {
+    name:'IU',
+    age: 30,
+    gender: 'F', //Gender타입에 선언된 값만 넣을 수 있다. 
+};
+console.log(IU);
+
