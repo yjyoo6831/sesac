@@ -1,7 +1,7 @@
 import React from 'react';
 import Student from './components/Student';
 import Card from './components/Card';
-
+import TodoList from './components/TodoList';
 function App() {
   // #1. 
   const handleClick = (name : string, grade:number): void  => {
@@ -10,9 +10,10 @@ function App() {
   };
   return (
     <div className="App">
-      <Student name="새싹" grade={3} handleClick={handleClick} ></Student>
+      {/* <Student name="새싹" grade={3} handleClick={handleClick} ></Student>
       <hr></hr>
-      <Card title='오늘 배울 것은? '></Card>
+      <Card title='오늘 배울 것은? '></Card> */}
+      <TodoList></TodoList>
     </div>
   );
 }
