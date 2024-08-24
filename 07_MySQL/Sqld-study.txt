@@ -1,2 +1,3 @@
 null +-*/ sth = null
 count (null) = 공집합
+count(*) = 둘의 행 null 포함
