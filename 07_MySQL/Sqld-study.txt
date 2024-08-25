@@ -1,3 +1,4 @@
 null +-*/ sth = null
 count (null) = 공집합
 count(*) = 둘의 행 null 포함
+NULLIF(com,100) = com이 null이면이면 100 출력
