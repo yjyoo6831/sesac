@@ -3,15 +3,20 @@ const ProductImageModel = (sequelize, DataTypes) =>{
     const ProductImage = sequelize.define(
         'ProductImage', 
         { 
-        // 새상품 최저가 인덱스
-        NewProductId:{
+        // 상품이미지 인덱스
+        imageId:{
             type:DataTypes.BIGINT,
             primaryKey : true,
             autoIncrement :true,
             allowNull : false,
         },
-        // 가격
-        Price :{
+        // 상품 인덱스
+        productId:{
+            type:DataTypes.BIGINT,
+            allowNull:false,
+        },
+        // 상품 이미지
+        productImage:{
             type:DataTypes.BIGINT,
             allowNull:false,
         },
@@ -21,8 +26,8 @@ const ProductImageModel = (sequelize, DataTypes) =>{
         timestamps : true, 
     }
 );
-    return NewProduct;
+    return ProductImage;
 }
 
-module.exports=NewProductModel;
+module.exports=ProductImageModel;
 
