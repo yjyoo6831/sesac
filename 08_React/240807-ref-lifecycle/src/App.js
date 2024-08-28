@@ -13,7 +13,7 @@ function App() {
       <RefSample2></RefSample2>
       <RefSample3></RefSample3>
       <RefSample4></RefSample4> */}
-      <LifeCycleClass></LifeCycleClass>
+      {/* <LifeCycleClass></LifeCycleClass> */}
       <LifeCycleFunction></LifeCycleFunction>
     </div>
   );
