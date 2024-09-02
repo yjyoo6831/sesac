@@ -2,9 +2,15 @@ const express = require('express');
 const controller = require('../controller/product/Cproduct');
 const likesController = require('../service/likesService');
 const reportController = require('../service/reportService');
+const utilController = require('../utils/apiHandler');
 const router = express.Router();
 
 // 기본 요청 경로 localhost:PORT/product
+
+router.get('/search/api',utilController.getNproductPrice)
+
+// 검색 버튼 클릭시
+router.post('/search',controller.postSearch);
 
 // 전체 상품 리스트
 router.get('/list', controller.getProductList);
@@ -24,16 +30,16 @@ router.get('/update', controller.getProductUpdate);
 // 특정 상품 수정 버튼 클릭시
 router.patch('/update', controller.patchProductUpdate);
 
-// // 특정 상품 삭제
+// 특정 상품 삭제
 router.delete('/delete', controller.deleteProduct);
 
-// // 좋아요 추가, 삭제
-
+// 상품별 찜 - 전체 개수 조회
 router.get('/likes', likesController.getLikes);
 
+// 상품 페이지 - 찜 버튼 클릭시
 router.post('/likes', likesController.postLikes);
 
-// // 신고 추가, 삭제 
-// router.post('/report/:productId', controller.postReport);
+// 상품 페이지 - 신고 버튼 클릭시
+router.post('/report', reportController.postReportProduct);
 
 module.exports = router;
