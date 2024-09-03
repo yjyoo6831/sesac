@@ -3,7 +3,7 @@ var sequelize = require('sequelize');
 
 exports.getReport = async (req, res) => {
     try {
-        const { productId } = req.query;
+        const productId = req;
         const report = await report.findOne({
             where: {
                 productId,
@@ -11,20 +11,17 @@ exports.getReport = async (req, res) => {
             attributes: [[sequelize.fn('SUM', sequelize.col('reportCount')), 'totalLike']],
             raw: true
         });
-        console.log("report >> ", Report.totalLike);
-        if (Report.totalLike) {
-            res.status(400).json({ "totalReport": Report.totalLike });
-        } else {
-            res.send('해당 상품은 신고 개수가 조회되지 않습니다.');
-        }
+        console.log("report >> ", Report.reportCount);
+        return report ? report.reportCount : 0;
+        
     } catch (err) {
         res.status(500).json({ message: 'getReport 서버 오류', err: err.message });
     }
 };
 
 exports.postReportProduct = async (req, res) => {
-    const loginId = req.userId;
-    const { productId, userId } = req.query;
+    const loginId = req.userId; //req.session.id
+    const { productId, userId } = req
 
     try {
         const existReport = await Report.findOne({
@@ -33,7 +30,6 @@ exports.postReportProduct = async (req, res) => {
 
         // 신고 내역 확인
         if (existReport) {
-
             // 신고 있으면 취소
             await Report.destroy({ where: { productId, userId } });
             Report.reportCount -= 1;
@@ -53,4 +49,24 @@ exports.postReportProduct = async (req, res) => {
     } catch (err) {
         return res.status(500).json({ message: 'postReportProduct 서버 오류', err: err.message });
     }
+}
+
+
+// 특정 유저의 신고 수 합산
+exports.getReportCountByUserId = async (userId) => {
+
+    const products = await Product.findAll({ where: { userId } });
+    
+    if (products.length === 0) {
+        console.log("등록된 상품이 없습니다.");
+        return 0;
+    }
+    
+    let userReportCount = 0;
+    for (const product of products) {
+        const reportCount = await Report.count({ where: { productId: product.productId } });
+        userReportCount += reportCount;
+    }
+    
+    return userReportCount;
 }
