@@ -1,10 +1,12 @@
 const sequelize = require('sequelize');
 const Op = sequelize.Op;
-const { Product, ProductImage, Category, NewProduct, Review, Likes, Report } = require('../../models/Index');
-
+const { User, Active, Product, ProductImage,
+    Category, NewProduct, Review, Likes, Report } = require('../../models/Index');
+const { paginate, paginateResponse } = require('../../utils/paginate');
 const { getNproductPrice } = require('../../utils/apiHandler');
 const { getLikes, postLikes } = require('../../service/likesService');
 const { getReport, postReportProduct } = require('../../service/reportService');
+const { isLoginUser, isWriter } = require('../../service/isLoginActive');
 
 const axios = require('axios');
 const dotenv = require('dotenv');
@@ -32,69 +34,93 @@ exports.postSearch = async (req, res) => {
         });
 
         // 네이버에서 새상품 가격 받아오기
-        console.log("searchWord > ", searchWord);
+        console.log('searchWord > ', searchWord);
 
         const newData = await getNproductPrice(searchWord);
-        console.log("newData > ", newData);
+        console.log('newData > ', newData);
 
         if (result.length) {
             res.send({
                 result: result,
-                newData
+                newData,
             });
-
         } else {
             res.send({ message: '해당 키워드에 맞는 중고리스트가 존재하지 않습니다.' });
         }
     } catch (err) {
-        console.log('error : ', err)
+        console.log('error : ', err);
         // res.status(500).json({ message: 'postSearch 서버 오류', err: err.message });
     }
 };
 
-// 전체 상품 리스트 /product/list
+// 전체 상품 리스트 /product/list?page=1&pageSize=8
 exports.getProductList = async (req, res) => {
     try {
-        const product = await Product.findAll({
+        // 페이지 네이션
+        let { page, limit } = req.query; // 요청 페이지 넘버
+
+        let offset = (page - 1) * limit; // 시작 위치 : 0
+        let listCnt = parseInt(offset) + parseInt(limit - 1);
+
+        console.log(`${page}page : ${offset} ~ ${listCnt}`);
+
+        const productCNT = await Product.findAndCountAll({});
+
+        const likesCNT = await Product.findAll({
+            attributes: [
+                'productId',
+                'productName',
+                'userId',
+                'price',
+                'content',
+                'viewCount',
+                'status',
+                'buyerId',
+                'createdAt',
+                'updatedAt',
+                [sequelize.fn('COUNT', sequelize.col('Like.likesId')), 'likeCount'], // 좋아요 개수
+            ],
+            include: [
+                {
+                    model: Likes,
+                    attributes: [], // 좋아요의 ID는 필요 없으므로 빈 배열
+                },
+            ],
+            group: ['Product.productId'], // productId로 그룹화
             order: [['productId', 'DESC']],
             raw: true,
+            offset,
+            limit: parseInt(limit),
         });
-        const likesCnt = await Likes.findAll({
 
-            attributes: ['productId', [sequelize.fn('SUM', sequelize.col('likesCount')), 'totalLike']],
-            group: ['productId'],
-            raw: true,
-        });
-        console.log(likesCnt);
-
-        res.send({
-            product,
-            likesCnt: likesCnt
-        })
+        res.send({ totalCount: productCNT.count, likesCNT: likesCNT });
     } catch (err) {
         res.status(500).json({ message: 'getProductList 서버 오류', err: err.message });
     }
 };
 
 // 상품 상세 페이지
-// GET /product/read?productId=""
+// GET /product/read
 exports.getProduct = async (req, res) => {
     try {
+        const userId = req.session.id; //로그인한 유저
+        const { productId } = req.query;
         console.log('req.query > ', req.query);
-        //userId : req.session.id 
-        const { productId, userId } = req.query;
+
         console.log('1개 상품 보기', productId);
+
         // 상품 정보 불러오기
         const product = await Product.findOne({
             where: { productId },
         });
         // 찜 개수 불러오기
         const likeCnt = await getLikes(productId);
+        console.log('likes >> ', likeCnt);
 
-        // 신고 수 불러오기 
-        // const reportCnt = await getReport(productId,userId);
+        // 신고 수 불러오기
+        const reportCnt = await getReport(productId);
 
-        console.log("likes >> ", likeCnt);
+        console.log('reportCnt >> ', reportCnt);
         res.send({
             productId: product.productId,
             productName: product.productName,
@@ -102,22 +128,27 @@ exports.getProduct = async (req, res) => {
             content: product.content,
             viewCount: product.viewCount,
             status: product.status,
-            totalLikes: likeCnt
-        })
-
+            totalLikes: likeCnt,
+            totalReport: reportCnt,
+        });
     } catch (err) {
         // res.send('getProduct error')
         res.status(500).json({ message: 'getProduct 서버 오류', err: err.message });
     }
 };
 
-// 상품 작성 페이지 /write
+// 상품 작성 페이지
 // GET /product/write
 exports.getProductWrite = async (req, res) => {
     try {
         console.log('상품 작성 페이지');
-        // res.render('productWrite',{title: "상품 작성 페이지"})
-        res.send('상품 작성 페이지');
+
+        const result = await isLoginUser(req, res);
+
+        if (result) {
+            // res.render('productWrite',{title: "상품 작성 페이지"})
+            res.send('상품 작성 페이지');
+        }
     } catch (err) {
         res.status(500).json({ message: 'getProductWrite 서버 오류', err: err.message });
     }
@@ -128,6 +159,11 @@ exports.getProductWrite = async (req, res) => {
 exports.postProduct = async (req, res) => {
     try {
         console.log('상품 등록 버튼 클릭');
+        const result = await isLoginUser(req, res);
+
+        if (!result) {
+            return;
+        }
         const {
             productName,
             userId,
@@ -184,15 +220,22 @@ exports.postProduct = async (req, res) => {
 // POST /product/update?productId=
 exports.getProductUpdate = async (req, res) => {
     try {
-        console.log('상품 수정 버튼 클릭됨.');
-        console.log('req.query > ', req.query);
+        console.log('상품 수정 페이지.');
         const { productId } = req.query;
-        // 상품 db 저장
-        const secHandProduct = await Product.findOne({
-            where: { productId },
-        });
+        const result = await isLoginUser(req, res);
+        console.log('result > ', result);
 
-        res.json(secHandProduct);
+        if (!result) return;
+
+        const writer = await isWriter(req, productId);
+        console.log('writer>> ', writer);
+
+        if (!writer) {
+            res.status(400).json({ message: '로그인 유저와 작성자가 일치하지 않습니다.' });
+        } else {
+            const secHandProduct = await Product.findOne({ where: { productId } });
+            res.send({ data: secHandProduct });
+        }
     } catch (err) {
         res.status(500).json({ message: 'getProductUpdate 서버 오류', err: err.message });
     }
@@ -206,62 +249,74 @@ exports.patchProductUpdate = async (req, res) => {
         console.log('req.body > ', req.body);
         const { productId } = req.query;
         const { productName, price, content, status } = req.body;
-        // 상품 db 저장
-        const secHandProduct = await Product.update(
-            {
-                productName,
-                price,
-                content,
-                status,
-            },
-            {
-                where: { productId },
-            }
-        );
-        var imgFileArr = req.files;
-        console.log('req.files >> ', req.files);
-        // filename 속성을 추출하는 함수
-        const extractFilenames = (imgArr) => {
-            const filenames = [];
-            for (const key in imgArr) {
-                if (Object.prototype.hasOwnProperty.call(imgArr, key)) {
-                    imgArr[key].forEach((file) => {
-                        filenames.push(file.filename);
+        const result = await isLoginUser(req, res);
+
+        if (!result) return;
+
+        const writer = await isWriter(req, productId);
+        console.log('writer>> ', writer);
+
+        if (!writer) {
+            res.status(400).json({ message: '로그인 유저와 작성자가 일치하지 않습니다.' });
+        } else {
+            const secHandProduct = await Product.update(
+                {
+                    productName,
+                    price,
+                    content,
+                    status,
+                },
+                {
+                    where: { productId },
+                }
+            );
+            var imgFileArr = req.files;
+            console.log('req.files >> ', req.files);
+            // filename 속성을 추출하는 함수
+            const extractFilenames = (imgArr) => {
+                const filenames = [];
+                for (const key in imgArr) {
+                    if (Object.prototype.hasOwnProperty.call(imgArr, key)) {
+                        imgArr[key].forEach((file) => {
+                            filenames.push(file.filename);
+                        });
+                    }
+                }
+                return filenames;
+            };
+            // 추출된 filename들
+            const filenames = extractFilenames(imgFileArr);
+            console.log('filenames >>> ', filenames);
+            for (i = 0; i < filenames.length; i++) {
+                let main_img = i + 1;
+                const existingRecord = await Recipe_Img.findOne({
+                    where: { recipe_num, main_img },
+                });
+                console.log('existingRecord > ', existingRecord);
+                //이미지 찾기
+                if (existingRecord) {
+                    console.log('i >> ', i, filenames[i]);
+                    const newImage = await Recipe_Img.update(
+                        {
+                            image_url: filenames[i],
+                        },
+                        {
+                            where: { recipe_num, main_img },
+                        }
+                    );
+                } else {
+                    const newImage = await ProductImage.create({
+                        productId: productId,
+                        image_url: filenames[i],
+                        main_img: i + 1,
                     });
+                    console.log('기존에 값이 없으므로 추가햇음 > ', main_img, i);
                 }
             }
-            return filenames;
-        };
-        // 추출된 filename들
-        const filenames = extractFilenames(imgFileArr);
-        console.log('filenames >>> ', filenames);
-        for (i = 0; i < filenames.length; i++) {
-            let main_img = i + 1;
-            const existingRecord = await Recipe_Img.findOne({
-                where: { recipe_num, main_img },
-            });
-            console.log('existingRecord > ', existingRecord);
-            //이미지 찾기
-            if (existingRecord) {
-                console.log('i >> ', i, filenames[i]);
-                const newImage = await Recipe_Img.update(
-                    {
-                        image_url: filenames[i],
-                    },
-                    {
-                        where: { recipe_num, main_img },
-                    }
-                );
-            } else {
-                const newImage = await ProductImage.create({
-                    productId: productId,
-                    image_url: filenames[i],
-                    main_img: i + 1,
-                });
-                console.log('기존에 값이 없으므로 추가햇음 > ', main_img, i);
-            }
+            res.send('업데이트 완료');
         }
-        res.send('업데이트 완료');
+
+        // 상품 db 저장
     } catch (err) {
         res.status(500).json({ message: 'getProductUpdate 서버 오류', err: err.message });
     }
@@ -272,38 +327,51 @@ exports.deleteProduct = async (req, res) => {
     try {
         console.log('req.body > ', req.query);
         const { productId } = req.query;
-        const isDeleted = await Product.destroy({
-            where: { productId },
-        });
-        console.log('삭제완료 >> ', isDeleted);
-        if (isDeleted === 1) {
-            res.send('삭제 성공 !🌟');
+        const result = await isLoginUser(req, res);
+
+        if (!result) return;
+
+        const writer = await isWriter(req, productId);
+        console.log('writer>> ', writer);
+
+        if (!writer) {
+            res.status(400).json({ message: '로그인 유저와 작성자가 일치하지 않습니다.' });
         } else {
-            res.send('띠용!');
+            const isDeleted = await Product.destroy({
+                where: { productId },
+            });
+            console.log('삭제완료 >> ', isDeleted);
+            if (isDeleted === 1) {
+                res.send('삭제 성공 !🌟');
+            } else {
+                res.send('삭제 실패 띠용!');
+            }
         }
     } catch (err) {
         res.status(500).json({ message: 'deleteProduct 서버 오류', err: err.message });
     }
 };
 
-exports.postOrder = async (req, res) => {
+// 안전거래 버튼 클릭시
+exports.getOrder = async (req, res) => {
     try {
-        const {productId} = req.body
-        const buyerId = 2;
-        // const userId : req.session.id 
-        const result = await Product.update(
-            { buyerId },
-            {
-                where: { productId },
-            }
-        );
-        if (result === 1) {
-            res.send('수정 실패');
-        } else {
-            res.send('수정 완료 !🌟');
-        }
+        console.log('안전 거래 버튼 클릭',req.query);
+        const { productId } = req.query;
+        const result = await isLoginUser(req, res);
+        
+        if (!result) return;
 
+        const writer = await isWriter(req, productId);
+        console.log('writer>> ', writer);
+
+        if (writer) {
+            res.status(400).json({ message: '본인은 본인 물건을 살 수 없다!' });
+        }else{
+            // res.render('productWrite',{title: "결제창 페이지"})
+            res.send('결제 페이지로 이동합니다...');
+        }
     } catch (err) {
         res.status(500).json({ message: 'postOrder 서버 오류', err: err.message });
     }
-}
+};
+
