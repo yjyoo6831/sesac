@@ -14,6 +14,7 @@ public class ConditionalStatement {
         }
 
         //////
+        /*
         // String 타입에 대해 조건문 사용시 주의 사항
         System.out.println("이름 입력해주세요 >> ");
         Scanner sc = new Scanner(System.in);
@@ -33,7 +34,7 @@ public class ConditionalStatement {
         }else{
             System.out.println("이름 확인해주세요");
         }
-
+*/
         // WHY?
         // - `==` 연산자: 두 객체의 "참조"를 비교 (동일한 메모리 위치를 가르키는지 검사)
         // - `.equals()` 메서드: 두 객체의 "내용"이 동일한지를 비교
@@ -73,5 +74,42 @@ public class ConditionalStatement {
         } else {
             System.out.println("내용이 다릅니다.");
         }
+        // if-else if문
+        // top-down 방식으로 처음 조건식이 참으로 평가되면 해당 식 수정한 다음에 if 절을 빠져나감
+        if(number %3 ==0){
+            System.out.println("3의 배수");
+        }else if(number % 5 ==0){
+            System.out.println("5의 배수");
+        }else if(number % 2 ==0){
+            System.out.println("2의 배수");
+        }else{
+            System.out.println("3,5,2 배수 전부 아니다.");
+        }
+
+        // switch ~ case 문
+        // - 각 case 문의 break 문은 선택사항으로 break 문 생략시 바로 밑의 case 문으로 넘어감
+        // (여러 case 문으로 하나의 시행문 지정 가능)
+        String dayOfWeek;
+        int day = 4;
+
+        switch (day){
+            case 1:
+                dayOfWeek = "일";
+                break;
+            case 2:
+            case 3:
+            case 4:
+            case 5:
+            case 6:
+                dayOfWeek = " 월~금";
+                break;
+            case 7:
+                dayOfWeek = " 토";
+                break;
+            default:
+                dayOfWeek = "잘못된 입력입니다.";
+                break;
+        }
+        System.out.println(dayOfWeek);
     }
 }
