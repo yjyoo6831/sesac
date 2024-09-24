@@ -27,7 +27,7 @@ const ProductDetail = () => {
   const navigate = useNavigate();
   const checkLikes = async () => {
     try {
-      if (product.userId != 0) {
+      if (product.userId) {
         const response = await axios.post(
           `http://localhost:8000/product/likes?productId=${productId}`,
           {productId},
@@ -37,18 +37,16 @@ const ProductDetail = () => {
             },
           },
         );
-        console.log("response > ", response.data.data);
-        setLikes(response.data.data); 
-
+        console.log("response > ", response.data);
+        if(response.data.data === 'no'){
+          alert('본인은 본인 글에 찜을 누를 수 없습니다.')
+        }else{
+          setLikes(response.data.data); 
+        }
         fetchProduct();
-      } else if (product.userId == 0) {
-        console.log(
-          `error.response.data.message >>${error.response.data.message}`,
-        );
+      } else if (product.userId === 0) {
         alert(`로그인을 먼저 해주세요 !`); 
-        // navigate('/login');
-      } else {
-        console.log(`error : ${product.userId}는 존재하지 않는 아이디입니다.`);
+        navigate('/login');
       }
     } catch (error) {
       console.error(`${productId}번 상품에 찜 추가 중 오류 발생.`, error);

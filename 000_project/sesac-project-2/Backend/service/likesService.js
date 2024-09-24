@@ -37,7 +37,7 @@ exports.postLikes = async (req, res) => {
         var flag=true;
 
         if (writer) {
-            res.send({ message: '본인은 본인글에 찜을 누를 수 없다.' });
+            res.json({ userId: userId , productId: productId , data : "no", message: "본인 글" });
         } else {
             const userLikes = await Likes.findOne({
                 where: {
