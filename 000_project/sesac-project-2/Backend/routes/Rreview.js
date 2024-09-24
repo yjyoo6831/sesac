@@ -12,7 +12,7 @@ router.post(`/`, authenticate(adminOrUser), controller.postReview);
 // 특정 유저의 리뷰 목록 조회 (판매자 또는 구매자 기준)
 // localhost:PORT/review/1?type=seller (userId = 1인 유저의 상점에 작성된 리뷰)
 // localhost:PORT/review/1?type=buyer (userId = 1인 유저가 작성한 리뷰)
-router.get(`/list/:userId`, authenticate(adminOrUser), controller.getReviewListByUserId);
+router.get(`/list/:userId`, controller.getReviewListByUserId);
 
 // 특정 리뷰 한개 조회
 router.get(`/:reviewId`, authenticate(adminOrUser), controller.getReview);
