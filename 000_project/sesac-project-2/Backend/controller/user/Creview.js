@@ -48,7 +48,8 @@ exports.getReviewListByUserId = async (req, res) => {
 
         const reviews = await Review.findAll({
             where: whereFilter,
-            include: includeFilter
+            include: includeFilter,
+            order:[['createdAt','DESC']]
         });
 
         if (reviews.length === 0) {
@@ -98,7 +99,7 @@ exports.getReviewList = async (req, res) => {
             include: [
                 { model: User, as: 'Buyer', attributes: ['nickname'] },
                 { model: User, as: 'Seller', attributes: ['nickname'] }
-            ]
+            ],
         });
 
         if (reviews.length === 0) {
