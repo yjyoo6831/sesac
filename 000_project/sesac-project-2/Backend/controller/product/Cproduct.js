@@ -196,6 +196,10 @@ exports.getProductList = async (req, res) => {
 // 상품 상세 페이지
 // GET /product/read?productId=
 exports.getProduct = async (req, res) => {
+    // var num=22;
+    // checkLikes(num.toString(),3);
+    // return ;
+
     try {
         const { productId } = req.query;
         console.log(`req.query > `, req.query);
@@ -229,20 +233,18 @@ exports.getProduct = async (req, res) => {
             ],
             where: { productId },
         });
-
-        var checklikes = 0;
         let userId = 0;
         if (req.headers.authorization) {
             const authHeader = req.headers.authorization;
-            // console.log('authHeader > ', authHeader);
+            console.log('authHeader > ', authHeader);
 
             const token = authHeader.split(' ')[1];
             const decoded = jwt.verify(token, process.env.JWT_SECRET);
             userId = decoded.userId;
             console.log('userId >> ', userId);
-            checklikes = await checkLikes(productId, userId);
+            var checklikes = await checkLikes(productId, userId);
         }
-        console.log('checklikes > ', checklikes);
+        console.log('user likes check > ', checklikes);
 
         console.log('product.location.depth1 > ', product.Location.dataValues);
         // 찜 개수 불러오기

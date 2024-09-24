@@ -1,5 +1,5 @@
 @server = http://localhost:8000
-@productId = 3
+@productId = 22
 
 #로그인한 유저
 @userId = 4
@@ -111,9 +111,14 @@ POST {{server}}/login
 Content-Type: application/json ; charset=UTF-8
 
 {
-    "email":"user2@example.com",
-    "password":"Userr!!12"
+    "email":"yejin@abc.com",
+    "password":"Test1!"
 }
+
+# {
+#     "email":"user2@example.com",
+#     "password":"Userr!!12"
+# }
 
 # {
 #     "email":"yejin@abc.com",

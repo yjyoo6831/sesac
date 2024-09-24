@@ -11,7 +11,7 @@ const ProductTab = (newItem) => {
       ref.current.scrollIntoView({ behavior: 'smooth' });
     }
   };
-  console.log('newItem >> ', newItem.newItem.length);
+  // console.log('newItem >> ', newItem.newItem.length);
 
   return (
     <div className="container mx-auto">
