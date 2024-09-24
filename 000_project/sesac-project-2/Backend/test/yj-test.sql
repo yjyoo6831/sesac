@@ -25,11 +25,8 @@ select count(*) from category;
 
 select * from category order by categoryId desc;
 select * from category where categoryName='패션잡화';
-select * from product;
 delete  from category where categoryId>=760;
 delete  from product where productId>=1;
-
-SELECT `imageId`, `productId`, `productImage`, `createdAt`, `updatedAt` FROM `ProductImage` AS `ProductImage` WHERE `ProductImage`.`productId` = '22';
 
 desc category;
 insert into product values(1,"물",3,100,"물 팔아요",0,"판매중",null,now(),now());
@@ -37,22 +34,19 @@ desc likes;
 select * from user;
 select * from location;
 select * from active;
-select * from likes;
+select * from likes order by productId desc;
 update active set isActive=1 where userId=4;
 select * from report;
+select * from review order by reviewId desc;
+
 select * from productImage order by imageId desc;
 desc productImage;
+
 select * from product order by productId desc;
 select * from category;
+
+
 delete from report where reportId>=1;
-
-SELECT * FROM `Product` AS `Product` ORDER BY `Product`.`productId` DESC LIMIT 0, 10;
-
-SELECT * FROM `Likes` AS `Likes` INNER JOIN `Product` AS `Product` 
-ON `Likes`.`productId` = `Product`.`productId` AND `Product`.`userId` = 2;
-
-
-SELECT `ProductImage`.* FROM (SELECT * FROM (SELECT `imageId`, `productImage`, `productId` FROM `ProductImage` AS `ProductImage` WHERE `ProductImage`.`productId` = 5 LIMIT 1) AS sub UNION ALL SELECT * FROM (SELECT `imageId`, `productImage`, `productId` FROM `ProductImage` AS `ProductImage` WHERE `ProductImage`.`productId` = 1 LIMIT 1) AS sub) AS `ProductImage`;
 
 select * from product order by productId desc;
 select * from user;
@@ -61,14 +55,6 @@ select * from category;
 
 select * from productImage order by imageId desc;
 
-SELECT `User`.*, `Products`.`buyerId` AS `Products.buyerId`, `Products`.`price` AS `Products.price` FROM (SELECT `User`.`userId`, `User`.`nickname`, `User`.`email`, `User`.`password`, `User`.`gender`, `User`.`age`, `User`.`temp`, `User`.`profile_image`, `User`.`money`, `User`.`point`, `User`.`createdAt`, `User`.`updatedAt` FROM `User` AS `User` WHERE ( SELECT `buyerId` FROM `Product` AS `Products` WHERE (`Products`.`buyerId` = 3 AND `Products`.`buyerId` = `User`.`userId`) LIMIT 1 ) IS NOT NULL LIMIT 1) AS `User` INNER JOIN `Product` AS `Products` ON `User`.`userId` = `Products`.`buyerId` AND `Products`.`buyerId` = 3;
-
-SELECT `Product`.`productId`, `Product`.`productName`, `Product`.`userId`, `Product`.`price`, `Product`.`content`, `Product`.`categoryId`, `Product`.`viewCount`, `Product`.`status`, `Product`.`buyerId`, `Product`.`createdAt`, `Product`.`updatedAt`, `User`.`userId` AS `User.userId` FROM `Product` AS `Product` INNER JOIN `User` AS `User` ON `Product`.`userId` = `User`.`userId` AND `User`.`nickname` = '1' WHERE `Product`.`userId` IS NOT NULL;
-
-SELECT `imageId`, `productId`, `productImage`, `createdAt`, `updatedAt` FROM `ProductImage` AS `ProductImage` WHERE `ProductImage`.`productId` = '19';
-
-
-SELECT `Product`.`productId`, `Product`.`productName`, `Product`.`userId`, `Product`.`price`, `Product`.`content`, `Product`.`categoryId`, `Product`.`viewCount`, `Product`.`status`, `Product`.`buyerId`, `Product`.`createdAt`, `Product`.`updatedAt`, `User`.`userId` AS `User.userId`, `User`.`nickname` AS `User.nickname`, `Location`.`locationId` AS `Location.locationId`, `Location`.`depth1` AS `Location.depth1`, `Location`.`depth2` AS `Location.depth2`, `Location`.`depth3` AS `Location.depth3` FROM `Product` AS `Product` LEFT OUTER JOIN `User` AS `User` ON `Product`.`userId` = `User`.`userId` LEFT OUTER JOIN `Location` AS `Location` ON `Product`.`userId` = `Location`.`locationId` WHERE `Product`.`productId` = '19';
 
 SELECT * FROM `Product` 
 INNER JOIN `Likes` AS `Like` 
@@ -82,6 +68,7 @@ desc user;
 desc product;
 
 update product set buyerId=2 where productId=3;
+update product set buyerId=1 where productId=15;
 delete from product where productId=1;
 
 alter table product drop column buyerId;
