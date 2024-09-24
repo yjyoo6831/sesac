@@ -15,7 +15,7 @@ const ProductDetail = () => {
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true); // 로딩 상태 추가
   const [error, setError] = useState(null); // 오류 상태 추가
-  const [likes, setLikes] = useState(false); // 찜 상태 관리
+  const [likes, setLikes] = useState(''); // 찜 상태 관리
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
 
@@ -27,28 +27,26 @@ const ProductDetail = () => {
   const navigate = useNavigate();
   const checkLikes = async () => {
     try {
-      console.log('product.userId > ', product.userId, product.userId !== 0);
-      console.log('token > ', token);
       if (product.userId != 0) {
-        const loginLike = product.isLike;
-        console.log('loginLike > ', loginLike);
-
-        await axios.post(
-          `http://localhost:8000/product/likes/productId=${productId}`,
-          { data: 0 },
+        const response = await axios.post(
+          `http://localhost:8000/product/likes?productId=${productId}`,
+          {productId},
           {
             headers: {
               Authorization: token,
             },
           },
         );
+        console.log("response > ", response.data.data);
+        setLikes(response.data.data); 
 
-        setLikes(loginLike);
+        fetchProduct();
       } else if (product.userId == 0) {
         console.log(
           `error.response.data.message >>${error.response.data.message}`,
         );
-        alert(`로그인을 먼저 해주세요 !`); // navigate('/login');
+        alert(`로그인을 먼저 해주세요 !`); 
+        // navigate('/login');
       } else {
         console.log(`error : ${product.userId}는 존재하지 않는 아이디입니다.`);
       }
@@ -142,30 +140,28 @@ const ProductDetail = () => {
   const handleCloseModal = () => {
     setIsModalOpen(false); // 모달 닫기
   };
-
-  useEffect(() => {
-    const fetchProduct = async () => {
-      try {
-        const response = await axios.get(
-          `http://localhost:8000/product/read?productId=${productId}`,
-          {
-            headers: {
-              Authorization: token,
-            },
+  const fetchProduct = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:8000/product/read?productId=${productId}`,
+        {
+          headers: {
+            Authorization: token,
           },
-        );
-        setProduct(response.data); // 응답 데이터 저장
-        console.log('data: ', response.data);
-      } catch (error) {
-        console.error('상품 데이터를 가져오는 중 오류 발생:', error);
-        setError('상품 데이터를 가져오는 중 오류 발생');
-      } finally {
-        setLoading(false); // 로딩 완료
-      }
-    };
-
+        },
+      );
+      setProduct(response.data); // 응답 데이터 저장
+      console.log('data: ', response.data);
+    } catch (error) {
+      console.error('상품 데이터를 가져오는 중 오류 발생:', error);
+      setError('상품 데이터를 가져오는 중 오류 발생');
+    } finally {
+      setLoading(false); // 로딩 완료
+    }
+  };
+  useEffect(() => {
     fetchProduct();
-  }, [productId]);
+  }, [productId, likes]);
 
   if (loading) {
     return <div className="loading">로딩 중...</div>;
@@ -236,10 +232,12 @@ const ProductDetail = () => {
                   className="items-center text-red-500 hover:text-red-700 transition duration-300"
                   onClick={checkLikes}
                 >
+                
                   <FontAwesomeIcon
-                    icon={likes ? solidHeart : regularHeart}
+                    icon={product.isLike ? solidHeart : regularHeart}
                     size="2x"
                   />
+                
                 </button>
                 <span className="ml-1">{product.totalLikes}</span>
               </div>

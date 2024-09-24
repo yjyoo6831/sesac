@@ -23,34 +23,23 @@ exports.getLikes = async (req) => {
 };
 
 exports.postLikes = async (req, res) => {
+    console.log('postLikes 에 들어옴');
     const { productId } = req.query;
     try {
         console.log('req.query > ', req.query);
         const userId = req.userId;
         const result = await isLoginUser(req, res);
-        console.log('userId > ', userId)
+        // console.log('userId > ', userId); // 로그인 유저
         if (!result) return;
-        
+
         const writer = await isWriter(req, productId);
-        console.log("writer>> ",writer)
-        
-        if(writer){
-            res.send({"message": "본인은 본인글에 찜을 누를 수 없다."})
-        }else{
+        console.log('writer>> ', writer);
+        var flag=true;
 
-        const userLikes = await Likes.findOne({
-            where: {
-                productId,
-                userId,
-            },
-            attributes: ['likesCount'],
-            raw: true,
-        });
-        console.log('b4 likesInfo >> ', userLikes);
-        if (userLikes) {
-            console.log('product, user 가 likes table 에 존재함.');
-
-            const isAlreadyLike = await Likes.findOne({
+        if (writer) {
+            res.send({ message: '본인은 본인글에 찜을 누를 수 없다.' });
+        } else {
+            const userLikes = await Likes.findOne({
                 where: {
                     productId,
                     userId,
@@ -58,36 +47,41 @@ exports.postLikes = async (req, res) => {
                 attributes: ['likesCount'],
                 raw: true,
             });
-
-            console.log('isAlreadyLike > ', isAlreadyLike);
-            if (isAlreadyLike.likesCount === 1) {
-                // 유저 좋아요 1일 경우
-                console.log(`유저 좋아요가 1이므로 0으로 바뀜`);
-                await Likes.destroy({
-                    where: { productId, userId },
+            console.log('b4 likesInfo >> ', userLikes);
+            if (userLikes) {
+                console.log('product, user 가 likes table 에 존재함.');
+                const isAlreadyLike = await Likes.findOne({
+                    where: {
+                        productId,
+                        userId,
+                    },
+                    attributes: ['likesCount'],
+                    raw: true,
                 });
+
+                console.log('isAlreadyLike > ', isAlreadyLike);
+                if (isAlreadyLike.likesCount === 1) {
+                    // 유저 좋아요 1일 경우
+                    console.log(`좋아요 1 -> 0`);
+                    await Likes.destroy({
+                        where: { productId, userId },
+                    });
+                    flag=false;
+
+                } else {
+                    // 유저 좋아요 0일 경우
+                    console.log(`좋아요 0 -> 1`);
+                    await likesCreate(productId, userId, 1);
+                }
             } else {
-                // 유저 좋아요 0일 경우
-                console.log(`유저 좋아요가 0이므로 1으로 바뀜`);
-                await likesCreate(productId, userId, 1);
-            }
-        } else {
-            const isUser = await Likes.findOne({
-                where: {
-                    productId,
-                    userId,
-                },
-                attributes: ['userId'],
-                raw: true,
-            });
-            if (!isUser) {
                 console.log(`${userId}의 찜 내역은 없으므로 새로 생성한다.`);
                 await likesCreate(productId, userId, 1);
+                
             }
-        } 
-        res.send(`${userId}번 유저가 ${productId}번 상품에 
-                좋아요를 눌렀습니다.`);
-            }
+            console.log("flag >> ", flag);
+            
+            res.json({ userId: userId , productId: productId , data : flag });
+        }
     } catch (err) {
         res.status(500).json({ message: 'postLikes 서버 오류', err: err.message });
     }
@@ -95,29 +89,24 @@ exports.postLikes = async (req, res) => {
 
 exports.checkLikes = async (productId, userId) => {
     try {
-        // console.log("checkLikes req >> ", );
-        
-        // const { productId, userId } = req;
-        console.log('checkLikes parameter > ', productId,userId);
+        console.log('checkLikes parameter > ', typeof productId, typeof userId);
         const likes = await Likes.findOne({
             where: {
-                productId,
-                userId
+                productId ,
+                userId ,
             },
             raw: true,
         });
-        console.log("------ likes > ", likes);
-        
-        var islike = likes ? likes.likesCount : 0;
-        console.log('do i likes ? ',islike)
-        return islike;
+        console.log('likesInfo >> ', likes);
+
+        var flag = likes ? true : false;
+        console.log('do i likes ? ', flag);
+        return flag;
     } catch (err) {
         return `message: 'checkLikes 서버 오류', err: ${err.message} `;
     }
 };
 
 function likesCreate(productId, userId, likesCount) {
-    Likes.create(
-        { productId, userId, likesCount },
-    );
+    Likes.create({ productId, userId, likesCount });
 }
