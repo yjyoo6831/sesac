@@ -284,7 +284,7 @@ const ProductDetail = () => {
         <p className="text-gray-700">{product.content}</p>
       </section>
 
-      <ProductTab newItem={product.newItem} />
+      <ProductTab product={product} newItem={product.newItem} />
 
       <Modal
         isOpen={isModalOpen}
