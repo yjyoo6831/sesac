@@ -196,9 +196,6 @@ exports.getProductList = async (req, res) => {
 // 상품 상세 페이지
 // GET /product/read?productId=
 exports.getProduct = async (req, res) => {
-    // var num=22;
-    // checkLikes(num.toString(),3);
-    // return ;
 
     try {
         const { productId } = req.query;
@@ -332,8 +329,8 @@ exports.postProduct = async (req, res) => {
 
         // productId를 받기 위한 조회
         let lastProductId = await Product.findOne({
-            order: [['createdAt', 'DESC']],
             attributes: ['productId'],
+            order: [['createdAt', 'DESC']],
         });
         var newProductId = 1;
         if (lastProductId) {
