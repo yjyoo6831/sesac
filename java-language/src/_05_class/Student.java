@@ -28,8 +28,23 @@ public class Student {
 //        grade = g;
 //    }
 
+    // 메소드
+    // 1) 인자 x, 반환값 x
+    public void goToSchool() {
+        System.out.println(this.name + "가(이) 학교에 간다!");
+    }
 
+    // 2) 인자 o, 반환값 x
+    public void study(String subject) {
+        System.out.println(this.name + "가(이) " + subject + " 과목을 공부한다!");
+    }
 
+    // 3) 인자 x, 반환값 o
+    public int getGrade() { return this.grade; }
 
+    // 4) 인자 o, 반환값 o
+    public String getTestResult(int score) {
+        return this.name + " 학생의 점수: " + score;
+    }
 
 }
