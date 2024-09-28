@@ -10,6 +10,7 @@ public class Student {
     // 필드
     public String name;
     public int grade;
+    // public, private, default 값은 private
 
     // 생성자
     // - 객체가 생성될 때 자동으로 호출되는 특별한 종류의 메서드
