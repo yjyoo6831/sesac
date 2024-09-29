@@ -3,6 +3,7 @@ show tables;
 select * from user;
 desc user;
 
+
 -- 타임존 변경
 select now(),@@system_time_zone AS TimeZone;
 set global time_zone = '+9:00';
