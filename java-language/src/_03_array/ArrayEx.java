@@ -123,11 +123,12 @@ public class ArrayEx {
         langs[0] = "Java";
         langs[1] = "Java";
         langs[2] = new String("Java");
+        String[] langs1 = {"1","1","1"};
         System.out.println("langs = " + Arrays.toString(langs));
         System.out.println(langs[0] == langs[1]); // 같은 객체 참조
         System.out.println(langs[1] == langs[2]); // 다른 객체 참조 (2번은 새로운 배열의 객체)
         System.out.println(langs[0].equals(langs[2]) ); // equals 는 값이 같은지만 비교하는 것
-
+        System.out.println(langs1[0] == langs1[1]);
         // 배열 복사
         // - 배열은 크기가 고정되어 있다.
         // -> 더 많은 저장공간이 필요해지면 더 큰 길이의 배열을 새로 만들어서 기존 배열을 복사해야한다.
@@ -144,7 +145,7 @@ public class ArrayEx {
 
         // ver2. arraycopy() 사용
         // : System.arraycopy(Object src, int srcPos, Object dest, int destPos, int length);
-        // - Ojbect src: 원본 배열
+        // - Object src: 원본 배열
         // - int srcPos: 원본 배열 복사 시작 인덱스
         // - Object dest: 새 배열
         // - int destPos: 새 배열 붙여넣기 시작 인덱스

@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Arrays;
 
 // 참고. Collection(컬렉션)
-// : 객체를 효율적으로 추가,삭제, 검색 할 수 잇도로 ㄱ
+// : 객체를 효율적으로 추가,삭제, 검색 할 수 잇도록
 // 관련 인터페이스 & 클래스를 java.util 패키지에 포함시켜 놓은 것
 public class ArrayListEx {
     // ArrayList 선언하는 3가지 방법
