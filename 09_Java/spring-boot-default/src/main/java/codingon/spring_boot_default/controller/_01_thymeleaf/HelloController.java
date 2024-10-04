@@ -56,13 +56,18 @@ public class HelloController {
     }
 
     @GetMapping("/project2")
-    public String getAssign2(Model model{
+    public String getAssign2(Model model){
         List<Person> people = new ArrayList<>();
         people.add(new Person("kim",10));
         people.add(new Person("lee",20));
         people.add(new Person("hong",30));
         people.add(new Person("park",40));
         people.add(new Person("shin",50));
+        model.addAttribute("people",people);
+        for(Person person : people){
+            System.out.println("person = " + person);
+        }
+
         return "_01_thymeleaf/project2";
     }
 

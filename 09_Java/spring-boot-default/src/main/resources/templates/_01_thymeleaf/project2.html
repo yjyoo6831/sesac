@@ -5,12 +5,13 @@
     <title>Title</title>
 </head>
 <body>
-    <tr>
+    <tr border="2">
         <th>이름</th>
         <th>나이</th>
     </tr>
-    <tr>
-        <th></th>
+    <tr border="2" th:each="people:${people}">
+        <td th:text="${people.getName()}"></td>
+        <td th:text="${people.getAge()}"></td>
     </tr>
 </body>
 </html>
