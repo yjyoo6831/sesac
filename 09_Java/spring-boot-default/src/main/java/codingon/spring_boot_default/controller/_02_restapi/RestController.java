@@ -2,9 +2,7 @@ package codingon.spring_boot_default.controller._02_restapi;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class RestController {
@@ -12,7 +10,10 @@ public class RestController {
     // GET localhost:PORT/ 요청 시 ; _02_restapi/req.html 이 브라우저에 보여줌
     // node.js의 res.render()와 유사한 역할
     @GetMapping("/")
-    public String getReq() { return "_02_restapi/req"; }
+    public String getReq() {
+        return "_02_restapi/lmsres";
+//        return "_02_restapi/req";
+    }
 
     // GET 요청
     // #1. Get Method / Query string
@@ -91,6 +92,55 @@ public class RestController {
 
         return "_02_restapi/res";
     }
+
+    // === POST 요청 ===
+    // #5. Post Method / form data(required=true)
+    @PostMapping("/post/res1")
+    public String postRes1(@RequestParam(value="name") String name,@RequestParam int age, Model model){
+        System.out.println("[POST] request param (name) = "+ name);
+        System.out.println("[POST] request param (age) = "+ age);
+
+        model.addAttribute("name", name);
+        model.addAttribute("age", age);
+
+        return "_02_restapi/res";
+    }
+
+    // #6. Post Method / form data(required=false)
+    @PostMapping("/post/res2")
+    public String postRes2(@RequestParam String name,@RequestParam(required=false) Integer age, Model model){
+        System.out.println("[POST] request param (name) = "+ name);
+        System.out.println("[POST] request param (age) = "+ age);
+
+        model.addAttribute("name", name);
+        model.addAttribute("age", age);
+
+        return "_02_restapi/res";
+    }
+
+    // # 1~6 폼까지는 항상 Template view 반환!
+    // 하지만, Spring Boot를 API 서버로 활용하고자 데이터 자체를 응답하고 싶다면 ?
+    // -> @RequestBody 사용
+    // #7. Post Method / @RequestBody annotaion
+    @PostMapping("/post/res3")
+    @ResponseBody // 메서드의 반환 값을 응답 본문 (response body)에 직접 쓰도록 지시)
+    public String postRes3(@RequestParam String name, @RequestParam int age, Model model){
+        // @ResponseBody 어노테이션
+        // - 응답시 객체를 JSON으로 리턴할 때 사용
+        // - 즉, 응답 객체를 전달(express res.send()메서드와 유사)
+        System.out.println("[POST] request param (name) = "+ name);
+        System.out.println("[POST] request param (age) = "+ age);
+
+        model.addAttribute("name", name);
+        model.addAttribute("age", age);
+
+        // 템플릿 엔진(res.html)이 아닌 문자열 그 자체를 응답
+        return name + " " + age;
+    }
+
+
+
+    // lms 과제
     @GetMapping("/introduce/{name}")
     public String introduce(@PathVariable String name, Model model) {
         System.out.println("param(name) = " + name);
@@ -106,5 +156,25 @@ public class RestController {
         model.addAttribute("name", name);
         model.addAttribute("age", age);
         return "_02_restapi/lmsres";
+    }
+
+    @PostMapping("/post/lms")
+    @ResponseBody
+    public String postLms(@RequestParam String name, @RequestParam String sex, @RequestParam String date,
+                          @RequestParam String interest, Model model) {
+
+        System.out.println("이름 : " + name +
+                "\n성별 : " + sex +
+                "\n생년월일 : " + date + "\n관심사 : " + interest
+        );
+        model.addAttribute("name", name);
+        model.addAttribute("sex", sex);
+        model.addAttribute("date", date);
+        model.addAttribute("interest", interest);
+        String result = "이름 : " + name +  "<br>" +
+                "성별 : " + sex + "<br>" +
+                "생년월일 : " + date + "<br>" +
+                "관심사 : " + interest;
+        return result;
     }
 }

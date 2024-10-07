@@ -42,5 +42,29 @@
         <a href="/get/res4/성춘향/21"> get/res4/성춘향/21 </a>
     </div>
 </div>
+<h1>POST 요청</h1>
+<div class="forms-container">
+    <form action="/post/res1" method="POST" class="form-card">
+        <h3>#5. Post Method. form data (required=true)</h3>
+        <input type="text" name="name" placeholder="이름" /><br />
+        <input type="text" name="age" placeholder="나이" />
+        <br />
+        <button type="submit">Post 전송</button>
+    </form>
+    <form action="/post/res2" method="POST" class="form-card">
+        <h3>#6. Post Method. form data (required=false)</h3>
+        <input type="text" name="name" placeholder="이름" /><br />
+        <input type="text" name="age" placeholder="나이" />
+        <br />
+        <button type="submit">Post 전송</button>
+    </form>
+    <form action="/post/res3" method="POST" class="form-card">
+        <h3>#7. Post Method. @ResponseBody Annotation</h3>
+        <input type="text" name="name" placeholder="이름" /><br />
+        <input type="text" name="age" placeholder="나이" />
+        <br />
+        <button type="submit">Post 전송</button>
+    </form>
+</div>
 </body>
 </html>
