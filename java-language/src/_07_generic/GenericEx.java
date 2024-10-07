@@ -68,7 +68,5 @@ public class GenericEx {
         System.out.println(gli2.toString());
 
         System.out.println(gli2.get(0));
-
-
     }
 }
