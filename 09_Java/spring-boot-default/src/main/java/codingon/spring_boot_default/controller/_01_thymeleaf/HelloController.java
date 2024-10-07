@@ -57,7 +57,7 @@ public class HelloController {
 
     @GetMapping("/project2")
     public String getAssign2(Model model){
-        List<Person> people = new ArrayList<>();
+        List<Person> people = new ArrayList<>(); // 객체 선언
         people.add(new Person("kim",10));
         people.add(new Person("lee",20));
         people.add(new Person("hong",30));
@@ -67,7 +67,6 @@ public class HelloController {
         for(Person person : people){
             System.out.println("person = " + person);
         }
-
         return "_01_thymeleaf/project2";
     }
 
