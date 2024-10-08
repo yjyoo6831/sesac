@@ -2,10 +2,15 @@ package codingon.spring_boot_default.vo;
 
 import lombok.Getter;
 
+import java.util.List;
+
 @Getter
 public class UserVO {
     private String name;
     private int age;
+    private String gender;
+    private String date;
+    private List<String> interest;
 }
 
 // VO 객체 특징
