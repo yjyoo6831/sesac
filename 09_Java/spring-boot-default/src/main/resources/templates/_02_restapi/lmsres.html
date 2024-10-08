@@ -102,17 +102,14 @@
     }
     function login(){
         const form = document.getElementById('login');
-        axios.get(`/login`,{
-                name : form.name.value,
-                password : form.password.value,
-            }
-        ).then((res)=>{
+        axios.get(`/login`)
+            .then((res)=>{
             console.log("login > ", res.data)
             voResultBox.textContent = res.data;});
     }
     function update(){
         const form = document.getElementById('update');
-        axios.put(`/update`,{
+        axios.post(`/update`,{
                 name : form.name.value,
                 password : form.password.value,
             }

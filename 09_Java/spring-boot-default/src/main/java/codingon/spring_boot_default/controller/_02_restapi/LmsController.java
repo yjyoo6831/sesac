@@ -1,5 +1,6 @@
 package codingon.spring_boot_default.controller._02_restapi;
 
+import codingon.spring_boot_default.dto.LmsDTO;
 import codingon.spring_boot_default.vo.UserVO;
 import codingon.spring_boot_default.vo.LmsVO;
 import org.springframework.stereotype.Controller;
@@ -71,20 +72,21 @@ public class LmsController {
     // 로그인
     @GetMapping("/login")
     @ResponseBody
-    public String getLogin(@ModelAttribute LmsVO lmsVO){
-        lmsVO.add
-        return lmsVO.getName() + " " + lmsVO.getPassword();
+    public String getLogin(){
+        return "로그인 화면";
     }
     // 회원정보수정
-    @PutMapping("/update")
+    @PostMapping("/update")
     @ResponseBody
-    public String putUpdate(@RequestBody LmsVO lmsVO){
-        return lmsVO.getName() + " " + lmsVO.getPassword();
+    public String postUpdate(LmsDTO lmsDTO){
+        lmsDTO.setName(lmsDTO.getName());
+        lmsDTO.setPassword(lmsDTO.getPassword());
+        return "회원 정보 수정완료";
     }
     // 회원정보삭제
-    @DeleteMapping("/deleted")
-    public String delUser(@RequestBody LmsVO lmsVO){
-        return lmsVO.getName() + " " + lmsVO.getPassword();
+    @DeleteMapping("/deleted/{id}")
+    public String delUser(@PathVariable int id){
+        return "회원 정보 삭제";
     }
 
 
