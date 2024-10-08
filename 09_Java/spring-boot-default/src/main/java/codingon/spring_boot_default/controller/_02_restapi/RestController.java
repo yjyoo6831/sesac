@@ -11,7 +11,7 @@ public class RestController {
     // ==== Template 렌더링 ====
     // GET localhost:PORT/ 요청 시 ; _02_restapi/req.html 이 브라우저에 보여줌
     // node.js의 res.render()와 유사한 역할
-    @GetMapping("/")
+//    @GetMapping("/")
     public String getReq() {
 //        return "_02_restapi/lmsres";
         return "_02_restapi/req";
@@ -389,54 +389,5 @@ public class RestController {
         System.out.println("[POST] axios and vo (age) = " + userVO.getAge());
 
         return "이름: " + userVO.getName() + ", 나이: " + userVO.getAge();
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-    // lms 과제
-    @GetMapping("/introduce/{name}")
-    public String introduce(@PathVariable String name, Model model) {
-        System.out.println("param(name) = " + name);
-        model.addAttribute("name", name);
-        return "_02_restapi/lmsres";
-    }
-
-    @GetMapping("/introduce2")
-    public String introduce2(@RequestParam(value="name") String name, @RequestParam(value="age") int age, Model model) {
-        System.out.println("query(name) = " + name);
-        System.out.println("query(age) = " + age);
-
-        model.addAttribute("name", name);
-        model.addAttribute("age", age);
-        return "_02_restapi/lmsres";
-    }
-
-    @PostMapping("/post/lms")
-    @ResponseBody
-    public String postLms(@RequestParam String name, @RequestParam String sex, @RequestParam String date,
-                          @RequestParam String interest, Model model) {
-
-        System.out.println("이름 : " + name +
-                "\n성별 : " + sex +
-                "\n생년월일 : " + date + "\n관심사 : " + interest
-        );
-        model.addAttribute("name", name);
-        model.addAttribute("sex", sex);
-        model.addAttribute("date", date);
-        model.addAttribute("interest", interest);
-        String result = "이름 : " + name +  "<br>" +
-                "성별 : " + sex + "<br>" +
-                "생년월일 : " + date + "<br>" +
-                "관심사 : " + interest;
-        return result;
     }
 }
