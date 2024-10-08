@@ -3,13 +3,22 @@ import { Link } from 'react-router-dom';
 import { Label } from 'flowbite-react';
 import { Input } from '../../shared/input';
 
-export default function LoginPage({
+const LoginPage = ({
   navigate,
   handleSubmit,
   setEmail,
   setPassword,
-  error,
-}) {
+  error
+}) => {
+  const goKaKaoLogin = async () => {
+    const REDIRECT_URI='http://localhost:3000/auth/kakao/login'
+    
+    const kakaoURL = `https://kauth.kakao.com/oauth/authorize?
+            client_id=${REST_API}&redirect_uri=${REDIRECT_URI}&response_type=code
+            `;
+    window.location.href = kakaoURL;
+    }
+
   return (
     <main className="bg-gray-50">
       <div className="flex justify-between items-center px-2 pt-4 sm:px-5 sm:pt-4">
@@ -84,6 +93,7 @@ export default function LoginPage({
           >
             로그인
           </button>
+          <button type='button' onClick={goKaKaoLogin}>카카오 로그인</button>
           <div className="flex justify-end">
             <p className="mr-2">아직 회원이 아니신가요?</p>
             <Link to="/register" className="font-semibold">
@@ -95,3 +105,4 @@ export default function LoginPage({
     </main>
   );
 }
+export default LoginPage;
