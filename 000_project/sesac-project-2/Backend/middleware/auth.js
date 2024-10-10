@@ -83,19 +83,17 @@ const adminOrUser = "adminOrUser";
 
 exports.authenticate = (accessType) => {
   return (req, res, next) => {
-    // console.log("req >> ",req);
     try {
       // Authorization 헤더에서 토큰 추출
       const authHeader = req.headers.authorization;
-      
       if (!authHeader || !authHeader.startsWith("Bearer ")) {
         return res.status(401).json({ message: "토큰이 제공되지 않았습니다." });
       }
-
+      
       const token = authHeader.split(" ")[1];
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
       const { userId, isActive, isAdmin } = decoded;
-
+      
       // 비활성화된 계정인지 확인
       if (!isActive) {
         return res.status(403).json({ message: "계정이 비활성화되었습니다." });
@@ -129,7 +127,6 @@ exports.authenticate = (accessType) => {
       req.userId = userId;
       req.isActive = isActive;
       req.isAdmin = isAdmin;
-
       next();
     } catch (err) {
       return res.status(500).json({ message: "서버 오류", err: err.message });
