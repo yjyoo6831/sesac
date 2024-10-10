@@ -12,7 +12,7 @@ router.post(`/login`, controller.userLogin);
 // 로그아웃
 router.delete(`/logout`, authenticate(adminOrUser), controller.userLogout);
 
-// 카카오 로그인 
-router.get(`/auth/kakao`, kakaoController.kakaoLogin);
+// 카카오 사용자 정보 가져오기
+router.post(`/api/auth/kakao/login`, kakaoController.kakaoGetUserInfo);
 
 module.exports = router;
