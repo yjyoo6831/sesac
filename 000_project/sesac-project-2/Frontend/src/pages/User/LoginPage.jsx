@@ -1,7 +1,8 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Routes, Route } from 'react-router-dom';
 import { Label } from 'flowbite-react';
 import { Input } from '../../shared/input';
+import KaKaoCallBack from './KaKaoCallBack';
 
 const LoginPage = ({
   navigate,
@@ -10,12 +11,15 @@ const LoginPage = ({
   setPassword,
   error
 }) => {
+  
   const goKaKaoLogin = async () => {
-    const REDIRECT_URI='http://localhost:3000/auth/kakao/login'
+    const REST_API_KEY=process.env.REACT_APP_REST_API_KEY;
+    const REDIRECT_URI=process.env.REACT_APP_REDIRECT_URI;
+    console.log("REST_API_KEY > ", REST_API_KEY);
+    console.log('REDIRECT_URI > ', REDIRECT_URI);
     
-    const kakaoURL = `https://kauth.kakao.com/oauth/authorize?
-            client_id=${REST_API}&redirect_uri=${REDIRECT_URI}&response_type=code
-            `;
+    const kakaoURL = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
+    console.log('kakaoURL > ', kakaoURL);
     window.location.href = kakaoURL;
     }
 
@@ -93,7 +97,9 @@ const LoginPage = ({
           >
             로그인
           </button>
-          <button type='button' onClick={goKaKaoLogin}>카카오 로그인</button>
+          <img src='../../../images/kakao_login_medium_narrow.png' 
+          className="w-56 h-12 items-center"
+          onClick={goKaKaoLogin}></img>          
           <div className="flex justify-end">
             <p className="mr-2">아직 회원이 아니신가요?</p>
             <Link to="/register" className="font-semibold">
