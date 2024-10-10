@@ -2,6 +2,7 @@ import { Route, Routes, useLocation } from 'react-router-dom';
 import MainPage from '../pages/MainPage';
 import RegisterContainer from '../features/User/Register/container/RegisterContainer';
 import { LoginContainer } from '../features/User/login/container/LoginContainer';
+import KaKaoCallBack from '../pages/User/KaKaoCallBack.jsx';
 import UserEditContainer from '../features/User/mypage/container/UserEditContainer';
 import MyPageContainer from '../features/User/mypage/container/MyPageContainer';
 import PaymentPage from '../pages/Payment/PaymentPage';
@@ -39,6 +40,7 @@ export const RootRouter = () => {
         <Route path="/" element={<MainPage />} />
         <Route path="/login" element={<LoginContainer />} />
         <Route path="/register" element={<RegisterContainer />} />
+        <Route path="/auth/kakao/login" element={<KaKaoCallBack />} /> 
         <Route
           path="/mypage"
           element={<ProtectedRoute element={<MyPageContainer />} />}
