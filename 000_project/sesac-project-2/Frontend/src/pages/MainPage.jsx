@@ -1,15 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 const ProductList = () => {
   const [products, setProducts] = useState([]);
-  const [images, setImages] = useState([]); // images 상태 추가
+  const [images, setImages] = useState([]);
   const [totalPages, setTotalPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const limit = 5;
+  const observerRef = useRef();
 
   const fetchProducts = async (page) => {
     try {
@@ -17,10 +18,10 @@ const ProductList = () => {
       const response = await axios.get(
         `http://localhost:8000/product/list?page=${page}&limit=${limit}`
       );
-      const { productInfo, images, location, totalPages, currentPage } = response.data;
-      
+      const { productInfo, images, location, totalPages } = response.data;
+
       // images를 상태로 저장
-      setImages(images); 
+      setImages((prevImages) => [...prevImages, ...images]);
 
       const productsWithImages = productInfo.map((product, index) => {
         return {
@@ -30,9 +31,8 @@ const ProductList = () => {
         };
       });
 
-      setProducts(productsWithImages);
+      setProducts((prevProducts) => [...prevProducts, ...productsWithImages]);
       setTotalPages(totalPages);
-      setCurrentPage(currentPage);
     } catch (error) {
       setError('상품을 가져오는 중 오류가 발생했습니다.');
     } finally {
@@ -44,9 +44,24 @@ const ProductList = () => {
     fetchProducts(currentPage);
   }, [currentPage]);
 
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
-  };
+  useEffect(() => {
+    const handleScroll = (entries) => {
+      if (entries[0].isIntersecting && !loading && currentPage < totalPages) {
+        setCurrentPage((prev) => prev + 1);
+      }
+    };
+
+    const observer = new IntersectionObserver(handleScroll);
+    if (observerRef.current) {
+      observer.observe(observerRef.current);
+    }
+
+    return () => {
+      if (observerRef.current) {
+        observer.unobserve(observerRef.current);
+      }
+    };
+  }, [loading, currentPage, totalPages]);
 
   return (
     <section className="container mx-auto">
@@ -75,18 +90,8 @@ const ProductList = () => {
         ))}
       </div>
 
-      {/* 페이지네이션 */}
-      <div className="flex justify-center mt-4">
-        {Array.from({ length: totalPages }, (_, index) => (
-          <button
-            key={index}
-            onClick={() => handlePageChange(index + 1)}
-            className={`mx-1 px-3 py-1 rounded ${currentPage === index + 1 ? 'bg-blue-500 text-white' : 'bg-gray-200 text-black'}`}
-          >
-            {index + 1}
-          </button>
-        ))}
-      </div>
+      {/* 스크롤 감지용 요소 */}
+      <div ref={observerRef} style={{ height: '20px' }} />
     </section>
   );
 };
