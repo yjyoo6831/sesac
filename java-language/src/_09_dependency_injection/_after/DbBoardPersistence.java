@@ -1,7 +1,7 @@
-package _09_dependency_injection._before;
+package _09_dependency_injection._after;
 
 // db에 게시판 저장
-public class DbBoardPersistence {
+public class DbBoardPersistence implements IBoardPersitence{
     public void save(){
         System.out.println("데이터베이스에 게시글 저장 중..");
     }
