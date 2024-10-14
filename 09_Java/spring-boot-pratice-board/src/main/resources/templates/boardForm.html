@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="/board.css">
+</head>
+<body>
+<h1 id="formTitle">Create board</h1>
+
+<form id="boardForm">
+    <div>
+        <label for="title">title:</label>
+        <input type="text" id="title" required>
+    </div>
+    <div>
+        <label for="content">content:</label>
+        <input type="content" id="content" required>
+    </div>
+    <div>
+        <label for="writer">writer:</label>
+        <input type="writer" id="writer" required>
+    </div>
+    <button type="submit" id="submitButton" class="btn">추가</button>
+</form>
+<a href="/board" class="btn" style="margin-top: 10px;">목록으로</a>
+<script>
+    let boardId = null;
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const pathParts = window.location.pathname.split('/');
+        const lastPart = pathParts[pathParts.length - 1];
+
+        if (lastPart === 'edit') {
+            boardId = pathParts[pathParts.length - 2];
+            document.getElementById('formTitle').textContent = 'Edit board';
+            document.getElementById('submitButton').textContent = '수정';
+            fetchboard(boardId);
+        } else {
+            boardId = null;
+            document.getElementById('formTitle').textContent = 'Create board';
+            document.getElementById('submitButton').textContent = '추가';
+        }
+
+        document.getElementById('boardForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            if (boardId) {
+                updateboard();
+            } else {
+                createboard();
+            }
+        });
+    });
+
+    function fetchboard(id) {
+        axios.get('/api/board/' + id)
+            .then(function (response) {
+                const board = response.data;
+                document.getElementById('title').value = board.title;
+                document.getElementById('content').value = board.content;
+            })
+            .catch(function (error) {
+                console.error('Error:', error);
+            });
+    }
+
+    function createboard() {
+        const boardData = {
+            title: document.getElementById('title').value,
+            content: document.getElementById('content').value,
+            writer: document.getElementById('writer').value
+        };
+
+        axios.post('/api/board', boardData)
+            .then(function (response) {
+                window.location.href = '/board';
+            })
+            .catch(function (error) {
+                console.error('Error:', error);
+            });
+    }
+
+    function updateboard() {
+        const boardData = {
+            title: document.getElementById('title').value,
+            content: document.getElementById('content').value,
+            writer: document.getElementById('writer').value
+        };
+
+        axios.put('/api/board/' + boardId, boardData)
+            .then(function (response) {
+                window.location.href = '/board';
+            })
+            .catch(function (error) {
+                console.error('Error:', error);
+            });
+    }
+</script>
+</body>
+</html>
