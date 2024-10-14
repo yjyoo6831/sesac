@@ -18,7 +18,7 @@ public interface BoardMapper {
     @Options(useGeneratedKeys = true, keyProperty = "id")
     void insert(Board board);
 
-    @Update("update board set title=#{title}, content=#{content}, where id=#{id}")
+    @Update("update board set title=#{title}, content=#{content}, writer=#{writer} where id=#{id}")
     void update(Board board);
 
     @Delete("delete from board where id = #{id}")

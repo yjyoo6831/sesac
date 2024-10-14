@@ -59,6 +59,7 @@
                 const board = response.data;
                 document.getElementById('title').value = board.title;
                 document.getElementById('content').value = board.content;
+                document.getElementById('writer').value = board.writer;
             })
             .catch(function (error) {
                 console.error('Error:', error);

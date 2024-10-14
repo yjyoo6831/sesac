@@ -46,6 +46,7 @@ public class BoardService {
     // dto to domain
     private Board convertToEntity(BoardDTO boardDTO) {
         Board board = new Board();
+        board.setId(boardDTO.getId());
         board.setTitle(boardDTO.getTitle());
         board.setContent(boardDTO.getContent());
         board.setWriter(boardDTO.getWriter());
@@ -55,6 +56,7 @@ public class BoardService {
     // domain to dto
     private BoardDTO convertToDTO(Board board) {
         BoardDTO boardDTO = new BoardDTO();
+        boardDTO.setId(board.getId());
         boardDTO.setTitle(board.getTitle());
         boardDTO.setContent(board.getContent());
         boardDTO.setWriter(board.getWriter());
