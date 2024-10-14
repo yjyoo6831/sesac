@@ -58,8 +58,11 @@ public class LmsController {
         System.out.println("[POST] userVO.gender = " + userVO.getGender());
         System.out.println("[POST] userVO.getDate = " + userVO.getDate());
         System.out.println("[POST] userVO.interest = " + userVO.getInterest());
-
-        return userVO.getName() + "회원가입 성공";
+        return "이름 : " + userVO.getName() +
+                "\n성별 : " + userVO.getGender() +
+                "\n생년월일 : " + userVO.getDate() +
+                "\n관심사 : " + userVO.getInterest() +
+                "\n회원 가입 성공!";
     }
 
     // 회원 관리 시스템

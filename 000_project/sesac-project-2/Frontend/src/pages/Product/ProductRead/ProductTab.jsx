@@ -27,7 +27,7 @@ const ProductTab = (product) => {
         </div>
       </div>
       <div>
-      {/* <NewItemSection newItem={product.newItem} /> */}
+      <NewItemSection newItem={product.newItem} />
       </div>
       <hr className="mt-2" />
       <div ref={userReviewRef} className="py-8">
