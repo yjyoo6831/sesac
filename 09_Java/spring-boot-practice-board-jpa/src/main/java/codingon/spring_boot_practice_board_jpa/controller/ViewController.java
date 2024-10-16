@@ -1,4 +1,4 @@
-package codingon.spring_boot_pratice_board.controller;
+package codingon.spring_boot_practice_board_jpa.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -1,8 +1,9 @@
-package codingon.spring_boot_pratice_board.service;
+package codingon.spring_boot_practice_board_jpa.service;
 
-import codingon.spring_boot_pratice_board.domain.Board;
-import codingon.spring_boot_pratice_board.dto.BoardDTO;
-import codingon.spring_boot_pratice_board.mapper.BoardMapper;
+import codingon.spring_boot_practice_board_jpa.entity.Board;
+import codingon.spring_boot_practice_board_jpa.entity.Board;
+import codingon.spring_boot_practice_board_jpa.dto.BoardDTO;
+import codingon.spring_boot_practice_board_jpa.repository.BoardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,10 +14,10 @@ import java.util.List;
 public class BoardService {
 
     @Autowired
-    private BoardMapper boardMapper;
+    private BoardRepository boardRepository;
 
     public List<BoardDTO> getAllBoard(){
-        List<Board> board = boardMapper.findAll(); // 서비스 -> 매퍼
+        List<Board> board = boardRepository.findAll(); // 서비스 -> 매퍼
         List<BoardDTO> boardDTO = new ArrayList<>();
 
         for(Board b : board){
@@ -27,40 +28,54 @@ public class BoardService {
     }
 
     public BoardDTO getBoardById(int id) {
-        Board board = boardMapper.findById(id);
+        Board board = boardRepository.findById(id).orElse(null);
+        if(board == null){
+            throw new RuntimeException("board not found");
+        }
         return convertToDTO(board);
     }
 
     public void createBoard(BoardDTO boardDTO) {
         Board board = convertToEntity(boardDTO);
-        boardMapper.insert(board);
+        boardRepository.save(board);
     }
-    public void updateBoard(BoardDTO boardDTO) {
-        Board board = convertToEntity(boardDTO);
-        boardMapper.update(board);
+    public void updateBoard(int id, BoardDTO boardDTO) {
+        Board board = convertToEntityWithId(id, boardDTO);
+        boardRepository.save(board);
     }
     public void deleteBoard(int id) {
-        boardMapper.delete(id);
+        boardRepository.deleteById(id);
     }
 
-    // dto to domain
+    // dto to entity
     private Board convertToEntity(BoardDTO boardDTO) {
-        Board board = new Board();
-        board.setId(boardDTO.getId());
-        board.setTitle(boardDTO.getTitle());
-        board.setContent(boardDTO.getContent());
-        board.setWriter(boardDTO.getWriter());
-        board.setRegistered(boardDTO.getRegistered());
-        return board;
+        return Board.builder()
+                .id(boardDTO.getId())
+                .title(boardDTO.getTitle())
+                .content(boardDTO.getContent())
+                .writer(boardDTO.getWriter())
+                .registered(boardDTO.getRegistered())
+                .build();
     }
-    // domain to dto
+    // entity to dto
     private BoardDTO convertToDTO(Board board) {
-        BoardDTO boardDTO = new BoardDTO();
-        boardDTO.setId(board.getId());
-        boardDTO.setTitle(board.getTitle());
-        boardDTO.setContent(board.getContent());
-        boardDTO.setWriter(board.getWriter());
-        boardDTO.setRegistered(board.getRegistered());
-        return boardDTO;
+        return BoardDTO.builder()
+                .no((int) (board.getId() + 100))
+                .id(board.getId())
+                .title(board.getTitle())
+                .content(board.getContent())
+                .writer(board.getWriter())
+                .registered(board.getRegistered())
+                .build();
     }
+    private Board convertToEntityWithId(int id, BoardDTO boardDTO){
+        return Board.builder()
+                .id(id)
+                .title(boardDTO.getTitle())
+                .content(boardDTO.getContent())
+                .writer(boardDTO.getWriter())
+                .registered(boardDTO.getRegistered())
+                .build();
+    }
+    
 }

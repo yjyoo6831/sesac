@@ -1,7 +1,7 @@
-package codingon.spring_boot_pratice_board.controller;
+package codingon.spring_boot_practice_board_jpa.controller;
 
-import codingon.spring_boot_pratice_board.dto.BoardDTO;
-import codingon.spring_boot_pratice_board.service.BoardService;
+import codingon.spring_boot_practice_board_jpa.dto.BoardDTO;
+import codingon.spring_boot_practice_board_jpa.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,10 +29,11 @@ public class BoardController {
     public BoardDTO getBoardById(@PathVariable int id) {
         return boardService.getBoardById(id);
     }
+
     @PutMapping("/{id}")
     public BoardDTO updateUser(@PathVariable int id, @RequestBody BoardDTO boardDTO) {
-        boardDTO.setId(id);
-        boardService.updateBoard(boardDTO);
+
+        boardService.updateBoard(id, boardDTO);
         return boardDTO;
     }
 
