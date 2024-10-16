@@ -29,7 +29,7 @@ public class UserService {
         }
         return userDTOs;
     }
-    private UserDTO getUserById(Long id) {
+    public UserDTO getUserById(Long id) {
         // JPA가 기본 제공하는 findById 메서드로 특정 유저를 찾으면
         // 그 User 객체를 반환함
         // 만약, 사용자를 찾지 못하면 null 을 반환한다.
@@ -38,6 +38,33 @@ public class UserService {
             throw new RuntimeException("User not found");
         }
         return convertToDTO(user);
+    }
+
+    // 새 사용자 생성
+    public void createUser(UserDTO userDTO) {
+        User user = convertToEntity(userDTO);
+        userRepository.save(user);
+    }
+
+    // 사용자 정보 업데이트
+    public void updateUser(Long id, UserDTO userDTO) {
+        User user = convertToEntityWithId(id, userDTO);
+        userRepository.save(user);
+    }
+
+    // 특정 ID의 사용자 삭제
+    public void deleteUser(Long id){
+        userRepository.deleteById(id);
+    }
+
+    ////////////////////////////////////////
+    public List<UserDTO> getUserByUsername(String username){
+        List<User> users = userRepository.findByUsername(username);
+        List<UserDTO> userDTOs = new ArrayList<>();
+        for (User user:users){
+            userDTOs.add(convertToDTO(user));
+        }
+        return userDTOs;
     }
 
     // entity(domain) to dto
@@ -50,6 +77,20 @@ public class UserService {
                 .id(user.getId())
                 .build();
     }
-
-
+    // dto to entity(domain)
+    private User convertToEntity(UserDTO dto) {
+        return User.builder()
+                .id(dto.getId())
+                .username(dto.getUsername())
+                .email(dto.getEmail())
+                .build();
+    }
+    // dto to entitiy(domain) with id
+    private User convertToEntityWithId(Long id, UserDTO dto) {
+        return User.builder()
+                .id(id)
+                .username(dto.getUsername())
+                .email(dto.getEmail())
+                .build();
+    }
 }
