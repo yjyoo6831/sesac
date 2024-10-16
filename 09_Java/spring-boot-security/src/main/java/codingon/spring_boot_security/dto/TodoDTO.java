@@ -23,7 +23,7 @@ public class TodoDTO {
     }
 
     // DTO를 Entity로 변환하는 메소드
-    public static TodoEntity todoEntity(final TodoDTO dto){
+    public static TodoEntity toEntity(final TodoDTO dto){
         return TodoEntity.builder()
                 .id(dto.getId())
                 .title(dto.getTitle())
