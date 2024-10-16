@@ -58,6 +58,7 @@ public class UserService {
     }
 
     ////////////////////////////////////////
+    // 1. 사용자 이름으로 n명 조회
     public List<UserDTO> getUserByUsername(String username){
         List<User> users = userRepository.findByUsername(username);
         List<UserDTO> userDTOs = new ArrayList<>();
@@ -66,6 +67,28 @@ public class UserService {
         }
         return userDTOs;
     }
+
+    // 2. 검색
+    public List<UserDTO> searchUsers(String keyword){
+        // 첫번째 인자 : username 두번째 : email
+//        List<User> users = userRepository.findByUsernameContainingOrEmailContaining(keyword, keyword);
+        // 쿼리 스트링으로 사용하려면 하나만
+        List<User> users = userRepository.findByUsernameContainingOrEmailContaining(keyword);
+        System.out.println(keyword);
+        List<UserDTO> userDTOs = new ArrayList<>();
+        for(User user:users){
+            userDTOs.add(convertToDTO(user));
+        }
+        return userDTOs;
+
+    }
+
+    // 3. 이름 존재 여부 확인
+    public boolean isUsernameExists(String username){
+        return userRepository.existsByUsername(username);
+    }
+
+    ////////////////////////////////////////
 
     // entity(domain) to dto
     private UserDTO convertToDTO(User user) {

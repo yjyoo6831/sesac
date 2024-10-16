@@ -48,4 +48,16 @@ public class UserController {
     public List<UserDTO> getUserByUsername(@RequestParam String username){
         return userService.getUserByUsername(username);
     }
+
+    // 2. 검색어 보냈을 때 사용자 이름/ 이메일에 특정 문자열이 포함된 모든 사용자 n명 찾기
+    @GetMapping("/search")
+    public List<UserDTO> searchUsers(@RequestParam String keyword){
+        return userService.searchUsers(keyword);
+    }
+
+    // 3. 이름 존재 여부
+    @GetMapping("/exists")
+    public boolean isUsernameExists(@RequestParam String username){
+        return userService.isUsernameExists(username);
+    }
 }

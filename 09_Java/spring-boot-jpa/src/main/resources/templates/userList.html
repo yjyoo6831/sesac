@@ -9,6 +9,13 @@
 <h1>User List</h1>
 <div class="btn-container">
     <a href="/users/new" class="btn btn-new">유저 등록</a>
+    <hr>
+    <div class="username-search-section">
+        <input type="text" id="searchUsername" placeholder="유저명으로 검색해보세요">
+        <button onclick="searchUsername()" class="btn">검색</button>
+    </div>
+    <span id="usersResult"></span>
+    <hr>
     <div class="search-section">
         <input type="text" id="searchInput" placeholder="유저명 혹은 이메일로 검색해보세요">
         <button onclick="searchUsers()" class="btn">검색</button>
@@ -50,13 +57,31 @@
                 console.error('Error:', error);
             });
     }
+    function searchUsername(){
+        const username = document.getElementById('searchUsername').value;
+        const usersResult = document.getElementById('usersResult');
+        axios.get(`/api/users/byUsername?username=${username}`)
+            .then(function (res) {
+                const users=res.data;
+                const usersResult = document.getElementById('usersResult');
+                console.log(users);
+                if(users.length != 0){ updateUserTable(users); }
+                else {
+                    console.log(usersResult);
+                    usersResult.textContent=`${username}은 존재하지 않는 이름입니다.`;
+                    usersResult.style.color = 'red';
+                 }
 
+            })
+            .catch(function (error) {
+                console.error('Error:', error);
+            });
+    }
     function searchUsers() {
         const keyword = document.getElementById('searchInput').value;
         axios.get(`/api/users/search?keyword=${keyword}`)
             .then(function (response) {
                 const users = response.data;
-                updateUserTable(users);
             })
             .catch(function (error) {
                 console.error('Error:', error);
