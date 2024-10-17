@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Data // getter, setter, equals, hashCode, toString 메서드를 자동생성한다.
+@Data // getter, setter, equals, hashCode, toString 메서드를 모두 포함한다.
 public class TodoDTO {
     private Long id;
     private String title;
