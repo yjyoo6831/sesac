@@ -92,4 +92,14 @@ public class TodoController {
         // 4) ResponseDTO 리턴
         return ResponseEntity.ok().body(response);
     }
+    @PutMapping("/update/{id}")
+    public TodoDTO updateTodo(@PathVariable Long id, @RequestBody TodoDTO todoDTO){
+        service.updateTodo(id, todoDTO);
+        return todoDTO;
+    }
+    @DeleteMapping("/delete/{id}")
+    public void deleteTodo(@AuthenticationPrincipal String userId, @PathVariable Long id){
+        service.deleteTodo(id);
+
+    }
 }
