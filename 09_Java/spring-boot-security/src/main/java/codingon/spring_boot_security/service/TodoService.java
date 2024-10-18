@@ -1,5 +1,6 @@
 package codingon.spring_boot_security.service;
 
+import codingon.spring_boot_security.dto.TodoDTO;
 import codingon.spring_boot_security.entity.TodoEntity;
 import codingon.spring_boot_security.repository.TodoRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -32,6 +33,23 @@ public class TodoService {
     // read todo
     public List<TodoEntity> retrieve(final String userId){
         return repository.findByUserId(userId);
+    }
+
+    // update todo
+    public void updateTodo(final Long id, TodoDTO todoDTO)
+    {
+        TodoEntity todoEntity = repository.findById(id).get();
+        todoEntity.setTitle(todoEntity.getTitle());
+        todoEntity.setDone(todoEntity.isDone());
+
+        repository.save(todoEntity);
+
+    }
+
+    // delete todo
+    public void deleteTodo(final Long id)
+    {
+        repository.delete(todoEntity);
     }
 
     // 유효성 검사
