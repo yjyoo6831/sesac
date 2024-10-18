@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserDTO {
-    private String token;
+    private String token; // jwt 저장 공간
     private String email;
     private String username;
     private String password;
