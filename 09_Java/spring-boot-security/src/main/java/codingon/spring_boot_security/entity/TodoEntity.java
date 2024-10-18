@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 public class TodoEntity {
     @Id // 주키
     @GeneratedValue(strategy = GenerationType.IDENTITY) // 기본키 1씩 증가
-    @Column(name = "id" , updatable = false) // 주키는 id , update : f
+    @Column(name = "id" , updatable = false) // 주키는 id , update : false
     private Long id;
     @Column(name = "userId" , nullable = false)
     private String userId;
