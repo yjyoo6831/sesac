@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Table(name="User", uniqueConstraints = {@UniqueConstraint(columnNames="email")})
 // - email 필드에 unique 제약조건
-// - unique 제약조건 ? 해당 테이블의 컬럼이 중복된 값을 허용하지 않음, pk와 다른 점은 null 값 허용
+// - unique 제약조건 ? 해당 테이블의 컬럼이 중복된 값을 허용하지 않음, pk와 다른 점은 null 값 허용한다.
 public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
