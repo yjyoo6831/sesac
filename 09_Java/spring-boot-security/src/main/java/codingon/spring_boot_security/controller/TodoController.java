@@ -92,11 +92,13 @@ public class TodoController {
         // 4) ResponseDTO 리턴
         return ResponseEntity.ok().body(response);
     }
+    // Todo 수정
     @PutMapping("/update/{id}")
     public TodoDTO updateTodo(@PathVariable Long id, @RequestBody TodoDTO todoDTO){
         service.updateTodo(id, todoDTO);
         return todoDTO;
     }
+    // Todo 삭제
     @DeleteMapping("/delete/{id}")
     public void deleteTodo(@AuthenticationPrincipal String userId, @PathVariable Long id){
         service.deleteTodo(id);

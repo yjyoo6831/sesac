@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="06_Node.js">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/06_Node.js/21-socket.io_240706.zip!/" />
+      <root url="jar://$PROJECT_DIR$/06_Node.js/15-mvc.zip!/" />
+      <root url="jar://$PROJECT_DIR$/06_Node.js/lms_nodejs_mysql.zip!/" />
+      <root url="jar://$PROJECT_DIR$/06_Node.js/16_mvc_mysql_release.zip!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
