@@ -1,0 +1,1 @@
+insert into place_category values('키즈카페');
