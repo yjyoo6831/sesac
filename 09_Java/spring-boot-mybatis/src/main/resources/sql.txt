@@ -12,6 +12,12 @@ create database codingon default character set utf8 default collate utf8_general
                                         ('john_doe', 'john.doe@example.com'),
                                         ('jane_smith', 'jane.smith@example.com'),
                                         ('bob_johnson', 'bob.johnson@example.com');
+                                        
+insert into users (username, email) values
+                                        ('john_doe', 'john.doe1@example.com'),
+                                        ('jane_smith', 'jane.smith1@example.com'),
+                                        ('bob_johnson', 'bob.johnson1@example.com');
+ 
  select * from users;
  show tables;
  
@@ -29,4 +35,6 @@ create database codingon default character set utf8 default collate utf8_general
 );
 
 select * from board;
+
+
 desc board;
