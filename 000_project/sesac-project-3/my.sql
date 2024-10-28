@@ -8,6 +8,8 @@ show tables;
 
 select * from place_category order by place_ctg_id desc;
 select * from place order by place_id desc;
+select * from place where location like "%성북%";
+
 select * from review;
 select * from user;
 insert into user values(false,false,now(),now(),1,'test1','test1','010-2222-3333','abc@naver.com','1234','a.png');
