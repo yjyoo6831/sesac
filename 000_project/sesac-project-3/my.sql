@@ -12,6 +12,10 @@ select * from place where location like "%성북%";
 
 select * from review;
 select * from user;
+
+select * from review r 
+join place p on r.place_id = p.place_id;
+
 insert into user values(false,false,now(),now(),1,'test1','test1','010-2222-3333','abc@naver.com','1234','a.png');
 insert into user values(false,false,now(),now(),2,'test2','test2','010-2222-1111','abc2@naver.com','1234','a.png');
 
