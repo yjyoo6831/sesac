@@ -13,6 +13,8 @@ select * from place where location like "%성북%";
 select * from review;
 select * from user;
 
+
+
 select * from review r 
 join place p on r.place_id = p.place_id;
 
