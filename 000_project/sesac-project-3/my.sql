@@ -10,10 +10,11 @@ select * from place_category order by place_ctg_id desc;
 select * from place order by place_id desc;
 select * from place where location like "%성북%";
 
-select * from review;
+select * from review order by review_id desc;
 select * from user;
 insert into user values(false,false,now(),now(),1,'test1','test1','010-2222-3333','abc@naver.com','1234','a.png');
 insert into user values(false,false,now(),now(),2,'test2','test2','010-2222-1111','abc2@naver.com','1234','a.png');
+insert into user values(false,false,now(),now(),3,'test3','test3','010-2222-1112','abc3@naver.com','1234','a.png');
 
 insert into review values(false,5,now(),1,1,now(),1,"좋아요");
 insert into review values(false,3,now(),2,2,now(),1,"좋아요");
