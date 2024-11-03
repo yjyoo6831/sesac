@@ -11,9 +11,9 @@ select * from place order by place_id desc;
 select * from place where location like "%성북%";
 
 select * from review order by review_id desc;
+select r.place_id, avg(r.star) from review r where place_id=1;
+select r.user_id, r.review_content, r.star, r.place_id, r.review_id, r.created_at, round(avg(star)) as "avg_star" from review r where place_id=1;
 select * from user;
-
-
 
 select * from review r 
 join place p on r.place_id = p.place_id;

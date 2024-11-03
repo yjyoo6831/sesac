@@ -1,13 +1,13 @@
 package sesac_3rd.sesac_3rd.service.user;
 
-import sesac_3rd.sesac_3rd.dto.user.LoginFormDTO;
-import sesac_3rd.sesac_3rd.dto.user.UserDTO;
-import sesac_3rd.sesac_3rd.dto.user.UserFormDTO;
-import sesac_3rd.sesac_3rd.dto.user.UserResponseDTO;
+import sesac_3rd.sesac_3rd.dto.user.*;
+import sesac_3rd.sesac_3rd.handler.pagination.PaginationResponseDTO;
+
+import java.util.List;
 
 public interface UserService {
     // 로그인
-    boolean userLogin(LoginFormDTO dto);
+    LoginResponse userLogin(String loginId, String userPw);
 
     // 회원가입
     UserResponseDTO register(UserFormDTO dto);
@@ -16,13 +16,13 @@ public interface UserService {
     void isNicknameDuplicate(String nickname);
 
     // 회원가입 - 아이디 중복 검사
-    boolean isLoginIdDuplicate(String loginId);
+    void isLoginIdDuplicate(String loginId);
 
     // 회원가입 - 이메일 중복 검사
-    boolean isEmailDuplicate(String email);
+    void isEmailDuplicate(String email);
 
     // 회원가입 - 전화번호 중복 검사
-    boolean isPhonenumDuplicate(String phoneNum);
+    void isPhonenumDuplicate(String phoneNum);
 
     // 로그아웃
     void logout();
@@ -34,7 +34,20 @@ public interface UserService {
     UserDTO updateUser(Long userId, UserFormDTO dto);
 
     // 회원 탈퇴
+    void deleteUser(Long userId);
 
+    // 비밀번호 일치 확인(회원 수정, 탈퇴시)
+    void checkUserPw(Long userId, String userPw);
 
-    // 비밀번호 일치 확인(탈퇴시)
+    // 사용자 모임 목록 조회(모임 삭제 상태 제외하고, 사용자가 모임장인 모임) - 페이지네이션
+    PaginationResponseDTO<UserMeetingListDTO> getUserLeaderMeetingList(Long userId, int size, int page);
+
+    // 사용자 모임 목록 조회(모임 삭제 상태 제외하고, 사용자가 모임장이거나 모임에 속해 있는 경우) - 페이지네이션
+    PaginationResponseDTO<UserMeetingListDTO> getUserMeetingList(Long userId, int size, int page);
+
+    // 사용자 모임 일정 목록 조회(사용자가 모임장이거나 속해있는 모임, 삭제된 모임 제외)
+    List<UserMeetingListDTO> getUserMeetingScheduleList(Long userId);
+
+    // 사용자 리뷰 목록 조회(장소 정보까지 같이) - 페이지네이션 할건지?
+    List<UserReviewDTO.UserReviewListDTO> getUserReviewList(Long userId);
 }

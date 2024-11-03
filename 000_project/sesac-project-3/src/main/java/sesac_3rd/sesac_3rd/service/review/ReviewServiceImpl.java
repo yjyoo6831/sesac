@@ -4,16 +4,19 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import sesac_3rd.sesac_3rd.dto.review.ReviewDTO;
+import sesac_3rd.sesac_3rd.dto.review.ReviewFormDTO;
+import sesac_3rd.sesac_3rd.dto.review.ReviewListDTO;
 import sesac_3rd.sesac_3rd.entity.Review;
+import sesac_3rd.sesac_3rd.entity.User;
 import sesac_3rd.sesac_3rd.exception.CustomException;
 import sesac_3rd.sesac_3rd.exception.ExceptionStatus;
 import sesac_3rd.sesac_3rd.repository.ReviewRepository;
 
-import static sesac_3rd.sesac_3rd.mapper.review.ReviewMapper.convertToDTO;
-import static sesac_3rd.sesac_3rd.mapper.review.ReviewMapper.convertToEntity;
-
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import static sesac_3rd.sesac_3rd.mapper.review.ReviewMapper.convertToDTO;
+import sesac_3rd.sesac_3rd.mapper.review.ReviewMapper;
 
 @Slf4j
 @Service
@@ -22,16 +25,19 @@ public class ReviewServiceImpl implements ReviewService{
     @Autowired
     private ReviewRepository reviewRepository;
 
-    // 리뷰 목록 조회
+    @Autowired
+    private ReviewMapper reviewMapper;
+
+    // 장소별 리뷰 목록 조회
     @Override
-    public List<ReviewDTO> getAllReview(Long placeId){
-            List<Review> review = reviewRepository.findAllById(placeId);
-            List<ReviewDTO> reviewDTO = new ArrayList<>();
-            for(Review r : review){
-                ReviewDTO dto = convertToDTO(r);
-                reviewDTO.add(dto);
-            }
-            return reviewDTO;
+    public ReviewListDTO getAllReviewByPlaceId(Long placeId){
+        List<Review> reviews = reviewRepository.findByPlace_PlaceId(placeId);
+        System.out.println("reviews = " + reviews);
+
+        Integer avgStar = reviewRepository.getAverageStar(placeId);
+        System.out.println("avgStar : " + avgStar);
+
+        return new ReviewListDTO(reviews, avgStar);
     }
 
     // 리뷰 단건 조회
@@ -43,16 +49,43 @@ public class ReviewServiceImpl implements ReviewService{
 
     // 리뷰 작성
     @Override
-    public void createReview(ReviewDTO reviewDTO) {
-        Review review = convertToEntity(reviewDTO);
-        reviewRepository.save(review);
+    public Review createReview(ReviewFormDTO reviewformDTO, User user) {
+        Review review = reviewMapper.convertToEntity(reviewformDTO, user);
+        return reviewRepository.save(review);
     }
 
-
-
     // 리뷰 수정
+    @Override
+    public ReviewFormDTO updateReview(Long reviewId, ReviewFormDTO reviewformDTO){
+        try {
+            Review review = reviewRepository.findById(reviewId)
+                    .orElseThrow(()->new CustomException(ExceptionStatus.REVIEWID_NOT_FOUND));
+            review.setStar(reviewformDTO.getStar());
+            review.setReviewContent(reviewformDTO.getReviewContent());
+            reviewRepository.save(review);
+            return reviewformDTO;
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+    }
 
     // 리뷰 삭제
+    @Override
+    public boolean deleteReview(Long reviewId){
+        try{
+            Review review = reviewRepository.findById(reviewId)
+                    .orElseThrow(()->new CustomException(ExceptionStatus.REVIEWID_NOT_FOUND));
+            review.setDeleted(true);
+            reviewRepository.save(review);
+            return true;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+
+    }
 
 
 }

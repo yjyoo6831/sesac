@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import sesac_3rd.sesac_3rd.constant.MessageType;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -18,9 +19,9 @@ public class ChatMessageDTO {
     public static class ChatMessageList {
         private Long chatroomId;
         private List<ChatMessageDTO.ChatMessage> chatmsgList;
-        private int page;
-        private int pageSize;
-        private int totalPages;
+//        private int page;
+//        private int pageSize;
+//        private int totalPages;
     }
 
     // 채팅 메세지 단일 (목록, 응답용)
@@ -32,9 +33,11 @@ public class ChatMessageDTO {
         private Long chatmsgId;
         private Long chatroomId;
         private Long senderId;
+        private String senderNickname;
         private String senderProfileImg;
         private String chatmsgContent;
         private LocalDateTime createdAt;
+        private MessageType messageType;
     }
 
 

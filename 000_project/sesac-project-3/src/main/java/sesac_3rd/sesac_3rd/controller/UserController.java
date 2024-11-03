@@ -3,13 +3,15 @@ package sesac_3rd.sesac_3rd.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-import sesac_3rd.sesac_3rd.dto.user.LoginFormDTO;
-import sesac_3rd.sesac_3rd.dto.user.UserDTO;
-import sesac_3rd.sesac_3rd.dto.user.UserFormDTO;
-import sesac_3rd.sesac_3rd.dto.user.UserResponseDTO;
+import org.springframework.web.multipart.MultipartFile;
+import sesac_3rd.sesac_3rd.dto.user.*;
 import sesac_3rd.sesac_3rd.handler.ResponseHandler;
+import sesac_3rd.sesac_3rd.handler.pagination.PaginationResponseDTO;
 import sesac_3rd.sesac_3rd.service.user.UserService;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/user")
@@ -53,15 +55,28 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+//    @AuthenticationPrincipal 어노테이션은 Spring Security에서 현재 인증된 사용자의 정보를 컨트롤러에서 직접 접근할 수 있게 해주는 어노테이션
+
     // 로그인
+    // 로그인 완료 후 리턴값을 뭘 해야할지는 정해야함
     @PostMapping("/login")
-    public ResponseEntity<ResponseHandler> userLogin(@RequestBody LoginFormDTO dto){
-        return null;
+    public ResponseEntity<ResponseHandler<Boolean>> userLogin(@RequestBody LoginFormDTO dto){
+        LoginResponse loginResponse = userService.userLogin(dto.getLoginId(), dto.getUserPw());
+
+        ResponseHandler<Boolean> response = new ResponseHandler<>(
+                loginResponse.isLogined(),
+                HttpStatus.OK.value(),
+                "로그인 완료"
+        );
+
+        return ResponseEntity.ok().header("Authorization", "Bearer " + loginResponse.getToken()).body(response);
     }
 
     // 회원가입
-    // 에러 표시 어떻게 되는지 확인 필요
-    @PostMapping("/signup")
+    @PostMapping("/register")
     public ResponseEntity<ResponseHandler<UserResponseDTO>> register(@RequestBody UserFormDTO dto){
         UserResponseDTO registeredUser = userService.register(dto);
         ResponseHandler<UserResponseDTO> response = new ResponseHandler<>(
@@ -70,24 +85,12 @@ public class UserController {
                 "회원가입 완료"
         );
         return ResponseEntity.ok(response);
-//        {
-//            "data": {
-//                    "userId": 1,
-//                    "loginId": "user1",
-//                    "nickname": "춘식이",
-//                    "email": "abc@aaa.com",
-//                    "phoneNum": "01022543369",
-//                    "createdAt": "2024-10-28T14:58:21.8197911"
-//        },
-//            "status": 201,
-//                "message": "회원가입 완료"
-//        }
     }
 
     // 회원가입 - 닉네임 중복 검사
     @PostMapping("/check/nickname")
-    public ResponseEntity<ResponseHandler<Boolean>> checkNicknameDuplicate(@RequestBody String nickname){
-        userService.isNicknameDuplicate(nickname);
+    public ResponseEntity<ResponseHandler<Boolean>> checkNicknameDuplicate(@RequestBody UserFormDTO dto){
+        userService.isNicknameDuplicate(dto.getNickname());
 
         ResponseHandler<Boolean> response = new ResponseHandler<>(
                 false,
@@ -98,40 +101,40 @@ public class UserController {
     }
 
     // 회원가입 - 아이디 중복 검사
-    @PostMapping("/check/loginid")
-    public ResponseEntity<ResponseHandler<Boolean>> checkLoginIdDuplicate(@RequestBody String loginId){
-        boolean isDuplicated = userService.isLoginIdDuplicate(loginId);
+    @PostMapping("/check/loginId")
+    public ResponseEntity<ResponseHandler<Boolean>> checkLoginIdDuplicate(@RequestBody UserFormDTO dto){
+        userService.isLoginIdDuplicate(dto.getLoginId());
 
         ResponseHandler<Boolean> response = new ResponseHandler<>(
-                isDuplicated,
-                isDuplicated ? HttpStatus.CONFLICT.value() : HttpStatus.OK.value(),   // 409, 200
-                isDuplicated ? "이미 사용중인 사용자 아이디" : "사용 가능한 사용자 아이디"
+                false,
+                HttpStatus.OK.value(),   // 200
+                "사용 가능한 사용자 아이디입니다."
         );
         return ResponseEntity.ok(response);
     }
 
     // 회원가입 - 이메일 중복 검사
     @PostMapping("/check/email")
-    public ResponseEntity<ResponseHandler<Boolean>> checkEmailDuplicate(@RequestBody String email){
-        boolean isDuplicated = userService.isEmailDuplicate(email);
+    public ResponseEntity<ResponseHandler<Boolean>> checkEmailDuplicate(@RequestBody UserFormDTO dto){
+        userService.isEmailDuplicate(dto.getEmail());
 
         ResponseHandler<Boolean> response = new ResponseHandler<>(
-                isDuplicated,
-                isDuplicated ? HttpStatus.CONFLICT.value() : HttpStatus.OK.value(),   // 409, 200
-                isDuplicated ? "이미 사용중인 사용자 아이디" : "사용 가능한 사용자 아이디"
+                false,
+                HttpStatus.OK.value(),   // 200
+                "사용 가능한 이메일 입니다."
         );
         return ResponseEntity.ok(response);
     }
 
     // 회원가입 - 전화번호 중복 검사
-    @PostMapping("/check/phonenum")
-    public ResponseEntity<ResponseHandler<Boolean>> checkPhonenumDuplicate(@RequestBody String phoneNum){
-        boolean isDuplicated = userService.isPhonenumDuplicate(phoneNum);
+    @PostMapping("/check/phoneNum")
+    public ResponseEntity<ResponseHandler<Boolean>> checkPhonenumDuplicate(@RequestBody UserFormDTO dto){
+        userService.isPhonenumDuplicate(dto.getPhoneNum());
 
         ResponseHandler<Boolean> response = new ResponseHandler<>(
-                isDuplicated,
-                isDuplicated ? HttpStatus.CONFLICT.value() : HttpStatus.OK.value(),   // 409, 200
-                isDuplicated ? "이미 사용중인 사용자 아이디" : "사용 가능한 사용자 아이디"
+                false,
+                HttpStatus.OK.value(),   // 200
+                "사용 가능한 전화번호입니다."
         );
         return ResponseEntity.ok(response);
     }
@@ -140,10 +143,10 @@ public class UserController {
 //    void logout();
 
     // 회원 정보 단건 조회
-    // 에러 처리 필요
-    @GetMapping("/{userid}")
+    // security로 처리해야 할수도???
+    // 그리고 params에 userId 노출은 웬만하면 안하는 걸로 바꾸는게 나을듯
+    @GetMapping("/{userId}")
     public ResponseEntity<ResponseHandler<UserDTO>> getUser(@PathVariable Long userId){
-        try {
             UserDTO user = userService.getUser(userId);
 
             ResponseHandler<UserDTO> response = new ResponseHandler<>(
@@ -153,21 +156,17 @@ public class UserController {
             );
 
             return ResponseEntity.ok(response);
-        }
-        catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-//        catch (Exception e) {
-//            throw new RuntimeException(e);
-//        }
-//        return null;
     }
 
     // 회원 정보 수정
-    @PutMapping("/{userid}")
-    public ResponseEntity<ResponseHandler<UserDTO>> updateUser(@PathVariable Long userid, @RequestBody UserFormDTO dto){
-        try {
-            UserDTO updatedUser = userService.updateUser(userid, dto);
+    @PutMapping("/{userId}")
+    public ResponseEntity<ResponseHandler<UserDTO>> updateUser(@PathVariable Long userId
+                                                                , @RequestBody UserFormDTO dto
+//                                                                , @RequestPart("user") UserFormDTO dto
+//  이미지는 선택                                                   , @RequestPart(value = "image", required = false) MultipartFile image
+                                                                )
+    {
+            UserDTO updatedUser = userService.updateUser(userId, dto);
             ResponseHandler<UserDTO> response = new ResponseHandler<>(
                     updatedUser,
                     HttpStatus.OK.value(),  // 200
@@ -175,9 +174,74 @@ public class UserController {
             );
             return ResponseEntity.ok(response);
 
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-
     }
+
+    // 이거도 body에서 userId빼오는 방식 말고 다른 방식으로 구현 가능성
+    // 회원 탈퇴
+    @PatchMapping("/logical/{userId}")
+    public ResponseEntity<ResponseHandler<Boolean>> deleteUser(@PathVariable Long userId){
+        userService.deleteUser(userId);
+
+        ResponseHandler<Boolean> response = new ResponseHandler<>(
+                true,
+                HttpStatus.OK.value(),   // 200
+                "사용자 탈퇴 처리 완료"
+        );
+
+        return ResponseEntity.ok(response);
+    }
+
+    // 비밀번호 일치 확인 - ( 회원 수정, 탈퇴시 )
+    @PostMapping("/check/userpw")
+    public ResponseEntity<ResponseHandler<Boolean>> checkUserPw(@RequestBody LoginFormDTO dto){
+        userService.checkUserPw(dto.getUserId(), dto.getUserPw());
+
+        ResponseHandler<Boolean> response = new ResponseHandler<>(
+                true,
+                HttpStatus.OK.value(),    // 200
+                "비밀번호 일치"
+        );
+
+        return ResponseEntity.ok(response);
+    }
+
+    // 사용자 리뷰 목록 조회(장소 정보까지 같이)
+    // 페이지네이션 필요할지도??
+    @GetMapping("/review/list/{userId}")
+    public ResponseEntity<ResponseHandler<List<UserReviewDTO.UserReviewListDTO>>> getUserReviewList(@PathVariable Long userId){
+        List<UserReviewDTO.UserReviewListDTO> getReviewList = userService.getUserReviewList(userId);
+
+        return ResponseHandler.response(getReviewList, HttpStatus.OK, "사용자 리뷰 목록 조회");
+    }
+
+    // 사용자 모임 일정 목록 조회(사용자가 모임장이거나 속해있는 모임, 삭제된 모임 제외)
+    @GetMapping("/meetingTime/list/{userId}")
+    public ResponseEntity<ResponseHandler<List<UserMeetingListDTO>>> getUserMeetingScheduleList(@PathVariable Long userId){
+        List<UserMeetingListDTO> getUserMettingSchlist = userService.getUserMeetingScheduleList(userId);
+
+        return ResponseHandler.response(getUserMettingSchlist, HttpStatus.OK, "사용자 모임 일정 목록 조회");
+    }
+
+    // 사용자 모임 목록 조회(모임 삭제 상태 제외하고, 사용자가 모임장이거나 모임에 속해 있는 경우) - 페이지네이션
+    @GetMapping("/meeting/list/{userId}")
+    public ResponseEntity<ResponseHandler<PaginationResponseDTO<UserMeetingListDTO>>> getUserMeetingList(@PathVariable Long userId,
+                                                                                                         @RequestParam(defaultValue = "0") int page,
+                                                                                                         @RequestParam(defaultValue = "8") int size)
+    {
+        PaginationResponseDTO<UserMeetingListDTO> getUserMeetingList = userService.getUserMeetingList(userId, size, page);
+
+        return ResponseHandler.response(getUserMeetingList, HttpStatus.OK, "사용자 모임 목록 조회");
+    }
+
+    // 사용자 모임 목록 조회(모임 삭제 상태 제외하고, 사용자가 모임장인 모임) - 페이지네이션
+    @GetMapping("/meeting/leader/list/{userId}")
+    public ResponseEntity<ResponseHandler<PaginationResponseDTO<UserMeetingListDTO>>> getUserLeaderMeetingList(@PathVariable Long userId,
+                                                                                                               @RequestParam(defaultValue = "0") int page,
+                                                                                                               @RequestParam(defaultValue = "8") int size
+                                                                                                               ){
+        PaginationResponseDTO<UserMeetingListDTO> getUserLeaderMeetingList = userService.getUserLeaderMeetingList(userId, size, page);
+
+        return ResponseHandler.response(getUserLeaderMeetingList, HttpStatus.OK, "사용자 모임 목록 조회");
+    }
+
 }

@@ -21,9 +21,9 @@ public class ChatRoomDTO {
     public static class ChatRoomList {
         private Long userId;
         private List<ChatRoomDTO.ChatRoom> chatroomList;
-        private int page;
-        private int pageSize;
-        private int totalPages;
+//        private int page;
+//        private int pageSize;
+//        private int totalPages;
     }
 
     // 채팅방 단일
@@ -35,7 +35,7 @@ public class ChatRoomDTO {
         private Long chatroomId;
         private Long meetingId;
         private String meetingTitle;
-        private MeetingCategory meetingCategory;
+        private String meetingCategoryName;
         private String lastMessage;
         private LocalDateTime lastMessageCreatedAt;
         private int capacity;

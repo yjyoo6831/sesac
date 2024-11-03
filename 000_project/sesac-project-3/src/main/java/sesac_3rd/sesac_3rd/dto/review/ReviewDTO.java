@@ -7,7 +7,7 @@ import sesac_3rd.sesac_3rd.entity.User;
 
 import java.time.LocalDateTime;
 
-@Getter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -15,9 +15,8 @@ public class ReviewDTO {
     private Long reviewId;
     private Place place;
     private User user;
-    private Integer star;
+    private int star;
     private String reviewContent;
     private boolean isDeleted;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+
 }
