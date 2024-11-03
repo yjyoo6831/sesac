@@ -10,8 +10,10 @@ select * from place_category order by place_ctg_id desc;
 select * from place order by place_id desc;
 select * from place where location like "%성북%";
 
-select * from review order by review_id desc;
-select r.place_id, avg(r.star) from review r where place_id=1;
+select * from review where is_deleted=false and place_id=1 order by review_id desc ;
+select * from review where  place_id=4 order by review_id desc ;
+select r.place_id, avg(r.star) from review r where place_id=2;
+select r.place_id, avg(r.star) from Review r where r.place_id = 1 group by r.place_id;
 select r.user_id, r.review_content, r.star, r.place_id, r.review_id, r.created_at, round(avg(star)) as "avg_star" from review r where place_id=1;
 select * from user;
 
