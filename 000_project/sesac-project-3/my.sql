@@ -7,11 +7,45 @@ use kinderpia;
 show tables;
 
 select * from place_category order by place_ctg_id desc;
+select * from meeting_category order by meeting_ctg_id desc;
 select * from place order by place_id desc;
-select * from place where location like "%성북%";
+select * from place where place_name like "%강남%";
+insert IGNORE into place (place_ctg_id, place_name, location, detail_address, latitude, longitude, place_img, operating_date, is_paid, homepage_url, place_num) values
+(1, '서울형 키즈카페 강서구 화곡3동점','강서구','서울특별시 강서구 강서로 231 2층 (화곡동, 우장산역 해링턴 타워)',NULL,NULL,NULL,'화요일~일요일', FALSE ,'https://icare.seoul.go.kr/icare/user/kidsCafe/BD_selectKidsCafeList.do','02-2698-2299'),
+(1, '서울형 키즈카페 서초구 서초1동점(서리풀노리학교 서초1동점)','서초구','서울특별시 서초구 사임당로 115 헤센파크힐 L층',NULL,NULL,NULL,'월~토', FALSE ,'https://icare.seoul.go.kr/icare/user/kidsCafe/BD_selectKidsCafeList.do','02-525-9340'),
+(1, '서울형 키즈카페 성북구 종암동점','성북구','서울특별시 성북구 종암로19길 60 성북함께어울림센터, 2층 (종암동)',NULL,NULL,NULL,'수~일', FALSE ,'https://icare.seoul.go.kr/icare/user/kidsCafe/BD_selectKidsCafeList.do','02-2241-0796'),
+(1, '서울형 키즈카페 성북구 정릉2동점','성북구','서울특별시 성북구 북악산로1길 64 508커뮤니티센터, 1층 (정릉동)',NULL,NULL,NULL,'수~일', FALSE ,'https://icare.seoul.go.kr/icare/user/kidsCafe/BD_selectKidsCafeList.do','02-2241-0793'),
+(1, '서울형 키즈카페 노원구 중평공원점','노원구','서울특별시 노원구 동일로203길 73 중평공원 내 (하계동)',NULL,NULL,NULL,'화~일', FALSE ,'https://icare.seoul.go.kr/icare/user/kidsCafe/BD_selectKidsCafeList.do','02-973-1955');
+desc place;
 
 select * from likes;
 
+SELECT
+    r.review_id AS reviewId,
+    r.review_content AS reviewContent,
+    r.star,
+    u.nickname,
+    u.profile_img AS profileImg,
+    u.is_blacklist AS isBlacklist,
+    COUNT(l.review_id) AS likeCount
+FROM
+    Review r    
+JOIN
+    User u ON r.user_id = u.user_id    
+LEFT JOIN
+    likes l ON l.review_id = r.review_id
+WHERE
+    r.place_id = 2
+    AND r.is_deleted = false    
+GROUP BY
+    r.review_id, u.nickname, u.profile_img, u.is_blacklist
+ORDER BY
+    r.created_at DESC;
+
+select * from user;
+
+select * from likes k 
+join review r where k.review_id = r.review_id;
 
 select * from review;
 select * from review where is_deleted=false and place_id=1 order by review_id desc ;

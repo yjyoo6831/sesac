@@ -39,8 +39,16 @@ public class ChatMessageService {
         // ChatRoom 과 User 존재 여부 확인
         ChatRoom chatRoom = chatRoomRepository.findById(chatroomId)
                 .orElseThrow(() -> new CustomException(ExceptionStatus.CHATROOM_NOT_FOUND));
+
+        // senderId 로 User 존재 여부 확인
         User sender = userRepository.findById(chatMessageDTO.getSenderId())
                 .orElseThrow(() -> new CustomException(ExceptionStatus.USER_NOT_FOUND));
+
+        // 컨트롤러에서 직접 주입하면 senderId와 token의 userId를 비교할 필요가 없어짐
+//        // senderId와 token 에 userId가 일치하는지 확인
+//        if (!sender.getUserId().equals(userId)) {
+//            throw new CustomException(ExceptionStatus.CHATMSG_USER_NOT_MATCH);
+//        }
 
         // 채팅방 활동 여부 확인
         if (!chatRoom.getIsActive()) {
@@ -126,7 +134,19 @@ public class ChatMessageService {
 
 
     // 채팅 메시지 목록 조회
-    public PaginationResponseDTO<ChatMessageDTO.ChatMessageList> getChatMessages(Long chatroomId, int page, int size) {
+    public PaginationResponseDTO<ChatMessageDTO.ChatMessageList> getChatMessages(Long userId, Long chatroomId, int page, int size) {
+
+        // ChatRoom 존재 여부 확인
+        ChatRoom chatRoom = chatRoomRepository.findById(chatroomId)
+                .orElseThrow(() -> new CustomException(ExceptionStatus.CHATROOM_NOT_FOUND));
+
+        // 유저가 해당 채팅방에 소속되어 있는지 확인
+        boolean isUserInMeeting = userMeetingRepository.existsByUser_UserIdAndMeeting_MeetingIdAndIsAcceptedTrue(userId, chatRoom.getMeeting().getMeetingId());
+
+        if (!isUserInMeeting) {
+            throw new CustomException(ExceptionStatus.USER_NOT_IN_CHATROOM);
+        }
+
         Sort sort = Sort.by(Sort.Order.asc("createdAt")); // 생성시간으로 오름차순
 
         /*
