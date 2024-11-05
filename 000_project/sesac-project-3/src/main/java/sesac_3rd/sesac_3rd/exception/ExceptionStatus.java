@@ -28,9 +28,11 @@ public enum ExceptionStatus {
     //Review
     REVIEWID_NOT_FOUND(404,"리뷰아이디를 찾을 수 없습니다."),
     REVIEW_ALREADY_WRITE(409, "해당 장소에 대한 리뷰는 이미 작성하였습니다."),
+    USER_NOT_WRITER(404,"로그인 유저와 작성자가 일치하지 않습니다."),
 
     // Meeting
     MEETING_NOT_FOUND(404, "모임을 찾을 수 없습니다."),
+    MEETING_CAPACITY_FULL(409, "모임의 총 인원이 다 찼습니다."),
 
     // UserMeeting
     MEETING_ALREADY_JOINED(409, "이미 참가한 모임입니다."),

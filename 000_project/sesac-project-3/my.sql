@@ -42,8 +42,10 @@ GROUP BY
 ORDER BY
     r.created_at DESC;
 
-select * from user;
+select * from user where user_id=3;
 
+select * from user order by user_id desc;
+select * from report;
 select * from likes k 
 join review r where k.review_id = r.review_id;
 
