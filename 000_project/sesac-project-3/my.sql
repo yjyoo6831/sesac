@@ -91,13 +91,53 @@ select * from user order by user_id desc;
 select * from report;
 select * from likes k 
 join review r where k.review_id = r.review_id;
-
+desc review;
+insert into review values(false,5,now(),15,13,now(),4,"좋아요");
+insert into review values(true,2,now(),15,14,now(),3,"좋아요");
+delete from review where review_id=15;
 select * from review;
-select * from review where is_deleted=false and place_id=1 order by review_id desc ;
+
+-- 리뷰 있는 것만 반영 
+SELECT 
+    p.place_id,
+    p.place_name,
+    p.location,
+    p.detail_address,
+    p.operating_date,
+    p.latitude,
+    p.longitude,
+    p.place_img,
+    p.homepage_url,
+    p.place_num,
+    p.is_paid,
+    pc.place_ctg_name,
+    COALESCE(ROUND(AVG(r.star)), 0) as average_star
+FROM 
+    place p
+    INNER JOIN place_category pc ON p.place_ctg_id = pc.place_ctg_id
+    LEFT JOIN review r ON p.place_id = r.place_id
+WHERE 
+    r.is_deleted = false
+GROUP BY 
+    p.place_id,
+    p.place_name,
+    p.location,
+    p.detail_address,
+    p.operating_date,
+    p.latitude,
+    p.longitude,
+    p.place_img,
+    p.homepage_url,
+    p.place_num,
+    p.is_paid,
+    pc.place_ctg_name;
+
+select * from review where is_deleted=false and place_id=15 order by review_id desc ;
+select * from review where place_id=15 order by review_id desc ;
 select * from review where  place_id=2 order by review_id desc ;
-select r.place_id, avg(r.star) from review r where place_id=2;
+select r.place_id, avg(r.star) from review r where place_id=15;
 select r.place_id, avg(r.star) from Review r where r.place_id = 1 group by r.place_id;
-select r.user_id, r.review_content, r.star, r.place_id, r.review_id, r.created_at, round(avg(star)) as "avg_star" from review r where place_id=1;
+select r.user_id, r.review_content, r.star, r.place_id, r.review_id, r.created_at, round(avg(star)) as "avg_star" from review r where place_id=15;
 select * from user;
 
 select * from review r 
