@@ -36,29 +36,9 @@ WHERE
     r.place_id = 2
     AND r.is_deleted = false;
 --
-SELECT 
-    r.review_id,
-    r.star,
-    r.review_content,
-    r.created_at,
-    r.is_deleted,
-    u.user_id,
-    u.nickname,
-    u.profile_img,
-    (SELECT COUNT(*) FROM likes l WHERE l.review_id = r.review_id) AS likes_count,
-    u.is_blacklist,
-    (SELECT COUNT(*) > 0 FROM likes l 
-     WHERE l.review_id = r.review_id 
-     AND l.user_id = 6) AS is_liked_by_user
-FROM 
-    review r
-    JOIN user u ON r.user_id = u.user_id
-WHERE 
-    r.place_id = 1
-    AND r.is_deleted = false
-ORDER BY 
-    r.created_at DESC;
     
+select * from review;
+select place_id, count(r.place_id) from Review r where is_deleted=0 group by place_id ;
 --
 select * from review r join likes l where r.review_id = 4;
 SELECT EXISTS (
