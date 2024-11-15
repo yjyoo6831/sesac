@@ -5,6 +5,7 @@ show databases;
 use kinderpia;
 
 show tables;
+select * from user;
 
 select * from place_category order by place_ctg_id desc;
 select * from meeting_category order by meeting_ctg_id desc;
