@@ -101,15 +101,16 @@ r.review_id, r.star, r.review_content, r.created_at, r.is_deleted,
     SELECT 1 
     FROM likes l 
     WHERE l.review_id = r.review_id 
-    AND l.user_id = 6 -- 로그인 유저 
+    AND l.user_id = 1 -- 로그인 유저 
 ) AS is_liked_by_user
 FROM 
     review r
-    JOIN user u ON u.user_id = 4
+    JOIN user u ON u.user_id = 1
 WHERE 
-    r.place_id = 2
+    r.place_id = 54
     AND r.is_deleted = false;
 --
+select * from likes;
 SELECT 
     r.review_id,
     r.star,
