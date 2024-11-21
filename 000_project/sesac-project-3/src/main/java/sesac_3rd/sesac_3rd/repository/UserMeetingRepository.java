@@ -11,7 +11,10 @@ import java.util.Optional;
 
 
 public interface UserMeetingRepository extends JpaRepository<UserMeeting, Long> {
-    boolean existsByUser_UserIdAndMeeting_MeetingId(Long userId, Long meetingId); // 참가한 사용자 여부 확인
+    // 사용자가 모임에 참가중인지 확인
+    boolean existsByUser_UserIdAndMeeting_MeetingId(Long userId, Long meetingId);
+    // 특정 모임과 가입자에 대한 UserMeeting entity 찾기
+    Optional<UserMeeting> findByUser_UserIdAndMeeting_MeetingId(Long joinUserId, Long meetingId);
 
     List<UserMeeting> findByMeeting_MeetingId(Long meetingId);
 
@@ -19,5 +22,12 @@ public interface UserMeetingRepository extends JpaRepository<UserMeeting, Long> 
 
     boolean existsByUser_UserIdAndMeeting_MeetingIdAndIsAcceptedTrue(Long userId, Long meetingId);
 
-    Optional<UserMeeting> findByUser_UserIdAndMeeting_MeetingId(Long userId, Long meetingId);
+    // 일별 모임 참여자 수(수락된 사람들)
+    @Query("SELECT FUNCTION('DATE', um.acceptedAt) as date, COUNT(um) " +
+            "FROM UserMeeting um " +
+            "WHERE um.isAccepted = true " +
+            "AND um.acceptedAt IS NOT NULL " +
+            "GROUP BY FUNCTION('DATE', um.acceptedAt) " +
+            "ORDER BY FUNCTION('DATE', um.acceptedAt) ASC")
+    List<Object[]> countDailyAcceptedUsers();
 }
